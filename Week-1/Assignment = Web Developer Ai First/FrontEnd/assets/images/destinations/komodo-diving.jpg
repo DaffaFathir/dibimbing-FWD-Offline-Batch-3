@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#007F8C"/>
+  <polygon points="200,500 300,400 400,500" fill="#FF6B6B"/>
+  <polygon points="450,480 550,380 650,480" fill="#FFCD56"/>
+  <circle cx="250" cy="200" r="40" fill="#4DD4DC" opacity="0.6"/>
+  <circle cx="550" cy="250" r="50" fill="#4DD4DC" opacity="0.6"/>
+  <text x="400" y="100" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Diving Paradise</text>
+</svg>

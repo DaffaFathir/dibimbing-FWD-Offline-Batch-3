@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Handling Demo - Southeast Asia Destinations</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/notification.css">
+  
+  <style>
+    body {
+      padding: 40px;
+      background: var(--color-bg-secondary);
+    }
+    
+    .demo-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--color-bg-primary);
+      padding: 30px;
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+    
+    h1 {
+      color: var(--color-text-primary);
+      margin-bottom: 20px;
+    }
+    
+    .demo-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: var(--color-bg-secondary);
+      border-radius: var(--border-radius-md);
+    }
+    
+    .demo-section h2 {
+      color: var(--color-text-primary);
+      margin-bottom: 15px;
+      font-size: 1.25rem;
+    }
+    
+    .demo-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-success {
+      background: var(--color-success);
+      color: white;
+    }
+    
+    .btn-error {
+      background: var(--color-error);
+      color: white;
+    }
+    
+    .btn-warning {
+      background: var(--color-warning);
+      color: white;
+    }
+    
+    .btn-info {
+      background: var(--color-info);
+      color: white;
+    }
+    
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    
+    .output {
+      margin-top: 15px;
+      padding: 15px;
+      background: var(--color-bg-primary);
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--color-border);
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1>Error Handling & User Feedback Demo</h1>
+    <p>This page demonstrates the error handling and notification system implemented for task 11.3.</p>
+    
+    <!-- Notification Types -->
+    <div class="demo-section">
+      <h2>1. Notification Types</h2>
+      <div class="demo-buttons">
+        <button class="btn btn-success" onclick="testSuccess()">Success Notification</button>
+        <button class="btn btn-error" onclick="testError()">Error Notification</button>
+        <button class="btn btn-warning" onclick="testWarning()">Warning Notification</button>
+        <button class="btn btn-info" onclick="testInfo()">Info Notification</button>
+      </div>
+    </div>
+    
+    <!-- Retry Functionality -->
+    <div class="demo-section">
+      <h2>2. Error with Retry Action</h2>
+      <div class="demo-buttons">
+        <button class="btn btn-error" onclick="testErrorWithRetry()">Show Error with Retry</button>
+      </div>
+      <div class="output" id="retry-output">Retry clicks will appear here...</div>
+    </div>
+    
+    <!-- API Error Simulation -->
+    <div class="demo-section">
+      <h2>3. API Error Simulation</h2>
+      <div class="demo-buttons">
+        <button class="btn btn-error" onclick="testAPIError()">Simulate API Failure</button>
+        <button class="btn btn-success" onclick="testAPISuccess()">Simulate API Success</button>
+      </div>
+      <div class="output" id="api-output">API responses will appear here...</div>
+    </div>
+    
+    <!-- Global Error Handler -->
+    <div class="demo-section">
+      <h2>4. Global Error Handler</h2>
+      <div class="demo-buttons">
+        <button class="btn btn-error" onclick="testGlobalError()">Trigger Uncaught Error</button>
+        <button class="btn btn-error" onclick="testUnhandledRejection()">Trigger Unhandled Promise Rejection</button>
+      </div>
+      <p style="font-size: 12px; color: var(--color-text-tertiary); margin-top: 10px;">
+        These will trigger the global error handler and show notifications.
+      </p>
+    </div>
+    
+    <!-- Component Error Boundary -->
+    <div class="demo-section">
+      <h2>5. Component Error Boundary</h2>
+      <div class="demo-buttons">
+        <button class="btn btn-error" onclick="testComponentError()">Simulate Component Render Error</button>
+      </div>
+      <div id="component-test"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { notify, getNotificationInstance } from './js/components/notification.js';
+    
+    // Initialize notification system
+    getNotificationInstance();
+    
+    // Setup global error handler
+    window.addEventListener('error', (event) => {
+      console.error('Global error caught:', event.error);
+      notify.error('An unexpected error occurred. Please try again.', {
+        duration: 0
+      });
+      event.preventDefault();
+    });
+    
+    window.addEventListener('unhandledrejection', (event) => {
+      console.error('Unhandled promise rejection:', event.reason);
+      notify.error('An unexpected error occurred. Please try again.', {
+        duration: 0
+      });
+      event.preventDefault();
+    });
+    
+    // Test functions
+    window.testSuccess = () => {
+      notify.success('Operation completed successfully!');
+    };
+    
+    window.testError = () => {
+      notify.error('An error occurred while processing your request.');
+    };
+    
+    window.testWarning = () => {
+      notify.warning('Please review your input before continuing.');
+    };
+    
+    window.testInfo = () => {
+      notify.info('Loading destinations from the server...');
+    };
+    
+    let retryCount = 0;
+    window.testErrorWithRetry = () => {
+      retryCount = 0;
+      notify.error('Failed to load destinations.', {
+        duration: 0,
+        action: {
+          text: 'Retry',
+          callback: () => {
+            retryCount++;
+            const output = document.getElementById('retry-output');
+            output.textContent = `Retry clicked ${retryCount} time(s)`;
+            notify.info(`Retrying... (attempt ${retryCount})`);
+          }
+        }
+      });
+    };
+    
+    window.testAPIError = async () => {
+      const output = document.getElementById('api-output');
+      output.textContent = 'Simulating API call...';
+      
+      try {
+        // Simulate API delay
+        await new Promise((resolve, reject) => {
+          setTimeout(() => reject(new Error('Network error: Failed to fetch destinations')), 1000);
+        });
+      } catch (error) {
+        output.textContent = `Error: ${error.message}`;
+        notify.error(error.message, {
+          duration: 0,
+          action: {
+            text: 'Retry',
+            callback: () => {
+              output.textContent = 'Retrying...';
+              window.testAPIError();
+            }
+          }
+        });
+      }
+    };
+    
+    window.testAPISuccess = async () => {
+      const output = document.getElementById('api-output');
+      output.textContent = 'Simulating API call...';
+      
+      try {
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 800));
+        output.textContent = 'Success: Loaded 15 destinations';
+        notify.success('Loaded 15 destinations successfully');
+      } catch (error) {
+        output.textContent = `Error: ${error.message}`;
+      }
+    };
+    
+    window.testGlobalError = () => {
+      // This will trigger the global error handler
+      throw new Error('This is a test uncaught error');
+    };
+    
+    window.testUnhandledRejection = () => {
+      // This will trigger the unhandled promise rejection handler
+      Promise.reject(new Error('This is a test unhandled promise rejection'));
+    };
+    
+    window.testComponentError = () => {
+      const container = document.getElementById('component-test');
+      try {
+        // Simulate component render error
+        throw new Error('Component render failed');
+      } catch (error) {
+        console.error('Component error caught:', error);
+        container.innerHTML = `
+          <div style="padding: 15px; background: #ffebee; border: 1px solid #f44336; border-radius: 4px; margin-top: 10px;">
+            <p style="color: #c62828; margin: 0;">⚠️ Error loading component</p>
+          </div>
+        `;
+        notify.error('Failed to render component. Please refresh the page.');
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Router Module Verification</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+    
+    h1 {
+      color: #00A9B5;
+      border-bottom: 3px solid #00A9B5;
+      padding-bottom: 0.5rem;
+    }
+    
+    h2 {
+      color: #FF6B6B;
+      margin-top: 2rem;
+    }
+    
+    .section {
+      background: white;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    
+    button, .link-button {
+      background: #00A9B5;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    button:hover, .link-button:hover {
+      background: #007F8C;
+    }
+    
+    .link-button {
+      background: #FF6B6B;
+    }
+    
+    .link-button:hover {
+      background: #E84545;
+    }
+    
+    .output {
+      background: #f9f9f9;
+      border-left: 4px solid #00A9B5;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+    
+    .info {
+      background: #E7F7F8;
+      border-left: 4px solid #00A9B5;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    input {
+      padding: 0.5rem;
+      border: 2px solid #E0E0E0;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 300px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #424242;
+    }
+  </style>
+</head>
+<body>
+  <h1>Router Module Verification</h1>
+  
+  <div class="info">
+    <strong>Current URL:</strong> <span id="current-url"></span><br>
+    <strong>Current Path:</strong> <span id="current-path"></span><br>
+    <strong>Query Parameters:</strong> <span id="query-params"></span>
+  </div>
+
+  <div class="section">
+    <h2>1. Query Parameter Methods</h2>
+    <p>Test reading query parameters from the URL.</p>
+    
+    <div class="button-group">
+      <button onclick="testGetQueryParam()">Test getQueryParam()</button>
+      <button onclick="testGetAllQueryParams()">Test getAllQueryParams()</button>
+    </div>
+    
+    <div id="query-output" class="output"></div>
+  </div>
+
+  <div class="section">
+    <h2>2. URL Building</h2>
+    <p>Test building URLs with query parameters.</p>
+    
+    <label for="dest-id">Destination ID:</label>
+    <input type="text" id="dest-id" value="dest-001" placeholder="Enter destination ID">
+    
+    <div class="button-group">
+      <button onclick="testBuildUrl()">Build URL</button>
+      <button onclick="testBuildComplexUrl()">Build Complex URL</button>
+    </div>
+    
+    <div id="build-output" class="output"></div>
+  </div>
+
+  <div class="section">
+    <h2>3. Page Detection</h2>
+    <p>Test checking which page we're currently on.</p>
+    
+    <div class="button-group">
+      <button onclick="testIsOnPage()">Check Current Page</button>
+    </div>
+    
+    <div id="page-output" class="output"></div>
+  </div>
+
+  <div class="section">
+    <h2>4. Navigation Methods</h2>
+    <p>Test navigation to different pages.</p>
+    
+    <div class="button-group">
+      <button onclick="navigateToDetail()">Navigate to Detail (dest-001)</button>
+      <button onclick="navigateToList()">Navigate to List</button>
+    </div>
+    
+    <div id="nav-output" class="output"></div>
+  </div>
+
+  <div class="section">
+    <h2>5. Link Interception</h2>
+    <p>Test automatic link click interception with data-route attribute.</p>
+    
+    <div class="button-group">
+      <a href="/detail.html?id=dest-123" data-route="detail" class="link-button">
+        Link with data-route (will intercept)
+      </a>
+      <a href="https://example.com" class="link-button" target="_blank">
+        Regular link (no interception)
+      </a>
+    </div>
+    
+    <div class="info">
+      <strong>Note:</strong> Links with <code>data-route</code> attribute are intercepted by the router.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6. Current State</h2>
+    <p>Current router state information.</p>
+    
+    <div class="button-group">
+      <button onclick="showCurrentState()">Show Current State</button>
+    </div>
+    
+    <div id="state-output" class="output"></div>
+  </div>
+
+  <script type="module">
+    import { router } from './js/router.js';
+    
+    // Make router available globally for demo
+    window.demoRouter = router;
+    
+    // Update current URL display
+    function updateUrlDisplay() {
+      document.getElementById('current-url').textContent = router.getCurrentUrl();
+      document.getElementById('current-path').textContent = router.getCurrentPath();
+      
+      const params = router.getAllQueryParams();
+      const paramStr = Object.keys(params).length > 0 
+        ? JSON.stringify(params, null, 2) 
+        : 'None';
+      document.getElementById('query-params').textContent = paramStr;
+    }
+    
+    updateUrlDisplay();
+    
+    // Test functions
+    window.testGetQueryParam = function() {
+      const output = document.getElementById('query-output');
+      
+      // Add some test query params to URL for demo
+      const testUrl = window.location.pathname + '?id=dest-001&category=beach&sort=price';
+      window.history.pushState({}, '', testUrl);
+      updateUrlDisplay();
+      
+      const id = router.getQueryParam('id');
+      const category = router.getQueryParam('category');
+      const sort = router.getQueryParam('sort');
+      const missing = router.getQueryParam('nonexistent');
+      
+      output.textContent = `getQueryParam() Results:
+      
+id: ${id}
+category: ${category}
+sort: ${sort}
+nonexistent: ${missing}`;
+    };
+    
+    window.testGetAllQueryParams = function() {
+      const output = document.getElementById('query-output');
+      const params = router.getAllQueryParams();
+      
+      output.textContent = `getAllQueryParams() Results:
+
+${JSON.stringify(params, null, 2)}`;
+    };
+    
+    window.testBuildUrl = function() {
+      const output = document.getElementById('build-output');
+      const destId = document.getElementById('dest-id').value;
+      
+      const url = router.buildUrl('/detail.html', { id: destId });
+      
+      output.textContent = `buildUrl() Results:
+
+Input:
+  path: /detail.html
+  params: { id: "${destId}" }
+
+Output: ${url}`;
+    };
+    
+    window.testBuildComplexUrl = function() {
+      const output = document.getElementById('build-output');
+      
+      const url = router.buildUrl('/detail.html', {
+        id: 'dest-001',
+        category: 'beach',
+        sort: 'price',
+        filter: null,  // Should be skipped
+        page: undefined  // Should be skipped
+      });
+      
+      output.textContent = `buildUrl() with Complex Params:
+
+Input:
+  path: /detail.html
+  params: {
+    id: 'dest-001',
+    category: 'beach',
+    sort: 'price',
+    filter: null,      // skipped
+    page: undefined    // skipped
+  }
+
+Output: ${url}
+
+Note: null and undefined values are automatically filtered out.`;
+    };
+    
+    window.testIsOnPage = function() {
+      const output = document.getElementById('page-output');
+      
+      const onList = router.isOnPage('list');
+      const onDetail = router.isOnPage('detail');
+      const currentPath = router.getCurrentPath();
+      
+      output.textContent = `isOnPage() Results:
+
+Current Path: ${currentPath}
+
+isOnPage('list'): ${onList}
+isOnPage('detail'): ${onDetail}`;
+    };
+    
+    window.navigateToDetail = function() {
+      const output = document.getElementById('nav-output');
+      output.textContent = 'Navigating to detail page with destination dest-001...\n\n(Note: This will actually navigate in a real scenario)';
+      
+      // Uncomment to actually navigate:
+      // router.navigateToDetail('dest-001');
+    };
+    
+    window.navigateToList = function() {
+      const output = document.getElementById('nav-output');
+      output.textContent = 'Navigating to list page...\n\n(Note: This will actually navigate in a real scenario)';
+      
+      // Uncomment to actually navigate:
+      // router.navigateToList();
+    };
+    
+    window.showCurrentState = function() {
+      const output = document.getElementById('state-output');
+      
+      const state = {
+        currentUrl: router.getCurrentUrl(),
+        currentPath: router.getCurrentPath(),
+        allQueryParams: router.getAllQueryParams(),
+        isOnListPage: router.isOnPage('list'),
+        isOnDetailPage: router.isOnPage('detail'),
+        routes: router.routes
+      };
+      
+      output.textContent = `Current Router State:
+
+${JSON.stringify(state, null, 2)}`;
+    };
+    
+    // Log when router intercepts links
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('[data-route]');
+      if (link) {
+        console.log('Router intercepted link:', link.getAttribute('href'));
+      }
+    });
+    
+    console.log('Router module loaded and ready!');
+    console.log('Router instance:', router);
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#E09F1C"/>
+  <rect x="100" y="150" width="150" height="300" fill="#FF6B6B"/>
+  <rect x="300" y="150" width="200" height="300" fill="#4FCC7E"/>
+  <rect x="550" y="150" width="150" height="300" fill="#4DD4DC"/>
+  <text x="400" y="500" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Night Market</text>
+</svg>

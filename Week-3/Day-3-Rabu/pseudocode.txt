@@ -1,0 +1,45 @@
+START
+    INPUT (masukan total belanja)
+        IF (total belanja kurang dari 200rb) = ongkir jadi 15rb
+        ELSE (gratis ongkir)
+    OUTPUT (total belanja + ongkir)
+END
+
+Decomposition :
+1. harga
+2. quantity
+3. member
+
+Pseudocode :
+START (BELI PRODUK)
+    INPUT
+        INPUT1 (HargaBarang)
+            IF HargaBarang (Harga Bulat, Finite, atau > 0)
+                Price = HargaBarang
+            ELSE 
+                return INPUT1
+
+        INPUT2 (JumlahBarang)
+            IF JumlahBarang (Banyak Bulat atau > 0)
+                Quantity = JumlahBarang
+            ELSE 
+                return INPUT2
+
+        INPUT3 (StatusMember)
+            IF StatusMember (True)
+                Discount = 10%
+            ELSE 
+                Discount = 0
+    SUM
+        Subtotal = Price x Quantity
+        Potongan = Subtotal x Discount
+
+    OUTPUT
+        Total Bayar = Subtotal - Potongan     
+END 
+
+Case Scenario :
+1. Kalau user input harga desimal, atau 0, maka user akan disuruh input ulang dengan ketentuan yang ada.
+2. Kalau user input jumlah nya 0 atau pecahan, maka user akan disuruh input ulang sesuai dengan ketentuan yang ada.
+3. Jika user merupakan member dari toko, maka user akan mendapatkan diskon 10%.
+4. Jika user bukan member dari toko tersebut, maka user tidak mendapatkan potongan harga.

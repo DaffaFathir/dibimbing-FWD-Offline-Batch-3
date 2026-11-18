@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#1A8047"/>
+  <rect x="200" y="250" width="400" height="300" fill="#757575"/>
+  <path d="M 300 250 Q 400 100 500 250" stroke="#26A65B" stroke-width="40" fill="none"/>
+  <path d="M 350 300 Q 420 150 490 300" stroke="#4FCC7E" stroke-width="30" fill="none"/>
+  <text x="400" y="100" font-family="Arial" font-size="26" fill="white" text-anchor="middle">Ta Prohm Trees</text>
+</svg>

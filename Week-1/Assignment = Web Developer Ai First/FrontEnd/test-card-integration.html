@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination Card Integration Test</title>
+  
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/destination-card.css">
+  
+  <style>
+    body {
+      padding: 2rem;
+      background: var(--color-bg-secondary);
+    }
+    
+    .test-header {
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+    }
+    
+    .test-header h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--color-text-primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .test-status {
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    
+    .test-status.success {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    .test-status.error {
+      background: #ffebee;
+      color: #c62828;
+    }
+    
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-header">
+    <h1>🏝️ Destination Card Integration Test</h1>
+    <p>Testing DestinationCard component with actual mock data</p>
+    <div id="status" class="test-status">Initializing...</div>
+  </div>
+  
+  <div class="cards-grid" id="cards-container"></div>
+
+  <script type="module">
+    import { DestinationCard } from './js/components/destination-card.js';
+    import { eventBus } from './js/event-bus.js';
+    import { mockDestinations } from './js/services/mock-data.js';
+
+    const status = document.getElementById('status');
+    const container = document.getElementById('cards-container');
+    
+    try {
+      // Test 1: Load mock data
+      status.textContent = `✓ Loaded ${mockDestinations.length} destinations from mock data`;
+      
+      // Test 2: Create cards
+      const cards = [];
+      mockDestinations.slice(0, 6).forEach((dest) => {
+        const cardContainer = document.createElement('div');
+        container.appendChild(cardContainer);
+        
+        const card = new DestinationCard(cardContainer, dest);
+        cards.push(card);
+      });
+      
+      status.textContent += `\n✓ Created ${cards.length} destination cards`;
+      status.className = 'test-status success';
+      
+      // Test 3: Listen for events
+      eventBus.on('card:detail-click', (data) => {
+        console.log('Card clicked:', data);
+        status.textContent = `✓ Card clicked: ${data.destination.name} (ID: ${data.destinationId})`;
+        status.className = 'test-status success';
+        
+        // Reset after 3 seconds
+        setTimeout(() => {
+          status.textContent = `✓ Loaded ${mockDestinations.length} destinations | Created ${cards.length} cards | Click any card to test events`;
+          status.className = 'test-status success';
+        }, 3000);
+      });
+      
+      status.textContent += '\n✓ Event listeners attached - try clicking a card!';
+      
+    } catch (error) {
+      status.textContent = `✗ Error: ${error.message}`;
+      status.className = 'test-status error';
+      console.error('Integration test failed:', error);
+    }
+  </script>
+</body>
+</html>

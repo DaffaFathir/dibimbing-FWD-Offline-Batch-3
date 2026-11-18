@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>Theme Toggle Manual Test - Task 12.4</title>
+  
+  <!-- Apply theme before render to prevent FOUC -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('user-theme-preference');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/components/theme-toggle.css">
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    /* Light theme (default) */
+    [data-theme="light"] body {
+      background: #FFFFFF;
+      color: #212121;
+    }
+    
+    /* Dark theme */
+    [data-theme="dark"] body {
+      background: #1A1A1A;
+      color: #F5F5F5;
+    }
+    
+    .test-section {
+      margin-bottom: 40px;
+      padding: 20px;
+      border: 1px solid;
+      border-radius: 8px;
+    }
+    
+    [data-theme="light"] .test-section {
+      border-color: #E0E0E0;
+      background: #FAFAFA;
+    }
+    
+    [data-theme="dark"] .test-section {
+      border-color: #424242;
+      background: #212121;
+    }
+    
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+    
+    .test-item {
+      margin: 15px 0;
+      padding: 10px;
+      border-left: 3px solid #00A9B5;
+    }
+    
+    .theme-toggle-demo {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin: 20px 0;
+    }
+    
+    .status {
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    
+    .status.pass {
+      background: #26A65B;
+      color: white;
+    }
+    
+    .status.pending {
+      background: #F7B731;
+      color: #212121;
+    }
+    
+    code {
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    
+    [data-theme="light"] code {
+      background: #E0E0E0;
+    }
+    
+    [data-theme="dark"] code {
+      background: #424242;
+    }
+    
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+    
+    [data-theme="light"] .button {
+      background: #00A9B5;
+      color: white;
+    }
+    
+    [data-theme="dark"] .button {
+      background: #4DD4DC;
+      color: #212121;
+    }
+    
+    .button:hover {
+      opacity: 0.9;
+    }
+    
+    #test-results {
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Theme Toggle Manual Test - Task 12.4</h1>
+  <p><strong>Requirements: 5.1, 5.2, 5.3, 5.4, 5.5</strong></p>
+  
+  <div class="test-section">
+    <h2>Test 1: Theme Toggle Appears on Both Pages</h2>
+    <div class="test-item">
+      <strong>List Page Toggle:</strong>
+      <div class="theme-toggle-demo">
+        <div id="list-page-toggle"></div>
+        <span class="status pending" id="status-1a">Testing...</span>
+      </div>
+    </div>
+    <div class="test-item">
+      <strong>Detail Page Toggle:</strong>
+      <div class="theme-toggle-demo">
+        <div id="detail-page-toggle"></div>
+        <span class="status pending" id="status-1b">Testing...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: Clicking Toggle Switches Themes</h2>
+    <div class="test-item">
+      <p>Current theme: <code id="current-theme">--</code></p>
+      <p>Document theme attribute: <code id="doc-theme">--</code></p>
+      <p><strong>Action:</strong> Click either toggle button above</p>
+      <span class="status pending" id="status-2">Click toggle to test</span>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 3: localStorage Stores Theme Preference</h2>
+    <div class="test-item">
+      <p>localStorage value: <code id="storage-value">--</code></p>
+      <button class="button" onclick="checkStorage()">Check localStorage</button>
+      <span class="status pending" id="status-3">Click button to test</span>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 4: Theme Persistence After Reload</h2>
+    <div class="test-item">
+      <p><strong>Instructions:</strong></p>
+      <ol>
+        <li>Set theme to Dark using the toggle above</li>
+        <li>Click the "Reload Page" button below</li>
+        <li>Verify page loads with Dark theme (no flash of light theme)</li>
+      </ol>
+      <button class="button" onclick="location.reload()">Reload Page</button>
+      <span class="status pending" id="status-4">Manual test required</span>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 5: System Preference Detection</h2>
+    <div class="test-item">
+      <p>System prefers dark mode: <code id="system-pref">--</code></p>
+      <button class="button" onclick="testSystemPref()">Check System Preference</button>
+      <span class="status pending" id="status-5">Click button to test</span>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 6: Keyboard Accessibility</h2>
+    <div class="test-item">
+      <p><strong>Instructions:</strong></p>
+      <ol>
+        <li>Tab to focus the theme toggle button above</li>
+        <li>Press <code>Space</code> key - theme should toggle</li>
+        <li>Press <code>Enter</code> key - theme should toggle again</li>
+        <li>Check that ARIA attributes update (inspect in DevTools)</li>
+      </ol>
+      <p>Space key test: <span class="status pending" id="status-6a">Manual test</span></p>
+      <p>Enter key test: <span class="status pending" id="status-6b">Manual test</span></p>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 7: ARIA Attributes</h2>
+    <div class="test-item">
+      <p>Toggle role: <code id="aria-role">--</code></p>
+      <p>Toggle aria-checked: <code id="aria-checked">--</code></p>
+      <p>Toggle aria-label: <code id="aria-label">--</code></p>
+      <button class="button" onclick="checkAria()">Check ARIA Attributes</button>
+      <span class="status pending" id="status-7">Click button to test</span>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h2>Automated Test Results</h2>
+    <div id="test-results"></div>
+  </div>
+
+  <script type="module">
+    import { ThemeToggle } from './js/components/theme-toggle.js';
+    import { themeManager } from './js/services/theme-manager.js';
+    import { eventBus } from './js/event-bus.js';
+
+    // Initialize theme manager
+    themeManager.initialize();
+
+    // Create toggles for both "pages"
+    const listPageContainer = document.getElementById('list-page-toggle');
+    const detailPageContainer = document.getElementById('detail-page-toggle');
+
+    const listToggle = new ThemeToggle(listPageContainer);
+    const detailToggle = new ThemeToggle(detailPageContainer);
+
+    // Test 1: Check toggles rendered
+    const listButton = listPageContainer.querySelector('[data-action="toggle-theme"]');
+    const detailButton = detailPageContainer.querySelector('[data-action="toggle-theme"]');
+    
+    if (listButton && detailButton) {
+      document.getElementById('status-1a').textContent = 'PASS';
+      document.getElementById('status-1a').className = 'status pass';
+      document.getElementById('status-1b').textContent = 'PASS';
+      document.getElementById('status-1b').className = 'status pass';
+    }
+
+    // Update current theme display
+    function updateThemeDisplay() {
+      document.getElementById('current-theme').textContent = themeManager.getTheme();
+      document.getElementById('doc-theme').textContent = document.documentElement.getAttribute('data-theme');
+    }
+    
+    updateThemeDisplay();
+
+    // Listen for theme changes
+    let themeChangeCount = 0;
+    themeManager.onChange((theme) => {
+      themeChangeCount++;
+      updateThemeDisplay();
+      
+      if (themeChangeCount >= 1) {
+        document.getElementById('status-2').textContent = 'PASS - Theme switched';
+        document.getElementById('status-2').className = 'status pass';
+      }
+    });
+
+    // Global functions for manual tests
+    window.checkStorage = function() {
+      const stored = localStorage.getItem('user-theme-preference');
+      document.getElementById('storage-value').textContent = stored || 'null';
+      
+      if (stored === 'light' || stored === 'dark') {
+        document.getElementById('status-3').textContent = 'PASS - Stored: ' + stored;
+        document.getElementById('status-3').className = 'status pass';
+      }
+    };
+
+    window.testSystemPref = function() {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.getElementById('system-pref').textContent = prefersDark ? 'dark' : 'light';
+      document.getElementById('status-5').textContent = 'System detected';
+      document.getElementById('status-5').className = 'status pass';
+    };
+
+    window.checkAria = function() {
+      const button = listButton || detailButton;
+      if (button) {
+        document.getElementById('aria-role').textContent = button.getAttribute('role') || 'none';
+        document.getElementById('aria-checked').textContent = button.getAttribute('aria-checked') || 'none';
+        document.getElementById('aria-label').textContent = button.getAttribute('aria-label') || 'none';
+        
+        const hasRole = button.getAttribute('role') === 'switch';
+        const hasChecked = button.hasAttribute('aria-checked');
+        const hasLabel = button.hasAttribute('aria-label');
+        
+        if (hasRole && hasChecked && hasLabel) {
+          document.getElementById('status-7').textContent = 'PASS - All ARIA attributes present';
+          document.getElementById('status-7').className = 'status pass';
+        }
+      }
+    };
+
+    // Auto-check storage on load
+    setTimeout(() => {
+      checkStorage();
+      checkAria();
+    }, 500);
+
+    // Run automated tests
+    const results = document.getElementById('test-results');
+    let testOutput = '';
+
+    function log(msg) {
+      testOutput += msg + '\n';
+      results.innerHTML = '<pre>' + testOutput + '</pre>';
+    }
+
+    log('Running automated tests...\n');
+
+    // Test: Toggle functionality
+    log('Test: Toggle switches theme');
+    const initialTheme = themeManager.getTheme();
+    listToggle.toggle();
+    setTimeout(() => {
+      const newTheme = themeManager.getTheme();
+      log(`  Initial: ${initialTheme}, After toggle: ${newTheme}`);
+      log(`  Result: ${initialTheme !== newTheme ? '✓ PASS' : '✗ FAIL'}\n`);
+
+      // Test: Multiple toggles sync
+      log('Test: Multiple toggles stay synchronized');
+      const theme1 = listToggle.getTheme();
+      const theme2 = detailToggle.getTheme();
+      log(`  List toggle: ${theme1}, Detail toggle: ${theme2}`);
+      log(`  Result: ${theme1 === theme2 ? '✓ PASS' : '✗ FAIL'}\n`);
+
+      // Test: Event emission
+      log('Test: EventBus receives theme:change events');
+      let eventReceived = false;
+      const unsub = eventBus.on('theme:change', () => {
+        eventReceived = true;
+      });
+      listToggle.toggle();
+      setTimeout(() => {
+        log(`  Event received: ${eventReceived}`);
+        log(`  Result: ${eventReceived ? '✓ PASS' : '✗ FAIL'}\n`);
+        unsub();
+
+        log('✅ Automated tests complete!');
+        log('\nPlease complete manual tests above.');
+      }, 100);
+    }, 100);
+  </script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <title>Detail Page</title>
+    <style type="text/tailwindcss">
+        @import "tailwindcss";
+
+    @layer utilities {
+    .scrollbar-none {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-none::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+</style>
+</head>
+
+<body class="bg-[#111313]">
+    <!-- HEADER -->
+    <header class="relative w-full min-h-[85vh] overflow-hidden bg-black text-white">
+
+        <!-- HERO BACKGROUND -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="grid h-full w-max grid-cols-[repeat(3,40vw)] grid-rows-2 mt-20 gap-y-10">
+
+                <div>
+                    <img src="Image/bg.jpg" alt="" class="h-full w-full object-cover">
+                </div>
+
+                <div>
+                    <img src="Image/bg.jpg" alt="" class="h-full w-full object-cover">
+                </div>
+
+                <div>
+                    <img src="Image/bg.jpg" alt="" class="h-full w-full object-cover">
+                </div>
+
+                <div>
+                    <img src="Image/bg.jpg" alt="" class="h-full w-full object-cover">
+                </div>
+
+                <div>
+                    <img src="Image/bg.jpg" alt="" class="h-full w-full object-cover">
+                </div>
+
+                <div>
+                    <img src="Image/bg.jpg" alt="" class="h-full w-full object-cover">
+                </div>
+            </div>
+        </div>
+
+        <!-- GRADIENT OVERLAY -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#111313]/70 to-[#111313]"></div>
+        <!-- LEFT OVERLAY -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent"></div>
+
+        <!-- NAVBAR -->
+        <nav class="relative z-10 flex h-15 items-center justify-between gap-3 border-b border-[#292929] bg-[#111313] px-4 sm:px-6 lg:px-10">
+
+            <!-- NAV LEFT -->
+            <div class="flex shrink-0 items-center gap-2 sm:gap-3">
+                <!-- <i class="fa-solid fa-film text-red-600"></i>-->
+                <img src="Image/m-logo-red.png" alt="Logo MovieStream" class="h-8 w-8 object-contain">
+
+                <a href="Landing Page.html">
+                    <span class="font-['Bebas_Neue'] text-base tracking-wider sm:text-lg">
+                        MOVIESTREAM
+                    </span>
+                </a>
+            </div>
+
+            <!-- NAV RIGHT -->
+            <div class="flex min-w-0 items-center gap-2 sm:gap-3">
+
+                <!-- SEARCH -->
+                <search class="flex h-[27px] w-[clamp(105px,35vw,170px)] shrink items-center gap-2 rounded-sm bg-[#303333] px-2 sm:px-3">
+                    <i class="fa-solid fa-magnifying-glass text-xs text-[#E9BCB6]"></i>
+
+                    <input type="search" placeholder="Search movies, actors..."
+                        class="w-full bg-transparent text-[11px] text-white outline-none placeholder:text-[#C4B5B1]">
+                </search>
+
+                <!-- SAVED -->
+                <button class="flex size-[27px] items-center justify-center rounded-md bg-[#303333] hover:bg-[#444] cursor-pointer">
+                    <i class="fa-regular fa-bookmark text-sm"></i>
+                </button>
+
+                <!-- PROFILE -->
+                <button class="flex size-[27px] items-center justify-center rounded-md bg-[#303333] hover:bg-[#444] cursor-pointer">
+                    <i class="fa-regular fa-user text-sm"></i>
+                </button>
+
+            </div>
+        </nav>
+
+        <!-- HERO CONTENT -->
+        <section class="relative z-10 flex min-h-[367px] flex-col justify-end ml-[3vw] mt-[15vh]">
+
+            <!-- MOVIE BADGES -->
+            <div class="mb-2 flex items-center gap-2">
+
+                <span
+                    class="flex items-center justify-center rounded-xs bg-red-600 h-5 w-25 text-[11px] font-600 tracking-wide">
+                    4K ULTRA HD
+                </span>
+
+                <span class="flex items-center justify-center bg-[#252828] h-5 w-13 text-[9px] font-bold">
+                    IMAX
+                </span>
+
+            </div>
+
+            <!-- MOVIE TITLE -->
+            <h1 class="mt-3 font-['Bebas_Neue'] text-[clamp(3rem,12vw,4.8rem)] leading-none tracking-wide">
+                INTERSTELLAR
+            </h1>
+
+            <!-- MOVIE INFORMATION -->
+            <div class="mt-4 flex flex-wrap items-center gap-3 text-[0.9rem] text-[#E9BCB6]">
+
+                <span>2014</span>
+                <span>•</span>
+                <span>Sci-Fi, Adventure, Drama</span>
+                <span>•</span>
+
+                <span class="flex items-center gap-1">
+                    <i class="fa-regular fa-clock text-yellow-400"></i>
+                    2h 49m
+                </span>
+
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="mt-6 flex items-center gap-3">
+
+                <!-- PLAY MOVIE -->
+                <button class="flex h-[48px] w-[180px] items-center justify-center gap-2 rounded-md bg-red-600 text-[14px] font-600 hover:bg-red-700 cursor-pointer">
+                    <i class="fa-solid fa-play"></i>
+                    PLAY MOVIE
+                </button>
+
+                <!-- MY LIST -->
+                <button class="flex h-[48px] w-[130px] items-center justify-center gap-2 rounded-md bg-[#303333]/90 text-[14px] font-600 hover:bg-[#454545] cursor-pointer">
+                    <i class="fa-solid fa-plus"></i>
+                    MY LIST
+                </button>
+
+                <!-- SHARE -->
+                <button class="flex size-[38px] items-center justify-center rounded-md bg-[#303333]/90 hover:bg-[#454545] cursor-pointer">
+                    <i class="fa-solid fa-share-nodes text-sm"></i>
+                </button>
+
+            </div>
+
+        </section>
+
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <main>
+        <section class="w-full border-b border-[#79392c] px-4 pt-15 pb-8 text-white sm:px-6 lg:px-[3vw]">
+
+            <div class="mx-auto grid h-full max-w-[1500px] grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_330px]">
+
+                <!-- LEFT CONTENT -->
+                <div class="min-w-0">
+
+                    <!-- THE STORY -->
+                    <section>
+                        <h2 class="mb-3 text-[1.2rem] font-600 tracking-[3px] text-[#F49A91]">
+                            THE STORY
+                        </h2>
+
+                        <p class="max-w-[700px] text-[15px] leading-5 tracking-wider text-[#C4C4C4]">
+                            When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph
+                            Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new
+                            planet for humans. As the team travels through a wormhole in space, they must face the
+                            unknown and the reality of time dilation, all while hoping to return home to their loved
+                            ones.
+                        </p>
+                    </section>
+
+
+                    <!-- TRAILERS & CLIPS -->
+                    <section class="mt-9">
+
+                        <div class="mb-4 flex items-center justify-between">
+                            <h2 id="trailers-heading" class="text-[1.2rem] font-600 tracking-[3px] text-[#F49A91]">
+                                TRAILERS & CLIPS
+                            </h2>
+
+                            <a href="#" class="text-[11px] text-red-500 hover:text-red-400">
+                                View All ›
+                            </a>
+                        </div>
+
+                        <!-- TRAILER LIST -->
+                        <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+
+                            <!-- TRAILER 1 -->
+                            <div class="w-[350px] shrink-0 cursor-pointer">
+                                <div class="relative overflow-hidden rounded-md">
+                                    <img src="Image/vt1.jpg" alt="Official Trailer"
+                                        class="aspect-video w-full object-cover">
+
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <button class="flex size-9 items-center justify-center rounded-full border border-white bg-black/50">
+                                            <i class="fa-solid fa-play text-sm"></i>
+                                        </button>
+                                    </div>
+
+                                    <span class="absolute bottom-2 right-2 bg-black/80 px-1.5 py-1 text-[9px]">
+                                        2:34
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[14px] font-semibold">
+                                    Official Trailer #1
+                                </h3>
+                            </div>
+
+
+                            <!-- TRAILER 2 -->
+                            <div class="w-[350px] shrink-0 cursor-pointer">
+                                <div class="relative overflow-hidden rounded-md">
+                                    <img src="Image/vt2.jpg" alt="No Time for Caution Clip"
+                                        class="aspect-video w-full object-cover">
+
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <button aria-label="Play No Time for Caution Clip"
+                                            class="flex size-9 items-center justify-center rounded-full bg-black/50">
+                                            <i class="fa-solid fa-play text-sm"></i>
+                                        </button>
+                                    </div>
+
+                                    <span class="absolute bottom-2 right-2 bg-black/80 px-1.5 py-1 text-[9px]">
+                                        1:15
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[14px] font-semibold">
+                                    "No Time for Caution" Clip
+                                </h3>
+                            </div>
+
+
+                            <!-- TRAILER 3 -->
+                            <div class="w-[350px] shrink-0 cursor-pointer">
+                                <div class="relative overflow-hidden rounded-md">
+                                    <img src="Image/vt3.jpg" alt="The Science of Interstellar"
+                                        class="aspect-video w-full object-cover">
+
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <button aria-label="Play The Science of Interstellar clip"
+                                            class="flex size-9 items-center justify-center rounded-full bg-black/50">
+                                            <i class="fa-solid fa-play text-sm"></i>
+                                        </button>
+                                    </div>
+
+                                    <span class="absolute bottom-2 right-2 bg-black/80 px-1.5 py-1 text-[9px]">
+                                        3:20
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[14px] font-semibold">
+                                    The Science of Interstellar
+                                </h3>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- CAST & CREW -->
+                    <section class="mt-10">
+
+                        <h2 class="mb-5 text-[1.2rem] font-600 tracking-[3px] text-[#F49A91]">
+                            CAST & CREW
+                        </h2>
+
+                        <div class="grid grid-cols-2 gap-5 sm:grid-cols-4">
+
+                            <!-- CAST 1 -->
+                            <div class="text-center">
+                                <img src="Image/pp1.jpg " alt="Matthew McConaughey"
+                                    class="mx-auto size-20 rounded-md object-cover cursor-pointer">
+
+                                <h3 class="mt-2 text-[14px] font-semibold">
+                                    Matthew McConaughey
+                                </h3>
+
+                                <p class="text-[12px] text-[#C49B96]">
+                                    Joseph Cooper
+                                </p>
+                            </div>
+
+                            <!-- CAST 2 -->
+                            <div class="text-center">
+                                <img src="Image/pp2.jpg" alt="Anne Hathaway"
+                                    class="mx-auto size-20 rounded-md object-cover cursor-pointer">
+
+                                <h3 class="mt-2 text-[14px] font-semibold">
+                                    Anne Hathaway
+                                </h3>
+
+                                <p class="text-[12px] text-[#C49B96]">
+                                    Dr. Amelia Brand
+                                </p>
+                            </div>
+
+                            <!-- CAST 3 -->
+                            <div class="text-center">
+                                <img src="Image/pp3.jpg" alt="Michael Caine"
+                                    class="mx-auto size-20 rounded-md object-cover cursor-pointer">
+
+                                <h3 class="mt-2 text-[14px] font-semibold">
+                                    Michael Caine
+                                </h3>
+
+                                <p class="text-[12px] text-[#C49B96]">
+                                    Professor Brand
+                                </p>
+                            </div>
+
+                            <!-- CAST 4 -->
+                            <div class="text-center">
+                                <img src="Image/pp4.jpg" alt="Christopher Nolan"
+                                    class="mx-auto size-20 rounded-md object-cover cursor-pointer">
+
+                                <h3 class="mt-2 text-[14px] font-semibold">
+                                    Christopher Nolan
+                                </h3>
+
+                                <p class="text-[12px] text-[#C49B96]">
+                                    Director
+                                </p>
+                            </div>
+
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- RIGHT SIDEBAR -->
+                <aside class="min-w-0">
+
+                    <!-- AVERAGE RATING -->
+                    <section class="rounded-xl border border-[#49332F] bg-[#202222] p-4">
+
+                        <h2 class="text-[12px] font-bold text-[#C49B96]">
+                            AVERAGE RATING
+                        </h2>
+
+                        <div class="mb-4 flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold">8.7</span>
+                                <span class="text-[10px] text-[#C49B96]">/10</span>
+                            </div>
+
+                            <i class="fa-solid fa-star text-xl text-yellow-400"></i>
+                        </div>
+
+                        <!-- RATING BARS -->
+                        <div class="space-y-2">
+
+                            <div class="flex items-center gap-3 text-[11px]">
+                                <span class="text-[#C49B96]">5</span>
+                                <div class="h-1.5 flex-1 rounded-full bg-[#393B3B]">
+                                    <div class="h-full w-[80%] bg-yellow-400"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 text-[11px]">
+                                <span class="text-[#C49B96]">4</span>
+                                <div class="h-1.5 flex-1 rounded-full bg-[#393B3B]">
+                                    <div class="h-full w-[15%] bg-yellow-400"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 text-[11px]">
+                                <span class="text-[#C49B96]">3</span>
+                                <div class="h-1.5 flex-1 rounded-full bg-[#393B3B]">
+                                    <div class="h-full w-[3%] bg-yellow-400"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 text-[11px]">
+                                <span class="text-[#C49B96]">2</span>
+                                <div class="h-1.5 flex-1 rounded-full bg-[#393B3B]">
+                                    <div class="h-full w-[1%] bg-yellow-400"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3 text-[11px]">
+                                <span class="text-[#C49B96]">1</span>
+                                <div class="h-1.5 flex-1 rounded-full bg-[#393B3B]">
+                                    <div class="h-full w-[1%] bg-yellow-400"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- RATE BUTTON -->
+                        <button
+                            class="mt-5 w-full rounded-md bg-[#383A3A] py-2.5 text-[14px] font-600 hover:bg-[#484A4A] cursor-pointer">
+                            RATE THIS MOVIE
+                        </button>
+
+                    </section>
+
+
+                    <!-- MOVIE INFORMATION -->
+                    <section class="mt-5">
+
+                        <dl>
+                            <div class="flex justify-between border-b border-[#49332F] py-4 text-[12px]">
+                                <dt class="text-[#C49B96]">Release Date</dt>
+                                <dd class="font-semibold">Nov 7, 2014</dd>
+                            </div>
+
+                            <div class="flex justify-between border-b border-[#49332F] py-4 text-[12px]">
+                                <dt class="text-[#C49B96]">Box Office</dt>
+                                <dd class="font-semibold">$773.9M</dd>
+                            </div>
+
+                            <div class="flex justify-between border-b border-[#49332F] py-4 text-[12px]">
+                                <dt class="text-[#C49B96]">Studio</dt>
+                                <dd class="font-semibold">Warner Bros.</dd>
+                            </div>
+
+                            <div class="flex justify-between border-b border-[#49332F] py-4 text-[12px]">
+                                <dt class="text-[#C49B96]">Language</dt>
+                                <dd class="font-semibold">English</dd>
+                            </div>
+                        </dl>
+                    </section>
+
+
+                    <!-- RECENT REVIEWS -->
+                    <section class="mt-6">
+
+                        <h2 class="mb-3 text-[15px] font-600">
+                            Recent Reviews
+                        </h2>
+
+                        <div class="rounded-lg border border-[#302C2B] bg-[#1C1E1E] p-3">
+
+                            <div class="flex items-center justify-between gap-2">
+
+                                <div class="flex items-center gap-2">
+                                    <div class="flex size-5 items-center justify-center rounded-full bg-red-600 text-[11px] font-bold">
+                                        JD
+                                    </div>
+
+                                    <span class="text-[11px] font-semibold">
+                                        John Doe
+                                    </span>
+                                </div>
+
+                                <span class="text-[9px] text-[#C49B96]">
+                                    2 days ago
+                                </span>
+
+                            </div>
+
+                            <p class="mt-2 text-[11px] italic leading-4 text-[#BDBDBD]">
+                                "A visual masterpiece. The soundtrack by Hans Zimmer is hauntingly beautiful. A
+                                must-watch
+                                on the biggest screen possible."
+                            </p>
+
+                        </div>
+
+                    </section>
+                </aside>
+            </div>
+        </section>
+
+        <!-- YOU MAY ALSO LIKE -->
+        <section class="w-full overflow-hidden border-b border-[#79392c]">
+
+            <!-- TITLE -->
+            <h2 class="mt-[7vh] ml-[3vw] text-[1.2rem] font-semibold tracking-[3px] text-[#F49A91]">
+                YOU MAY ALSO LIKE
+            </h2>
+
+            <!-- CARD CONTAINER -->
+            <div class="mt-5 grid w-full grid-flow-col auto-cols-[200px] grid-rows-[300px] gap-4 overflow-x-auto px-[3vw] pb-25 scrollbar-none">
+
+                <!-- CARD 1 -->
+                <div>
+                    <img src="Image/crd1.jpg" alt="Inception movie poster"
+                        class="h-[300px] w-full rounded-md object-cover cursor-pointer">
+
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-white">Inception</h3>
+                        <p class="text-xs text-[#C49B96]">2010 <span>•</span> Sci-Fi</p>
+                    </div>
+                </div>
+
+                <!-- CARD 2 -->
+                <div>
+                    <img src="Image/crd2.jpg" alt="The Martian movie poster"
+                        class="h-[300px] w-full rounded-md object-cover cursor-pointer">
+
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-white">The Martian</h3>
+                        <p class="text-xs text-[#C49B96]">2015 <span>•</span> Adventure</p>
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div>
+                    <img src="Image/crd3.jpg" alt="Blade Runner 2049 movie poster"
+                        class="h-[300px] w-full rounded-md object-cover cursor-pointer">
+
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-white">Blade Runner 2049</h3>
+                        <p class="text-xs text-[#C49B96]">2017 <span>•</span> Sci-Fi</p>
+                    </div>
+                </div>
+
+                <!-- CARD 4 -->
+                <div>
+                    <img src="Image/crd4.jpg" alt="Arrival movie poster"
+                        class="h-[300px] w-full rounded-md object-cover cursor-pointer">
+
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-white">Arrival</h3>
+                        <p class="text-xs text-[#C49B96]">2016 <span>•</span> Drama</p>
+                    </div>
+                </div>
+
+                <!-- CARD 5 -->
+                <div>
+                    <img src="Image/crd5.jpg" alt="Gravity movie poster"
+                        class="h-[300px] w-full rounded-md object-cover cursor-pointer">
+
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-white">Gravity</h3>
+                        <p class="text-xs text-[#C49B96]">2013 <span>•</span> Thriller</p>
+                    </div>
+                </div>
+
+                <!-- CARD 6 -->
+                <div>
+                    <img src="Image/crd6.jpg" alt="2001: A Space Odyssey movie poster"
+                        class="h-[300px] w-full rounded-md object-cover cursor-pointer">
+
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-white">2001: A Space Odyssey</h3>
+                        <p class="text-xs text-[#C49B96]">1968 <span>•</span> Sci-Fi</p>
+                    </div>
+                </div>
+
+                <!-- CARD 7 -->
+                <div>
+                    <img src="Image/crd1.jpg" alt="Inception movie poster"
+                        class="h-[300px] w-full rounded-md object-cover cursor-pointer">
+
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-white">Inception</h3>
+                        <p class="text-xs text-[#C49B96]">2010 <span>•</span> Sci-Fi</p>
+                    </div>
+                </div>
+
+                <!-- CARD 8 -->
+                <div>
+                    <img src="Image/crd2.jpg" alt="The Martian movie poster"
+                        class="h-[300px] w-full rounded-md object-cover cursor-pointer">
+
+                    <div class="mt-2">
+                        <h3 class="text-sm font-semibold text-white">The Martian</h3>
+                        <p class="text-xs text-[#C49B96]">2015 <span>•</span> Adventure</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="w-full bg-[#100D0C] py-10 text-center text-white">
+
+        <div class="flex flex-col items-center gap-5">
+
+            <!-- LOGO -->
+            <div class="flex items-center gap-2">
+                <img src="Image/m-logo-grey.png" alt="Logo MovieStream">
+                <a href="Landing Page.html">
+                    <p class="text-grey-700">MOVIESTREAM</p>
+                </a>
+            </div>
+
+            <!-- NAVIGATION -->
+            <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 px-4 text-sm text-[#C49B96]">
+                <p>Privacy Policy</p>
+                <p>Terms of Police</p>
+                <p>Support</p>
+                <p>Cookie Settings</p>
+            </div>
+
+            <!-- COPYRIGHT -->
+            <p class="text-xs text-[#C49B96]">
+                © 2024 MovieStream Entertainment inc. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+</body>
+
+</html>

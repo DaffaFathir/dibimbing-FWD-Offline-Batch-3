@@ -1,0 +1,13 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/DaffaFathir/Git-Practise
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "me-myself-i"]
+	remote = origin
+	merge = refs/heads/me-myself-i

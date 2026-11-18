@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock API Verification</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    h1 { color: #00A9B5; }
+    h2 { color: #333; margin-top: 30px; }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .result {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .success { background: #e8f5e9; color: #2e7d32; }
+    .error { background: #ffebee; color: #c62828; }
+    .info { background: #e3f2fd; color: #1565c0; }
+    button {
+      background: #00A9B5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    button:hover { background: #007F8C; }
+    .stats { 
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .stat {
+      background: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .stat-value {
+      font-size: 32px;
+      font-weight: bold;
+      color: #00A9B5;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mock API Service Verification</h1>
+  
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value" id="totalTests">0</div>
+      <div class="stat-label">Total Tests</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="passedTests" style="color: #26A65B;">0</div>
+      <div class="stat-label">Passed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="failedTests" style="color: #E84545;">0</div>
+      <div class="stat-label">Failed</div>
+    </div>
+  </div>
+
+  <button onclick="runAllTests()">Run All Tests</button>
+
+  <div class="test-section">
+    <h2>1. Get All Destinations</h2>
+    <button onclick="testGetAll()">Run Test</button>
+    <div id="getAllResult" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>2. Get Destination By ID</h2>
+    <button onclick="testGetById()">Run Test</button>
+    <div id="getByIdResult" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>3. Search Destinations</h2>
+    <button onclick="testSearch()">Run Test</button>
+    <div id="searchResult" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>4. Data Immutability</h2>
+    <button onclick="testImmutability()">Run Test</button>
+    <div id="immutabilityResult" class="result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>5. Network Delay</h2>
+    <button onclick="testDelay()">Run Test</button>
+    <div id="delayResult" class="result"></div>
+  </div>
+
+  <script type="module">
+    import { mockAPI } from './js/services/mock-api.js';
+    
+    window.mockAPI = mockAPI;
+    
+    let stats = { total: 0, passed: 0, failed: 0 };
+
+    function updateStats() {
+      document.getElementById('totalTests').textContent = stats.total;
+      document.getElementById('passedTests').textContent = stats.passed;
+      document.getElementById('failedTests').textContent = stats.failed;
+    }
+
+    function showResult(elementId, success, message) {
+      const element = document.getElementById(elementId);
+      element.className = `result ${success ? 'success' : 'error'}`;
+      element.textContent = message;
+      
+      stats.total++;
+      if (success) stats.passed++;
+      else stats.failed++;
+      updateStats();
+    }
+
+    window.testGetAll = async function() {
+      try {
+        const start = Date.now();
+        const destinations = await mockAPI.getAllDestinations();
+        const duration = Date.now() - start;
+        
+        if (!Array.isArray(destinations)) {
+          throw new Error('Result is not an array');
+        }
+        
+        showResult('getAllResult', true, 
+          `✓ SUCCESS\n` +
+          `Retrieved ${destinations.length} destinations\n` +
+          `Duration: ${duration}ms\n` +
+          `First destination: ${destinations[0].name} (${destinations[0].location})\n` +
+          `Sample data: ${JSON.stringify(destinations[0], null, 2).slice(0, 300)}...`
+        );
+      } catch (error) {
+        showResult('getAllResult', false, `✗ FAILED\n${error.message}`);
+      }
+    };
+
+    window.testGetById = async function() {
+      try {
+        const start = Date.now();
+        const destination = await mockAPI.getDestinationById('dest-001');
+        const duration = Date.now() - start;
+        
+        if (!destination || destination.id !== 'dest-001') {
+          throw new Error('Invalid destination returned');
+        }
+        
+        showResult('getByIdResult', true,
+          `✓ SUCCESS\n` +
+          `Retrieved: ${destination.name}\n` +
+          `Location: ${destination.location}\n` +
+          `Price: $${destination.price}\n` +
+          `Duration: ${duration}ms`
+        );
+      } catch (error) {
+        showResult('getByIdResult', false, `✗ FAILED\n${error.message}`);
+      }
+    };
+
+    window.testSearch = async function() {
+      try {
+        const query = 'beach';
+        const start = Date.now();
+        const results = await mockAPI.searchDestinations(query);
+        const duration = Date.now() - start;
+        
+        if (!Array.isArray(results)) {
+          throw new Error('Results is not an array');
+        }
+        
+        const names = results.map(d => d.name).join('\n  - ');
+        
+        showResult('searchResult', true,
+          `✓ SUCCESS\n` +
+          `Query: "${query}"\n` +
+          `Found ${results.length} results\n` +
+          `Duration: ${duration}ms\n` +
+          `Results:\n  - ${names}`
+        );
+      } catch (error) {
+        showResult('searchResult', false, `✗ FAILED\n${error.message}`);
+      }
+    };
+
+    window.testImmutability = async function() {
+      try {
+        const destinations1 = await mockAPI.getAllDestinations();
+        const originalName = destinations1[0].name;
+        
+        // Modify the data
+        destinations1[0].name = 'MODIFIED';
+        destinations1[0].price = 99999;
+        
+        // Get fresh copy
+        const destinations2 = await mockAPI.getAllDestinations();
+        
+        if (destinations2[0].name === 'MODIFIED' || destinations2[0].price === 99999) {
+          throw new Error('Data mutation affected original data - not properly cloned');
+        }
+        
+        showResult('immutabilityResult', true,
+          `✓ SUCCESS\n` +
+          `Original data is protected from mutation\n` +
+          `First call returned: ${originalName}\n` +
+          `Modified to: MODIFIED\n` +
+          `Second call still returned: ${destinations2[0].name}\n` +
+          `Deep cloning is working correctly!`
+        );
+      } catch (error) {
+        showResult('immutabilityResult', false, `✗ FAILED\n${error.message}`);
+      }
+    };
+
+    window.testDelay = async function() {
+      try {
+        const start = Date.now();
+        await mockAPI.getAllDestinations();
+        const duration = Date.now() - start;
+        
+        if (duration < 300) {
+          throw new Error(`Delay too short: ${duration}ms (expected >= 300ms)`);
+        }
+        
+        if (duration > 900) {
+          throw new Error(`Delay too long: ${duration}ms (expected <= 800ms)`);
+        }
+        
+        showResult('delayResult', true,
+          `✓ SUCCESS\n` +
+          `Network delay simulated correctly\n` +
+          `Duration: ${duration}ms\n` +
+          `Expected range: 300-800ms\n` +
+          `Realistic network simulation working!`
+        );
+      } catch (error) {
+        showResult('delayResult', false, `✗ FAILED\n${error.message}`);
+      }
+    };
+
+    window.runAllTests = async function() {
+      stats = { total: 0, passed: 0, failed: 0 };
+      updateStats();
+      
+      await testGetAll();
+      await testGetById();
+      await testSearch();
+      await testImmutability();
+      await testDelay();
+      
+      alert(`Tests completed!\nPassed: ${stats.passed}/${stats.total}`);
+    };
+  </script>
+</body>
+</html>

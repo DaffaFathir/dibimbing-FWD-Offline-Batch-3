@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#4DD4DC"/>
+  <rect width="800" height="200" y="400" fill="#007F8C"/>
+  <polygon points="300,350 500,350 520,450 280,450" fill="#8B4513"/>
+  <rect x="380" y="250" width="40" height="100" fill="#654321"/>
+  <polygon points="380,250 420,250 500,350" fill="white"/>
+  <text x="400" y="80" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Traditional Junk Boat</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#E09F1C"/>
+  <rect y="350" width="800" height="250" fill="#F7B731"/>
+  <polygon points="600,450 700,300 800,450" fill="#9E9E9E"/>
+  <polygon points="100,480 200,350 300,480" fill="#757575"/>
+  <text x="400" y="200" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Sea of Sand</text>
+</svg>

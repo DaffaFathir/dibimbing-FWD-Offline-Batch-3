@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer Component Test</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components/footer.css">
+  
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+    }
+    
+    .test-container {
+      flex: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .test-header {
+      background-color: var(--color-bg-secondary);
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    
+    .event-log {
+      background-color: var(--color-bg-tertiary);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 0.875rem;
+    }
+    
+    .event-log h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-family-primary);
+    }
+    
+    .event-entry {
+      padding: 0.5rem;
+      border-bottom: 1px solid var(--color-border-light);
+      color: var(--color-text-secondary);
+    }
+    
+    .event-entry:last-child {
+      border-bottom: none;
+    }
+    
+    .event-type {
+      color: var(--color-primary);
+      font-weight: bold;
+    }
+    
+    .footer-wrapper {
+      margin-top: auto;
+    }
+    
+    .test-controls {
+      margin-top: 1rem;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+    
+    .btn:hover {
+      background-color: var(--color-primary-dark);
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <div class="test-header">
+      <h1>Footer Component Test</h1>
+      <p>This page tests the Footer component with EventBus integration.</p>
+      
+      <div class="test-controls">
+        <button class="btn" id="update-social">Update Social Links</button>
+        <button class="btn" id="clear-log">Clear Event Log</button>
+      </div>
+      
+      <div class="event-log">
+        <h3>Event Log</h3>
+        <div id="event-log-content">
+          <div class="event-entry">Waiting for events...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-wrapper" id="footer-container">
+    <!-- Footer will be rendered here -->
+  </div>
+
+  <script type="module">
+    import { Footer } from './js/components/footer.js';
+    import { eventBus } from './js/event-bus.js';
+
+    // Enable debug mode for event bus
+    eventBus.setDebug(true);
+
+    // Initialize footer
+    const footerContainer = document.getElementById('footer-container');
+    const footer = new Footer(footerContainer, {
+      socialLinks: [
+        { platform: 'facebook', url: 'https://facebook.com/seasia' },
+        { platform: 'instagram', url: 'https://instagram.com/seasia' },
+        { platform: 'twitter', url: 'https://twitter.com/seasia' },
+        { platform: 'youtube', url: 'https://youtube.com/seasia' }
+      ],
+      year: 2024
+    });
+
+    // Log events
+    const eventLogContent = document.getElementById('event-log-content');
+    
+    function logEvent(eventName, data) {
+      const entry = document.createElement('div');
+      entry.className = 'event-entry';
+      
+      const timestamp = new Date().toLocaleTimeString();
+      const dataStr = JSON.stringify(data, null, 2);
+      
+      entry.innerHTML = `
+        <strong class="event-type">${eventName}</strong>
+        <div style="margin-top: 0.25rem; color: var(--color-text-tertiary);">${timestamp}</div>
+        <pre style="margin-top: 0.25rem; white-space: pre-wrap;">${dataStr}</pre>
+      `;
+      
+      // Clear "waiting" message if present
+      if (eventLogContent.querySelector('.event-entry')?.textContent === 'Waiting for events...') {
+        eventLogContent.innerHTML = '';
+      }
+      
+      eventLogContent.prepend(entry);
+    }
+
+    // Subscribe to footer events
+    eventBus.on('footer:link-click', (data) => {
+      logEvent('footer:link-click', data);
+      console.log('Footer link clicked:', data);
+    });
+
+    // Test controls
+    document.getElementById('update-social').addEventListener('click', () => {
+      const newLinks = [
+        { platform: 'linkedin', url: 'https://linkedin.com/seasia' },
+        { platform: 'youtube', url: 'https://youtube.com/seasia' }
+      ];
+      footer.updateSocialLinks(newLinks);
+      logEvent('social-links-updated', { count: newLinks.length, platforms: newLinks.map(l => l.platform) });
+    });
+
+    document.getElementById('clear-log').addEventListener('click', () => {
+      eventLogContent.innerHTML = '<div class="event-entry">Log cleared.</div>';
+    });
+
+    console.log('%c Footer Component Test Page Loaded ', 'background: #00A9B5; color: white; padding: 5px; font-weight: bold;');
+    console.log('Try clicking the footer links to see events in the log above.');
+  </script>
+</body>
+</html>

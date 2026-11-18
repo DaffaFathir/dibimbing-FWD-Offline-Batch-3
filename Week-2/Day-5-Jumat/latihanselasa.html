@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selasa</title>
+</head>
+
+<style>
+    .card {
+        margin: 100px 50px 80px; /*atas bawah 10, kiri kanan 5, kalau tiga atas 10 kanan kiri 5, bawah 8, kalau 4 searah jarum jam*/
+        background-color: gold;
+        width: 300px;
+        height: 100px;
+        /* border: black 1px solid; */
+        /* border-color: black; */
+        border-style: solid;
+        border-width: 1px;
+        /* border-bottom: 5px red solid; */
+    }
+
+    .tampil {
+        /* display: inline;
+        display: block;
+        display: inline-block; */
+        display: flex;
+    }
+
+    /* relative dan absolute */
+    .relative {
+        position: relative;
+        top: 0; /* bisa make left, right, top, bottom hanya ketika absolute dan relative */
+        width: 400px;
+        height: 200px;
+        border: 3px solid green;
+    }
+
+    .absolute {
+        position: absolute;
+        top: 50px;
+        left: 100px;
+        width: 200px;
+        height: 100px;
+        border: 3px solid red;
+    }
+
+    .container {
+        margin-top: 20px;
+        display: flex; /* Kalau cuma display flex, degaultnya row, kesamping */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;  
+        background-color: cyan;
+        border: 1px solid black;
+        width: 100%;
+        height: 250px;
+        gap: 15px;
+    }
+
+    .child {
+        width: 50px;
+        height: 50px;
+        background-color: lime;
+        border: 1px solid black;
+    }
+
+    .cont-grid {
+        margin-top: 25px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* fr cm ada di grid, membagi secara evenly atau per-per an */
+        grid-template-rows: repeat(3, 50px);
+        gap: 10px;
+        padding: 15px;
+        background-color: plum;
+    }
+
+    .cont-grid div {
+        background-color: sandybrown;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    p {
+        color: red;
+    }
+
+    @media (min-width: 400px) { /* Tablet */
+        p {
+            color: yellow;
+        } 
+    }
+
+    @media (min-width: 768px) { /* desktop */
+        p {
+            color: green;
+        } 
+    }
+
+    .button {
+        background-color: greenyellow;
+        color: black;
+        cursor: pointer;
+        transition: 0.15s ease-in-out;
+    }
+
+    .button:hover {
+        background-color: green;
+        color: white;
+    }
+
+</style>
+
+<body>
+
+    <!-- Relative n Absolute -->
+    <div class="card"></div> 
+    <h2>Using Position: Relative</h2>
+    <p>An element with position: Relative; is positioned realtive to its normal position</p>
+    <div class="relative">
+        This div element has position: Relative
+        <div class="absolute">This div element has position: absolute</div>
+    </div>
+
+    <!-- FLEX (diatur di parent) -->
+    <div class="container">
+        <div class="child">1</div>
+        <div class="child">2</div>
+        <div class="child">3</div>
+    </div>
+
+    <!-- GRID (diatur di parent)-->
+    <div class="cont-grid">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div style="grid-column: 1 / span 3; grid-row: 2 / span 2;">5</div>
+        <!-- <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div> -->
+    </div>
+
+    <!-- MEDIA QUERY (Responsive) -->
+        <!-- Paradigma Mobile-First (min-width) buat hp duluan - tablet - dekstop -->
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+        Sed inventore sunt aperiam labore nulla, corporis pariatur deserunt enim rerum perspiciatis eius repellat numquam tenetur, 
+        eligendi quisquam, adipisci qui consequatur laboriosam?</p>
+
+    <!-- HOVER -->
+    <button class="button">Contoh Hover</button>
+
+    <!-- PR (align-self dan clamp) -->
+</body>
+
+</html>

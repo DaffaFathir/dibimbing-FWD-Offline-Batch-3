@@ -1,0 +1,22 @@
+﻿{
+  "name": "southeast-asia-destinations",
+  "version": "1.0.0",
+  "description": "A responsive front-end web application for discovering tropical tourist destinations across Southeast Asia. Built with vanilla HTML, CSS, and JavaScript using a component-based architecture.",
+  "type": "module",
+  "scripts": {
+    "dev": "live-server --port=3000 --open=/index.html",
+    "start": "live-server --port=3000 --open=/index.html"
+  },
+  "keywords": [
+    "southeast-asia",
+    "tourism",
+    "travel",
+    "destinations",
+    "vanilla-javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

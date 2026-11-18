@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Router Module Tests</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+    
+    h1 {
+      color: #00A9B5;
+      border-bottom: 3px solid #00A9B5;
+      padding-bottom: 0.5rem;
+    }
+    
+    #test-output {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    
+    .pass {
+      color: #26A65B;
+    }
+    
+    .fail {
+      color: #E84545;
+    }
+    
+    .info {
+      color: #00A9B5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Router Module Tests</h1>
+  <div id="test-output">Running tests...</div>
+
+  <script type="module">
+    import './js/router.test.js';
+  </script>
+</body>
+</html>

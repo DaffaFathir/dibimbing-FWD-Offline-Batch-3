@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="belajarCSS.css">
+</head>
+<style>
+    /* Relative */
+    .setengah {
+        background-color: cyan;
+        height: 50px;
+        padding: 5px;
+    }
+
+    /* Absolute */
+    .kaku {}
+
+    /* Tipografi */
+    .spacing{
+        color: #0f0c05;
+        font-size: 1rem;
+        font-size: 1rem;
+        font-weight: bolder;
+        text-align: justify;
+        font-family: 'Times New Roman', Times, serif;
+        line-height: 1.5;
+        word-spacing: 1rem;
+        word-wrap: break-word;
+    }
+
+    /* Layout */
+    /* DIV (ngambil satu baris selayar) 
+    dan SPAN (menggunakan seluruh size text atau elemen, jika masih muat, dipake di sebelahnya)*/
+    /* Kalau block make div, kalau inline make span */
+
+    /* Custom Styling */
+    .button {
+        background-color: aqua;
+        color: black;
+        /* Kalau tidak mau bentrok dan nilai tetap itu (dikasih important*/
+        /* color: black !important; */
+        padding: 8px 16px
+    }
+
+    .button-utama {
+        background-color: blueviolet;
+        color: snow;
+    }
+
+</style>
+<body>
+    <div class="kartu-pengumuman">
+        <p>Ini isi kartu pengumuman</p>
+    </div>
+
+    <div class="bgblue textwhite pad36">
+        <p>Ini isi kartu pengumuman Kedua</p>
+    </div>
+
+    <!-- Color Type -->
+     <div class="hexcolor"></div>
+
+    <div class="setengah">
+        <div style="width: 50%; background-color: cadetblue;">tes</div>
+    </div>
+    <div style="width: 35vw; background-color: blue;">tes</div>
+    
+    <!-- Tipografi -->
+    <div class="spacing">
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque omnis explicabo, unde, labore amet iusto ullam, officia pariatur doloremque animi provident voluptates mollitia nulla autem dolore. Repellat voluptate quae aperiam.</p>
+    </div>
+
+    <!-- Custom Styling -->
+    <div class="button button-utama">
+        <p>Tombol Mas</p>
+    </div>
+
+    <br><br>
+
+    <div style="width: 350px; height: 250px; border-radius: 8px; border: 1px solid black;">
+        <span style="width: 10px; height: 5px; font-size: 16px; background-color: rgb(207, 215, 232); text-align: center; border-radius: 12px; color: blueviolet;">CSS PRO</span>
+        <span style="padding: 8px; font-size: 16px; font-weight: bold; float: right;">Modul 01</span>
+
+        <h2 style="padding: 8px 8px;">Tata Letak Cepat</h2>
+        <p style="text-align: left; font-size: 17px; line-height: 1.7; padding: 8px 8px;">Menggabungkan kelas color, Size, Tipografi, serta elemen Div dan Span secara terpadu.</p>
+
+        <div style="margin: auto; width: 250px; height: 40px; font-size: 18px; background-color: rgb(111, 42, 207); color: white; border-radius: 10px; text-align: center; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+            <p>Mulai Coding</p>
+        </div>
+
+        <button style="background-color: blueviolet; border-radius: 8px; color: white;">Mulai Coding</button>
+
+        <!-- Make button aja -->
+        
+        <!-- Display = flex, berarti Justify content X, align-items Y -->
+
+        <!-- Margin bottom kebawan (keluar), kalau padding ke dalam -->
+
+    </div>
+
+    <!-- LATIHAN SENDIRI NANTI -->
+
+</body>
+</html>

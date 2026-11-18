@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+    --color-pinkjambu: rgb(250, 105, 158);
+    --color-birr: #7328c4;
+}
+
+/* Custom button */
+.btn-pink {
+    @apply bg-pinkjambu text-birr;
+}
+
+/* Custom card */
+.card-custom {
+    @apply mt-8 ms-8 me-5 p-4 border rounded-md duration-200 cursor-pointer hover:bg-pinkjambu;
+}

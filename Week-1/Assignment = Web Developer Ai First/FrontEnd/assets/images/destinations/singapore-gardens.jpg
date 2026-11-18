@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#26A65B"/>
+  <polygon points="200,500 250,300 300,500" fill="#4FCC7E"/>
+  <polygon points="350,500 400,250 450,500" fill="#1A8047"/>
+  <polygon points="500,500 550,320 600,500" fill="#4FCC7E"/>
+  <text x="400" y="150" font-family="Arial" font-size="26" fill="white" text-anchor="middle">Gardens by the Bay</text>
+</svg>

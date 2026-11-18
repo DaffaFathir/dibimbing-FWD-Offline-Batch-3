@@ -1,0 +1,227 @@
+/* Responsive Breakpoints - Mobile First Approach */
+
+/* 
+ * Base styles are for mobile (320px+)
+ * Progressive enhancement for larger screens
+ * Content-driven breakpoints for optimal UX
+ */
+
+/* ============================================
+   TABLET: 768px and up
+   ============================================ */
+@media (min-width: 768px) {
+  /* Typography adjustments for tablet */
+  :root {
+    --font-size-base: 1.0625rem; /* 17px - slightly larger for tablet */
+  }
+
+  /* Heading size adjustments */
+  h1 {
+    font-size: var(--font-size-5xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-4xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-3xl);
+  }
+
+  /* Grid layout adjustments - 2 columns for tablet */
+  .destination-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-tablet-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Header navigation - show full nav on tablet */
+  .header-nav {
+    display: flex;
+  }
+
+  /* Hero section adjustments */
+  .hero-section {
+    height: 400px;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-4xl);
+  }
+
+  /* Footer layout - side by side */
+  .footer-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+  }
+}
+
+/* ============================================
+   LAPTOP: 1024px and up
+   ============================================ */
+@media (min-width: 1024px) {
+  /* Typography adjustments for laptop */
+  :root {
+    --font-size-base: 1.125rem; /* 18px - optimal reading size */
+    --spacing-container: var(--spacing-6);
+  }
+
+  /* Grid layout adjustments - 3 columns for laptop */
+  .destination-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-laptop-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-laptop-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Hero section adjustments */
+  .hero-section {
+    height: 500px;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-5xl);
+  }
+
+  /* Header adjustments */
+  .site-header {
+    padding: var(--spacing-3) 0;
+  }
+
+  /* Footer layout - multi-column */
+  .footer-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Card hover effects on larger screens */
+  .destination-card {
+    transition: transform var(--transition-base),
+                box-shadow var(--transition-base);
+  }
+
+  .destination-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* ============================================
+   DESKTOP: 1280px and up
+   ============================================ */
+@media (min-width: 1280px) {
+  /* Desktop specific styles - no container override */
+  
+  /* Grid layout adjustments - 4 columns for large desktop */
+  .destination-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Hero section full size */
+  .hero-section {
+    height: 600px;
+  }
+
+  /* Footer layout - full width */
+  .footer-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Destination detail layout - side by side content */
+  .detail-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-6);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY: Reduced Motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable transform animations */
+  .destination-card:hover {
+    transform: none;
+  }
+
+  /* Disable theme toggle animations */
+  .theme-toggle-thumb {
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY: High Contrast Mode
+   ============================================ */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: #000000;
+  }
+
+  [data-theme="dark"] {
+    --color-border: #FFFFFF;
+  }
+
+  /* Ensure all interactive elements have visible borders */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    border: 2px solid currentColor;
+  }
+
+  /* Enhance focus indicators */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  /* Hide interactive elements */
+  .header-search,
+  .theme-toggle-container,
+  button,
+  .footer-social {
+    display: none !important;
+  }
+
+  /* Optimize for print */
+  body {
+    background: white;
+    color: black;
+  }
+
+  .destination-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Remove shadows and backgrounds */
+  .destination-card,
+  .hero-section {
+    box-shadow: none;
+  }
+}

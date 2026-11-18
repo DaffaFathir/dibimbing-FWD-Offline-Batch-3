@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#007F8C"/>
+  <polygon points="150,450 250,350 350,450" fill="#FF6B6B"/>
+  <polygon points="450,480 550,380 650,480" fill="#4FCC7E"/>
+  <circle cx="300" cy="200" r="35" fill="#FFCD56"/>
+  <circle cx="550" cy="250" r="45" fill="#FF9E9E"/>
+  <text x="400" y="100" font-family="Arial" font-size="26" fill="white" text-anchor="middle">World's Best Diving</text>
+</svg>

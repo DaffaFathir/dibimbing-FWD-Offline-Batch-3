@@ -1,0 +1,379 @@
+/* Animations and Transitions */
+
+/**
+ * Animation utilities for:
+ * - Fade-in animations for loaded content
+ * - Loading spinner animations
+ * - Smooth transitions for hover states
+ * - Respecting prefers-reduced-motion
+ */
+
+/* ===========================
+   KEYFRAME ANIMATIONS
+   =========================== */
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In Up Animation (more subtle) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In Scale Animation */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Loading Spinner Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse Animation (for loading states) */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Slide In From Left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide In From Right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Shimmer Animation (for skeleton loading) */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* ===========================
+   ANIMATION UTILITY CLASSES
+   =========================== */
+
+/* Fade In Animations */
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.3s ease-out forwards;
+}
+
+/* Animation Delays (for staggered animations) */
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Initial state for fade-in animations */
+.will-animate {
+  opacity: 0;
+}
+
+/* ===========================
+   LOADING STATES
+   =========================== */
+
+/* Loading Spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--color-border-light);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-spinner-sm {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+
+.loading-spinner-lg {
+  width: 60px;
+  height: 60px;
+  border-width: 5px;
+}
+
+/* Loading Container */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-8);
+  min-height: 200px;
+}
+
+/* Pulse Animation for Loading States */
+.loading-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-200) 0%,
+    var(--color-neutral-100) 50%,
+    var(--color-neutral-200) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--border-radius-sm);
+}
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-tertiary) 0%,
+    #3a3a3a 50%,
+    var(--color-bg-tertiary) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ===========================
+   HOVER TRANSITIONS
+   =========================== */
+
+/* Smooth hover lift effect */
+.transition-lift {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.transition-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Scale on hover */
+.transition-scale {
+  transition: transform var(--transition-base);
+}
+
+.transition-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Image zoom on hover */
+.transition-zoom {
+  overflow: hidden;
+}
+
+.transition-zoom img {
+  transition: transform var(--transition-base);
+}
+
+.transition-zoom:hover img {
+  transform: scale(1.1);
+}
+
+/* Smooth color transitions */
+.transition-colors {
+  transition: background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base);
+}
+
+/* All-purpose smooth transition */
+.transition-all {
+  transition: all var(--transition-base);
+}
+
+/* Fast transitions for interactive elements */
+.transition-fast {
+  transition: all var(--transition-fast);
+}
+
+/* Slow transitions for dramatic effects */
+.transition-slow {
+  transition: all var(--transition-slow);
+}
+
+/* ===========================
+   STAGGERED ANIMATIONS
+   =========================== */
+
+/* 
+ * Staggered animations for lists/grids
+ * Apply to parent container
+ */
+.stagger-fade-in > * {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.stagger-fade-in > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-fade-in > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-fade-in > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-fade-in > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-fade-in > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-fade-in > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-fade-in > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger-fade-in > *:nth-child(8) { animation-delay: 0.8s; }
+.stagger-fade-in > *:nth-child(9) { animation-delay: 0.9s; }
+
+/* Initial state for staggered animations */
+.stagger-fade-in > * {
+  opacity: 0;
+}
+
+/* ===========================
+   PAGE TRANSITIONS
+   =========================== */
+
+/* Fade in page content on load */
+.page-content {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Content sections with staggered fade-in */
+.content-section {
+  animation: fadeInUp 0.6s ease-out backwards;
+}
+
+/* ===========================
+   REDUCED MOTION SUPPORT
+   =========================== */
+
+/* 
+ * Respect user's motion preferences
+ * Disable all animations and transitions if user prefers reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep spin animation but make it instant */
+  .loading-spinner {
+    animation: none;
+    border-top-color: transparent;
+    border-right-color: var(--color-primary);
+  }
+
+  /* Remove hover effects that rely on transforms */
+  .transition-lift:hover,
+  .transition-scale:hover,
+  .transition-zoom:hover img {
+    transform: none;
+  }
+
+  /* Preserve opacity transitions only (less jarring) */
+  .transition-colors {
+    transition: opacity 0.01ms;
+  }
+}
+
+/* ===========================
+   PERFORMANCE OPTIMIZATIONS
+   =========================== */
+
+/* 
+ * Use will-change for elements that will animate
+ * to enable GPU acceleration
+ */
+.will-animate,
+.transition-lift,
+.transition-scale,
+.transition-zoom img {
+  will-change: transform;
+}
+
+.transition-colors {
+  will-change: background-color, color, border-color;
+}
+
+/* Remove will-change after animation completes */
+.animation-complete {
+  will-change: auto;
+}
+
+/* ===========================
+   DARK THEME ADJUSTMENTS
+   =========================== */
+
+[data-theme="dark"] .loading-spinner {
+  border-color: var(--color-border);
+  border-top-color: var(--color-primary);
+}

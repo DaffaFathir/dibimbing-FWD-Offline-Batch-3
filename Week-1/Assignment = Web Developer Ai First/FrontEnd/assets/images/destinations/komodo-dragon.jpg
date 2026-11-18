@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#E09F1C"/>
+  <ellipse cx="400" cy="400" rx="200" ry="80" fill="#757575"/>
+  <circle cx="300" cy="380" r="50" fill="#616161"/>
+  <rect x="500" y="360" width="180" height="40" fill="#616161"/>
+  <text x="400" y="150" font-family="Arial" font-size="32" fill="white" text-anchor="middle">Komodo Dragon</text>
+</svg>

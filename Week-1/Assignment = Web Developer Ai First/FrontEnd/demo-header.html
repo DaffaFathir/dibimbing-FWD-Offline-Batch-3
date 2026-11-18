@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header Component Demo</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  
+  <style>
+    body {
+      background-color: var(--color-bg-secondary);
+      padding: 0;
+      margin: 0;
+    }
+    
+    .demo-container {
+      max-width: 1280px;
+      margin: 2rem auto;
+      padding: 2rem;
+    }
+    
+    .demo-section {
+      background: var(--color-bg-primary);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .demo-section h2 {
+      margin-top: 0;
+      color: var(--color-primary);
+      font-family: var(--font-family-heading);
+    }
+    
+    .demo-controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .demo-controls button {
+      padding: 0.75rem 1.5rem;
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius-md);
+      cursor: pointer;
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      transition: background-color var(--transition-fast);
+    }
+    
+    .demo-controls button:hover {
+      background-color: var(--color-primary-dark);
+    }
+    
+    .demo-header-container {
+      border: 2px dashed var(--color-border);
+      border-radius: var(--border-radius-md);
+      margin-top: 1rem;
+    }
+    
+    .info-text {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1 style="text-align: center; color: var(--color-primary); font-family: var(--font-family-heading);">
+      Header Component Demo
+    </h1>
+    
+    <!-- Demo 1: List Variant -->
+    <div class="demo-section">
+      <h2>List Variant (Home Page)</h2>
+      <div class="demo-controls">
+        <button id="toggle-search-1">Toggle Search</button>
+        <button id="toggle-user-1">Toggle User</button>
+        <button id="change-theme">Toggle Dark Mode</button>
+      </div>
+      <div id="header-list" class="demo-header-container"></div>
+      <p class="info-text">
+        This variant shows Home, About, and Contact links. Used on the destination list page.
+      </p>
+    </div>
+    
+    <!-- Demo 2: Detail Variant -->
+    <div class="demo-section">
+      <h2>Detail Variant (Detail Page)</h2>
+      <div class="demo-controls">
+        <button id="toggle-user-2">Toggle User</button>
+      </div>
+      <div id="header-detail" class="demo-header-container"></div>
+      <p class="info-text">
+        This variant shows Home, Destinations, and About links. Used on the destination detail page.
+      </p>
+    </div>
+    
+    <!-- Event Log -->
+    <div class="demo-section">
+      <h2>Event Log</h2>
+      <div id="event-log" style="
+        background-color: var(--color-bg-tertiary);
+        padding: 1rem;
+        border-radius: var(--border-radius-md);
+        font-family: 'Courier New', monospace;
+        font-size: var(--font-size-sm);
+        max-height: 300px;
+        overflow-y: auto;
+      ">
+        <div style="color: var(--color-text-secondary);">Events will appear here...</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Header } from './js/components/header.js';
+    import { eventBus } from './js/event-bus.js';
+    
+    // State
+    let showSearch = false;
+    let showUser1 = false;
+    let showUser2 = false;
+    let isDark = false;
+    
+    // Sample user data
+    const sampleUser = {
+      name: 'John Traveler',
+      profilePicture: 'https://ui-avatars.com/api/?name=John+Traveler&background=00A9B5&color=fff'
+    };
+    
+    // Initialize headers
+    let headerList = null;
+    let headerDetail = null;
+    
+    function initHeaders() {
+      const listContainer = document.getElementById('header-list');
+      const detailContainer = document.getElementById('header-detail');
+      
+      // Clear containers
+      listContainer.innerHTML = '';
+      detailContainer.innerHTML = '';
+      
+      // Create list variant
+      headerList = new Header(listContainer, {
+        variant: 'list',
+        showSearch: showSearch,
+        user: showUser1 ? sampleUser : null
+      });
+      
+      // Create detail variant
+      headerDetail = new Header(detailContainer, {
+        variant: 'detail',
+        showSearch: false,
+        user: showUser2 ? sampleUser : null
+      });
+    }
+    
+    // Event log
+    function logEvent(eventName, data) {
+      const logEl = document.getElementById('event-log');
+      const timestamp = new Date().toLocaleTimeString();
+      const message = `[${timestamp}] ${eventName}${data ? ': ' + JSON.stringify(data) : ''}`;
+      
+      const logEntry = document.createElement('div');
+      logEntry.textContent = message;
+      logEntry.style.color = 'var(--color-text-primary)';
+      logEntry.style.marginBottom = '0.5rem';
+      
+      logEl.appendChild(logEntry);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+    
+    // Subscribe to events
+    eventBus.on('header:navigate', (data) => {
+      logEvent('header:navigate', data);
+    });
+    
+    eventBus.on('header:home-click', () => {
+      logEvent('header:home-click');
+    });
+    
+    eventBus.on('header:search', (data) => {
+      logEvent('header:search', data);
+    });
+    
+    // Demo controls
+    document.getElementById('toggle-search-1').addEventListener('click', () => {
+      showSearch = !showSearch;
+      if (headerList) headerList.destroy();
+      const listContainer = document.getElementById('header-list');
+      listContainer.innerHTML = '';
+      headerList = new Header(listContainer, {
+        variant: 'list',
+        showSearch: showSearch,
+        user: showUser1 ? sampleUser : null
+      });
+      logEvent('UI Update', { showSearch });
+    });
+    
+    document.getElementById('toggle-user-1').addEventListener('click', () => {
+      showUser1 = !showUser1;
+      headerList.updateUser(showUser1 ? sampleUser : null);
+      logEvent('UI Update', { showUser: showUser1 });
+    });
+    
+    document.getElementById('toggle-user-2').addEventListener('click', () => {
+      showUser2 = !showUser2;
+      headerDetail.updateUser(showUser2 ? sampleUser : null);
+      logEvent('UI Update', { showUser: showUser2 });
+    });
+    
+    document.getElementById('change-theme').addEventListener('click', () => {
+      isDark = !isDark;
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      logEvent('Theme Changed', { theme: isDark ? 'dark' : 'light' });
+    });
+    
+    // Initialize
+    initHeaders();
+    logEvent('Demo Initialized');
+  </script>
+</body>
+</html>

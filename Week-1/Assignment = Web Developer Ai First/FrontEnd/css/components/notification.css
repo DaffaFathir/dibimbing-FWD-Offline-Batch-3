@@ -1,0 +1,307 @@
+/**
+ * Notification Component Styles
+ * Toast-style notification system
+ */
+
+/* Notification Container */
+.notification-container {
+  position: fixed;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  pointer-events: none;
+  max-width: 400px;
+  padding: var(--spacing-md);
+}
+
+/* Position variants */
+.notification-top-right {
+  top: 0;
+  right: 0;
+}
+
+.notification-top-left {
+  top: 0;
+  left: 0;
+}
+
+.notification-bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+.notification-bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.notification-top-center {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.notification-bottom-center {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Notification Card */
+.notification {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  min-width: 300px;
+  max-width: 100%;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s var(--transition-ease);
+}
+
+/* Animation states */
+.notification-enter {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notification-exit {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* Left-side animations */
+.notification-top-left .notification,
+.notification-bottom-left .notification {
+  transform: translateX(-100%);
+}
+
+.notification-top-left .notification-enter,
+.notification-bottom-left .notification-enter {
+  transform: translateX(0);
+}
+
+.notification-top-left .notification-exit,
+.notification-bottom-left .notification-exit {
+  transform: translateX(-100%);
+}
+
+/* Center animations */
+.notification-top-center .notification,
+.notification-bottom-center .notification {
+  transform: translateY(-100%);
+}
+
+.notification-top-center .notification-enter,
+.notification-bottom-center .notification-enter {
+  transform: translateY(0);
+}
+
+.notification-top-center .notification-exit {
+  transform: translateY(-100%);
+}
+
+.notification-bottom-center .notification-exit {
+  transform: translateY(100%);
+}
+
+/* Notification Icon */
+.notification-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: var(--font-size-lg);
+}
+
+/* Notification Content */
+.notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-message {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  word-wrap: break-word;
+}
+
+/* Notification Action Button */
+.notification-action {
+  flex-shrink: 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s var(--transition-ease);
+}
+
+.notification-action:hover {
+  opacity: 0.8;
+}
+
+.notification-action:active {
+  transform: scale(0.95);
+}
+
+/* Notification Dismiss Button */
+.notification-dismiss {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  font-size: var(--font-size-xl);
+  line-height: 1;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s var(--transition-ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-dismiss:hover {
+  background: var(--color-neutral-200);
+  color: var(--color-text-primary);
+}
+
+.notification-dismiss:active {
+  transform: scale(0.9);
+}
+
+/* Type variants */
+
+/* Success */
+.notification-success {
+  border-left: 4px solid var(--color-success);
+}
+
+.notification-success .notification-icon {
+  background: var(--color-success-light, #E8F5E9);
+  color: var(--color-success);
+}
+
+.notification-success .notification-action {
+  color: var(--color-success);
+}
+
+/* Error */
+.notification-error {
+  border-left: 4px solid var(--color-error);
+}
+
+.notification-error .notification-icon {
+  background: var(--color-error-light, #FFEBEE);
+  color: var(--color-error);
+}
+
+.notification-error .notification-action {
+  color: var(--color-error);
+}
+
+/* Warning */
+.notification-warning {
+  border-left: 4px solid var(--color-warning);
+}
+
+.notification-warning .notification-icon {
+  background: var(--color-warning-light, #FFF8E1);
+  color: var(--color-warning);
+}
+
+.notification-warning .notification-action {
+  color: var(--color-warning);
+}
+
+/* Info */
+.notification-info {
+  border-left: 4px solid var(--color-info);
+}
+
+.notification-info .notification-icon {
+  background: var(--color-info-light, #E3F2FD);
+  color: var(--color-info);
+}
+
+.notification-info .notification-action {
+  color: var(--color-info);
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .notification {
+  background: var(--color-neutral-800);
+  border-color: var(--color-neutral-700);
+}
+
+[data-theme="dark"] .notification-dismiss:hover {
+  background: var(--color-neutral-700);
+}
+
+[data-theme="dark"] .notification-success .notification-icon {
+  background: rgba(76, 175, 80, 0.2);
+}
+
+[data-theme="dark"] .notification-error .notification-icon {
+  background: rgba(244, 67, 54, 0.2);
+}
+
+[data-theme="dark"] .notification-warning .notification-icon {
+  background: rgba(255, 193, 7, 0.2);
+}
+
+[data-theme="dark"] .notification-info .notification-icon {
+  background: rgba(33, 150, 243, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .notification-container {
+    max-width: calc(100vw - var(--spacing-lg) * 2);
+    padding: var(--spacing-sm);
+  }
+
+  .notification {
+    min-width: 280px;
+  }
+
+  /* Stack on mobile - move to bottom center */
+  .notification-top-right,
+  .notification-top-left,
+  .notification-top-center {
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 480px) {
+  .notification {
+    min-width: 260px;
+    font-size: var(--font-size-sm);
+  }
+
+  .notification-message {
+    font-size: var(--font-size-sm);
+  }
+}

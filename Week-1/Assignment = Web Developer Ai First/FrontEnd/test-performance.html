@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Test - Lazy Loading</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/destination-card.css">
+  <style>
+    body {
+      padding: 2rem;
+      background: var(--color-bg-secondary);
+    }
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .test-info {
+      background: var(--color-bg-primary);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .test-info h1 {
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+    .test-info ul {
+      list-style: disc;
+      margin-left: 2rem;
+      line-height: 1.8;
+    }
+    .test-info code {
+      background: var(--color-bg-tertiary);
+      padding: 0.2rem 0.4rem;
+      border-radius: var(--radius-sm);
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body data-page="test">
+  <div class="test-container">
+    <div class="test-info">
+      <h1>Performance Optimizations Test Page</h1>
+      <p>This page tests the following performance optimizations:</p>
+      <ul>
+        <li><strong>Lazy Loading:</strong> Images use <code>data-src</code> and <code>loading="lazy"</code> attributes</li>
+        <li><strong>Intersection Observer:</strong> Images load when entering viewport (50px margin)</li>
+        <li><strong>Image Placeholders:</strong> Animated shimmer effect while images load</li>
+        <li><strong>CSS Containment:</strong> Cards use <code>contain: layout style paint</code> for better performance</li>
+        <li><strong>Event Delegation:</strong> Single click listener per card instead of multiple</li>
+        <li><strong>DOM Batching:</strong> All DOM operations use <code>requestAnimationFrame</code></li>
+      </ul>
+      <p><strong>Test Instructions:</strong></p>
+      <ol>
+        <li>Open browser DevTools (F12)</li>
+        <li>Go to Network tab and throttle to "Slow 3G"</li>
+        <li>Scroll down slowly to see lazy loading in action</li>
+        <li>Check that images only load when they enter viewport</li>
+        <li>Observe the shimmer placeholder animation before images load</li>
+      </ol>
+    </div>
+
+    <div class="destinations-grid" id="test-grid">
+      <!-- Test cards will be inserted here -->
+    </div>
+  </div>
+
+  <script type="module">
+    import { DestinationCard } from './js/components/destination-card.js';
+
+    // Create test destination data
+    const testDestinations = [
+      {
+        id: 'test-1',
+        name: 'Bali Paradise Beach',
+        location: 'Bali, Indonesia',
+        description: 'Experience pristine beaches, ancient temples, and vibrant culture in the Island of Gods.',
+        price: 1299,
+        imageUrl: 'https://picsum.photos/800/600?random=1'
+      },
+      {
+        id: 'test-2',
+        name: 'Phuket Tropical Resort',
+        location: 'Phuket, Thailand',
+        description: 'Stunning beaches, crystal clear waters, and world-class resorts await you.',
+        price: 899,
+        imageUrl: 'https://picsum.photos/800/600?random=2'
+      },
+      {
+        id: 'test-3',
+        name: 'Ha Long Bay Cruise',
+        location: 'Ha Long Bay, Vietnam',
+        description: 'Explore majestic limestone karsts and emerald waters on a luxury cruise.',
+        price: 1499,
+        imageUrl: 'https://picsum.photos/800/600?random=3'
+      },
+      {
+        id: 'test-4',
+        name: 'Boracay White Beach',
+        location: 'Boracay, Philippines',
+        description: 'Famous for its white sand beaches and crystal-clear turquoise waters.',
+        price: 999,
+        imageUrl: 'https://picsum.photos/800/600?random=4'
+      },
+      {
+        id: 'test-5',
+        name: 'Langkawi Island Getaway',
+        location: 'Langkawi, Malaysia',
+        description: 'Pristine beaches, lush rainforests, and duty-free shopping paradise.',
+        price: 799,
+        imageUrl: 'https://picsum.photos/800/600?random=5'
+      },
+      {
+        id: 'test-6',
+        name: 'Angkor Wat Temple Complex',
+        location: 'Siem Reap, Cambodia',
+        description: 'Discover the magnificent ancient temples and rich Khmer history.',
+        price: 699,
+        imageUrl: 'https://picsum.photos/800/600?random=6'
+      },
+      {
+        id: 'test-7',
+        name: 'Singapore Marina Bay',
+        location: 'Singapore',
+        description: 'Modern city-state with iconic skyline, gardens, and diverse culture.',
+        price: 1599,
+        imageUrl: 'https://picsum.photos/800/600?random=7'
+      },
+      {
+        id: 'test-8',
+        name: 'Lombok Gili Islands',
+        location: 'Lombok, Indonesia',
+        description: 'Three idyllic islands with pristine beaches and excellent diving.',
+        price: 1099,
+        imageUrl: 'https://picsum.photos/800/600?random=8'
+      }
+    ];
+
+    // Render test cards with performance optimizations
+    const grid = document.getElementById('test-grid');
+    
+    // Batch all card creation
+    requestAnimationFrame(() => {
+      // Create placeholder containers
+      grid.innerHTML = testDestinations
+        .map(dest => `<div data-card-id="${dest.id}"></div>`)
+        .join('');
+      
+      // Batch render all cards in next frame
+      requestAnimationFrame(() => {
+        testDestinations.forEach(destination => {
+          const container = grid.querySelector(`[data-card-id="${destination.id}"]`);
+          if (container) {
+            new DestinationCard(container, destination);
+          }
+        });
+        
+        console.log('✅ Performance test: All cards rendered with optimizations');
+        console.log('📊 Check DevTools Network tab to see lazy loading in action');
+      });
+    });
+  </script>
+</body>
+</html>

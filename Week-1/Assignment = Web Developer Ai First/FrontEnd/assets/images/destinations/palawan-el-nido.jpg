@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#00A9B5"/>
+  <ellipse cx="250" cy="380" rx="100" ry="180" fill="#757575"/>
+  <ellipse cx="450" cy="350" rx="120" ry="200" fill="#616161"/>
+  <ellipse cx="620" cy="370" rx="90" ry="170" fill="#757575"/>
+  <text x="400" y="100" font-family="Arial" font-size="32" fill="white" text-anchor="middle">El Nido</text>
+</svg>

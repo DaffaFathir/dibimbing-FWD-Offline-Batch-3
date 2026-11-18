@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination Card Component Test</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components/destination-card.css">
+  
+  <style>
+    body {
+      padding: 2rem;
+      background: var(--color-bg-secondary);
+    }
+    
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .test-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--color-text-primary);
+      margin-bottom: 2rem;
+    }
+    
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .test-section {
+      margin-bottom: 3rem;
+    }
+    
+    .test-section h2 {
+      font-size: 1.5rem;
+      color: var(--color-text-primary);
+      margin-bottom: 1rem;
+    }
+    
+    .test-console {
+      background: var(--color-neutral-900);
+      color: #00ff00;
+      padding: 1rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.875rem;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-top: 1rem;
+    }
+    
+    .test-console p {
+      margin: 0.25rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1 class="test-title">🏝️ Destination Card Component Test</h1>
+    
+    <div class="test-section">
+      <h2>Visual Test - Card Display</h2>
+      <div class="test-grid">
+        <div id="card-1"></div>
+        <div id="card-2"></div>
+        <div id="card-3"></div>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h2>Console Output</h2>
+      <div class="test-console" id="console-output">
+        <p>Loading tests...</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { DestinationCard } from './js/components/destination-card.js';
+    import { eventBus } from './js/event-bus.js';
+    import { runDestinationCardTests } from './js/components/destination-card.test.js';
+
+    // Mock destination data
+    const mockDestinations = [
+      {
+        id: 'dest-001',
+        name: 'Bali Paradise Beach',
+        location: 'Bali, Indonesia',
+        description: 'Experience pristine beaches, ancient temples, and vibrant culture in the Island of Gods. Perfect for relaxation and adventure.',
+        price: 1299,
+        imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800'
+      },
+      {
+        id: 'dest-002',
+        name: 'Phuket Beach Resort',
+        location: 'Phuket, Thailand',
+        description: 'Discover stunning beaches, crystal-clear waters, and world-class diving spots in this tropical paradise.',
+        price: 999,
+        imageUrl: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800'
+      },
+      {
+        id: 'dest-003',
+        name: 'Ha Long Bay Cruise',
+        location: 'Ha Long Bay, Vietnam',
+        description: 'Sail through emerald waters and limestone karsts on this UNESCO World Heritage site cruise experience.',
+        price: 850,
+        imageUrl: 'https://images.unsplash.com/photo-1528127269322-539801943592?w=800'
+      }
+    ];
+
+    // Render cards
+    mockDestinations.forEach((dest, index) => {
+      const container = document.getElementById(`card-${index + 1}`);
+      new DestinationCard(container, dest);
+    });
+
+    // Listen for card clicks
+    const consoleOutput = document.getElementById('console-output');
+    
+    function logToConsole(message, color = '#00ff00') {
+      const p = document.createElement('p');
+      p.textContent = message;
+      p.style.color = color;
+      consoleOutput.appendChild(p);
+      consoleOutput.scrollTop = consoleOutput.scrollHeight;
+    }
+
+    // Clear initial message
+    consoleOutput.innerHTML = '';
+    logToConsole('=== Event Listener Active ===', '#00A9B5');
+    
+    eventBus.on('card:detail-click', (data) => {
+      logToConsole(`✓ Card clicked: ${data.destinationId}`, '#26A65B');
+      logToConsole(`  Destination: ${data.destination.name}`, '#F7B731');
+    });
+
+    // Run automated tests
+    logToConsole('');
+    logToConsole('=== Running Automated Tests ===', '#00A9B5');
+    
+    // Override console methods to capture test output
+    const originalLog = console.log;
+    const originalAssert = console.assert;
+    
+    console.log = function(...args) {
+      logToConsole(args.join(' '));
+      originalLog.apply(console, args);
+    };
+    
+    console.assert = function(condition, message) {
+      if (!condition) {
+        logToConsole(`✗ ASSERTION FAILED: ${message}`, '#FF6B6B');
+      } else {
+        logToConsole(`✓ ${message}`, '#4FCC7E');
+      }
+      originalAssert.apply(console, arguments);
+    };
+
+    // Run tests
+    setTimeout(() => {
+      runDestinationCardTests();
+      
+      // Restore console
+      console.log = originalLog;
+      console.assert = originalAssert;
+      
+      logToConsole('');
+      logToConsole('=== Test Complete - Try clicking the cards above ===', '#00A9B5');
+    }, 500);
+  </script>
+</body>
+</html>

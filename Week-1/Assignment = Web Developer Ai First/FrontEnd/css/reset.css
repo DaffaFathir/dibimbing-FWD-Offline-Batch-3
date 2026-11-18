@@ -1,0 +1,146 @@
+/* CSS Reset for Browser Consistency */
+
+/* Box sizing reset - ensures padding and border are included in element width */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding from all elements */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove list styles (bullets/numbers) */
+ul, ol {
+  list-style: none;
+}
+
+/* Reset anchor styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Reset button styles to inherit font and remove default styling */
+button {
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Reset form elements to inherit font */
+input, textarea, select, button {
+  font: inherit;
+  color: inherit;
+}
+
+/* Remove default table spacing */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Reset images - responsive by default, block display to remove inline gap */
+img, picture, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Reset HTML5 semantic elements to block display */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* Body defaults - smooth fonts and natural line height */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
+}
+
+/* Remove default fieldset styles */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Reset legend */
+legend {
+  padding: 0;
+  display: table;
+}
+
+/* Reset HTML and body to full height */
+html {
+  height: 100%;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Remove default summary marker */
+summary {
+  display: list-item;
+  cursor: pointer;
+}
+
+/* Reset heading font weights (will be set by theme) */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+/* Reset paragraph margins */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Remove text decoration from abbr */
+abbr[title] {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  cursor: help;
+}
+
+/* Reset hr */
+hr {
+  border: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.2;
+}
+
+/* Improve consistency of default fonts in all browsers */
+code, kbd, samp, pre {
+  font-family: ui-monospace, 'Courier New', monospace;
+  font-size: 1em;
+}
+
+/* Remove default styles from focused elements (will be styled with theme) */
+:focus {
+  outline: none;
+}
+
+/* Ensure visible focus for keyboard navigation (accessibility) */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

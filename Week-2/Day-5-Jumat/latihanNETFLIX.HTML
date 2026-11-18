@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Latihan Netflix Tailwind</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- <link rel="stylesheet" href="latihanNETFLIX.css"> -->
+</head>
+
+<style type="text/tailwindcss">
+    @import "tailwindcss";
+
+
+</style>
+
+<body class="bg-black text-white font-['Helvetica Neue' Helvetica, Arial, sans-serif]">
+
+    <header class="bg-[url(bgimage.jpg)] h-screen">
+        <div class="bg-black/70 h-[inherit]">
+            <div class="flex justify-between py-[25px] px-[10vw]">
+                <b class="text-red-500 text-[36px] cursor-pointer">NETFLIX</b>
+
+                <div class="flex items-center gap-2">
+                    <select class="bg-transparent backdrop-blur-md text-white w-[13vw] h-[5vh] 
+                    rounded-[5px] font-bold focus:outline-none border border-white text-center">
+                        <option>Bahasa Indonesia</option>
+                        <option>English</option>
+                    </select>
+                    <button class="ml-2 bg-red-500 text-white py-1.5 px-3.5 
+                    rounded-[5px] font-bold font-[Aria;, Helvetica, sans-serif] 
+                    cursor-pointer">Masuk</button>
+                </div>
+            </div>
+
+            <div class="mt-[15vh] flex flex-col items-center justify-center 
+            text-center pt-0 px-[200px] pb-[80px] leading-[1.3]">
+
+                <h1 class="text-[3.5rem] font-extrabold">Film dan serial TV<br>tanpa batas, dan lebih<br>banyak lagi</h1>
+                <h3 class="mt-[12px] text-xl font-bold">Harga mulai dari Rp54.000. Batalkan kapan pun.</h3>
+                <p class="mt-[30px] text-base font-medium">Siap menonton? Masukkan email untuk membuat atau memulai lagi<br>keanggotaanmu.</p>
+
+                <div class="mt-[15px] flex gap-[10px]">
+                    <input class="bg-black/50 text-white rounded-[5px] text-semibold border-1 border-grey-900
+                    w-[30vw] py-0 px-[15px] text-base" ; type="email" placeholder="Alamat Email">
+                    <button class="bg-red-500 text-white text-2xl text-medium py-0 px-7 h-[55px]
+                    whitespace-nowrap rounded-[5px] cursor-pointer">Mulai ></button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <br><br><br><br>
+
+    <section>
+        <h3>Sedang Tren Sekarang</h3>
+        <figure>
+            <a href="#"><img src="1.webp" alt="Poster"></a>
+            <a href="#"><img src="2.webp" alt="Poster"></a>
+            <a href="#"><img src="3.webp" alt="Poster"></a>
+            <a href="#"><img src="4.webp" alt="Poster"></a>
+            <a href="#"><img src="5.webp" alt="Poster"></a>
+            <a href="#"><img src="6.webp" alt="Poster"></a>
+            <a href="#"><img src="7.webp" alt="Poster"></a>
+            <a href="#"><img src="8.webp" alt="Poster"></a>
+            <a href="#"><img src="9.webp" alt="Poster"></a>
+            <a href="#"><img src="10.webp" alt="Poster"></a>
+        </figure>
+    </section>
+
+    <br>
+
+    <section>
+        <h3>Alasan Lainnya untuk Bergabung</h3>
+        <div>
+            <h4>Nikmati di TV-mu</h4>
+            <p>Tonton di Smart TV, Playstation, Xbox, Chromecast, Apple TV, pemutar Blu-ray, dan banyak lagi.</p>
+        </div>
+
+        <div>
+            <h4>Download serial untuk menontonnya secara offline</h4>
+            <p>Simpan favoritmu dengan mudah agar selalu ada acara TV dan film yang bisa ditonton.</p>
+        </div>
+
+        <div>
+            <h4>Tonton di mana pun</h4>
+            <p>Streaming film dan serial TV tanpa batas di ponsel, tablet, laptop, dan TV-mu.</p>
+        </div>
+
+        <div>
+            <h4>Buat profil untuk anak</h4>
+            <p>Kirim anak-anak untuk bertualang bersama karakter favorit di dunia yang dibuat khusus untuk mereka —
+                gratis dengan keanggotaanmu.</p>
+        </div>
+    </section>
+
+    <br><br><br>
+
+    <footer>
+        <p>Ada pertanyaan? Hubungi <a href="tel:0123456789" target="_blank">0123456789</a></p>
+        <div>
+            <nav>
+                <a href="#">Tanya Jawab</a>
+                <a href="#">Hubungan Investor</a>
+                <a href="#">Cara Menonton</a>
+                <a href="#">Informasi Perusahaan</a>
+                <a href="#">Hanya di Netflix</a>
+            </nav>
+
+            <nav>
+                <a href="#">Pusat Bantuan</a>
+                <a href="#">Lowongan Kerja</a>
+                <a href="#">Ketentuan Penggunaan</a>
+                <a href="#">Hubungi Kami</a>
+            </nav>
+
+            <nav>
+                <a href="#">Akun</a>
+                <a href="#">Tukar Kartu Hadiah</a>
+                <a href="#">Privasi</a>
+                <a href="#">Uji Kecepatan</a>
+            </nav>
+
+            <nav>
+                <a href="#">Pusat Media</a>
+                <a href="#">Beli Kartu Hadiah</a>
+                <a href="#">Preferensi Cookie</a>
+                <a href="#">Informasi Legal</a>
+            </nav>
+        </div>
+
+        <br><br><br>
+
+        <select>
+            <option>Bahasa Indonesia</option>
+            <option>English</option>
+        </select>
+
+        <p>Netflix Indonesia</p>
+        <p>Halaman ini dilindungi oleh reCAPTCHA Google untuk memastikan kamu bukan bot.</p>
+    </footer>
+
+</body>
+
+</html>

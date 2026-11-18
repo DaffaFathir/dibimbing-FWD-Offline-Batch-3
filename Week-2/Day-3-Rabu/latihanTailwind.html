@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Latihan Tailwind CSS</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="latihanTailwind.css">
+</head>
+
+<style type="text/tailwindcss">
+  @import "tailwindcss";
+
+ @theme{
+    --color-pinkjambu: rgb(250,105,158);
+    --color-birr: #7328c4;
+
+  }
+  .btn-pink {
+    @apply bg-pinkjambu text-birr;
+  }
+
+  /* Group gabisa dipake di @apply */
+  .card-custom {
+    @apply mt-8 ms-8 me-5 p-4 border rounded-md duration-200 cursor-pointer hover:bg-pinkjambu;
+  }  
+
+</style>
+
+<body>
+  <h1 class="text-3xl font-bold underline">
+    Hello world!
+  </h1>
+
+  <p class="text-[3rem] font-black capitalize underline text-blue-300 italic tracking-[50px]">omke gas!</p>
+  <!-- font-size, font-weight, text-transform, text-decoration, color, font-style, letter-spacing -->
+
+  <button class="ml-8 mt-8 px-10 py-3 bg-[rgb(0,251,255)] text-black border-2 border-black rounded-sm cursor-pointer capitalize hover:bg-sky-500 duration-200">pencet aku</button>
+
+  <div class=" mt-8 ml-8 max-w-xs bg-green-300 rounded-2xl shadow-xl p-6 space-y-4">
+    <h3 class="text-xl font-bold capitalize">kelas web dasar</h3>
+    <p class="text-slate-500 capitalize">belajar HTML, CSS, tailwind</p>
+    <button class="bg-sky-600 text-white px-4 py-2 rounded-lg cursor-pointer">Lihat</button>
+  </div>
+
+  <div class="group card-custom">
+    <h3 class="group-hover:text-white">Judul Kartu</h3>
+    <p class="group-hover:text-white">Ikut Berubah nih Wok</p>
+  </div>
+
+  <!-- <span class="inline-block ml-10 mt-10 h-10 w-10 animate-spin rounded-full border-4 border-t-transparent border-gray-400"></span> -->
+
+  <!-- Dipelajari lagi transform dan animation -->
+
+  <!-- <div class="bg-[url(bgimage.jpg)]">
+    <div class="bg-white/30 backdrop-blur-none ..."></div>
+  </div> -->
+
+  <p class="text-red-500 sm:text-green-500 md:text-blue-500 lg:text-yellow-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+    Sunt reprehenderit repudiandae nam sit minus rem exercitationem 
+    dignissimos? Qui quae odit voluptatem modi quibusdam, ullam 
+    voluptatibus quasi eveniet quod, autem pariatur?
+  </p>
+
+  <div class="mt-8 ml-8 h-8 w-20 bg-pinkjambu text-birr">TES</div>
+
+</body>
+
+</html>

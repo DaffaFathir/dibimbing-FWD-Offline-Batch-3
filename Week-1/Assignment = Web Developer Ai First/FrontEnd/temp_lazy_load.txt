@@ -1,0 +1,18 @@
+﻿/**
+ * Set up lazy loading for images using native browser lazy loading
+ */
+setupLazyLoading() {
+  if (!this.imageElement) return;
+  
+  // Mark image as loaded when it finishes loading
+  this.imageElement.addEventListener('load', () => {
+    this.imageElement.classList.add('loaded');
+    this.imageLoaded = true;
+  }, { once: true });
+  
+  // If image is already loaded (cached), mark it immediately
+  if (this.imageElement.complete) {
+    this.imageElement.classList.add('loaded');
+    this.imageLoaded = true;
+  }
+}

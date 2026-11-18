@@ -1,0 +1,764 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+header {
+    background:
+        linear-gradient(to bottom,
+            transparent 40%,
+            #080808 100%),
+        url("Picture/neonhero.jpg") center/cover no-repeat;
+    height: 100vh;
+}
+
+/* BODY */
+body {
+    background-color: #080808;
+}
+
+/* MASKING BG-IMAGE */
+.mask {
+    background: rgba(0, 0, 0, 0.45);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVIGASI */
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 4.5vw;
+    backdrop-filter: blur(15px);
+    background-color: rgba(10, 15, 18, 0.6);
+}
+
+/* NAV KIRI */
+.left-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 45px;
+}
+
+.logo {
+    color: red;
+    font-size: clamp(18px, 2vw, 30px);
+    font-weight: 600;
+    letter-spacing: -3px;
+    transform: scaleY(1.4);
+    text-decoration: none;
+}
+
+.left-nav-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.left-nav-content a {
+    color: white;
+    text-decoration: none;
+    font-size: clamp(10px, 1.2vw, 14px);
+    transition: 0.3s;
+}
+
+/* .left-nav-content button {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+} */
+
+.left-nav-content a:hover {
+    color: red;
+    text-decoration: underline;
+}
+
+/* NAV KANAN */
+.right-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.find-btn {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 38px;
+    width: clamp(140px, 20vw, 230px);
+    padding: 0 10px;
+    border: 1px solid #37140d;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+/* .find-btn i {
+    color: white;
+    font-size: 12px;
+    padding: 0 8px 0 0;
+} */
+
+.find-btn input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 11px;
+    width: 100%;
+}
+
+.subs-btn {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+    height: 38px;
+    width: 115px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* kaca pembesar */
+.right-nav i {
+    color: white;
+    font-size: 15px;
+    padding: 8px;
+}
+
+/* foto profile */
+header img {
+    border-radius: 12px;
+    border: 1px solid #79392c;
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+}
+
+/* HERO CARD */
+.hero-content {
+    width: min(540px, 55vw);
+    margin-top: 35vh;
+    margin-left: 4.5vw;
+    margin-bottom: 10px;
+    background: transparent;
+    /* background-color: green; */
+}
+
+/* rating, genre, dan duration */
+.card-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: #FFDB3C;
+    color: #725F00;
+    width: 55px;
+    padding: 5px;
+    border-radius: 2px;
+}
+
+.border-top {
+    border: 1px solid #33353580;
+    color: white;
+}
+
+.genre {
+    background-color: #5E3F3B4D;
+    width: 110px;
+    padding: 4px;
+}
+
+.duration {
+    background-color: #5E3F3B4D;
+    width: 70px;
+    padding: 4px;
+}
+
+/* MOVIE TITLE */
+.title {
+    color: #E2E2E2;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(30px, 6.2vw, 54px);
+    font-weight: 550;
+    transform: scaleY(1.6);
+    /* letter-spacing: 1px; */
+    margin-top: 30px;
+}
+
+/* deskripsi */
+.desc {
+    margin-top: 25px;
+    color: #E9BCB6;
+    font-size: clamp(10px, 1.5vw, 16px);
+    font-weight: 500;
+    line-height: 1.7;
+}
+
+/* tombol */
+.card-bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.trailer {
+    background-color: red;
+    color: white;
+    border: none;
+    width: 160px;
+    height: 35px;
+    border-radius: 1px;
+    font-size: 9px;
+    font-weight: bolder;
+    cursor: pointer;
+    transform: scaleY(1.4);
+    letter-spacing: 1px;
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #141414B2;
+    border: 1px solid #33353580;
+    color: white;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transform: scaleY(1.4);
+    padding: 10px 38px;
+    cursor: pointer;
+}
+
+/* MAIN SECTION */
+section {
+    color: white;
+    margin: 0px 4vw;
+}
+
+/* trending now */
+.trend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: scaleY(1.6);
+    letter-spacing: 1px;
+    margin-top: 50px;
+    margin-bottom: 60px;
+}
+
+.view {
+    font-size: x-small;
+    color: red;
+}
+
+.cont-trend {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 450px;
+    gap: 15px;
+    width: 100%;
+    overflow-x: auto;
+    /* background-color: green; */
+}
+
+.cont-trend::-webkit-scrollbar {
+    display: none;
+}
+
+.item {
+    width: 220px;
+}
+
+.cont-trend img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.movie-info {
+    margin-top: 15px;
+}
+
+.movie-info h3 {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.movie-info p {
+    color: #E9BCB6;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+/* browse genre */
+.brows-gen {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    transform: scaleY(1.5);
+    letter-spacing: 1px;
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+/* grid layout */
+.browse {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 250px);
+    gap: 15px;
+    /* background-color: green; */
+}
+
+/* genre card */
+.genre-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* gambar */
+.genre-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+/* hover gambar */
+.genre-card:hover img {
+    transform: scale(1.08);
+}
+
+/* icon dan text container */
+.genre-info {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2;
+
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+
+    color: white;
+}
+
+/* icon */
+.genre-info img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+/* text */
+.genre-info span {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* overlay gradient */
+.genre-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.75),
+            transparent 65%);
+    pointer-events: none;
+}
+
+/* posisi grid */
+.genre-action {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+}
+
+.genre-drama {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.genre-scifi {
+    grid-column: 3 / 5;
+    grid-row: 1 / 2;
+}
+
+.genre-horror {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+
+/* new release */
+.release {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: scaleY(1.6);
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    margin-top: 70px;
+}
+
+.btn-duo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-geser {
+    width: 35px;
+    height: 23px;
+    color: white;
+    background-color: transparent;
+    border: 1px solid #79392c;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cont-release {
+    display: grid;
+    grid-template-columns: repeat(10, 150px);
+    grid-template-rows: 350px;
+    gap: 50px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.cont-release::-webkit-scrollbar {
+    display: none;
+}
+
+.aitem {
+    width: 180px;
+}
+
+.cont-release img {
+    background-color: green;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.film-info {
+    margin-top: 15px;
+}
+
+.film-info h3 {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.film-info p {
+    color: #E9BCB6;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* FOOTER */
+footer {
+    background-color: #100D0C;
+    padding: 50px 5vw 20px;
+    color: white;
+}
+
+/* Main Footer */
+.footer-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 30px;
+    padding-bottom: 40px;
+}
+
+/* Footer Columns */
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+}
+
+.cin-icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: flex-start;
+    gap: 15px;
+}
+
+.footer-column h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.footer-column p {
+    color: #A9A09D;
+    font-size: 13px;
+}
+
+/* Subscribe */
+.group-subs {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1px;
+}
+
+.subscribe-column input {
+    width: 200px;
+    padding: 10px;
+    background-color: #211B19;
+    border: none;
+    border-radius: 4px;
+    color: white;
+}
+
+.subscribe-column button {
+    width: 50px;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: small;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #3A302D;
+    padding-top: 20px;
+}
+
+.footer-bottom p {
+    color: #A9A09D;
+    font-size: 12px;
+}
+
+.footer-icons {
+    display: flex;
+    gap: 20px;
+}
+
+/* responsive tablet */
+@media (max-width: 768px) {
+    header {
+        min-height: 100vh;
+        height: auto;
+        background-position: 58% center;
+    }
+
+    .mask {
+        min-height: inherit;
+    }
+
+    header nav {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        grid-template-areas:
+            "brand subscribe profile"
+            "links links links"
+            "search search search";
+        gap: 10px 8px;
+        padding: 10px 4vw;
+    }
+
+    .left-nav {
+        display: contents;
+    }
+
+    .logo {
+        grid-area: brand;
+    }
+
+    .left-nav-content {
+        grid-area: links;
+        justify-content: space-between;
+        gap: clamp(8px, 2.4vw, 16px);
+        min-width: 0;
+    }
+
+    .left-nav-content a,
+    .left-nav-content button {
+        font-size: clamp(9px, 1.4vw, 13px);
+        white-space: nowrap;
+    }
+
+    .right-nav {
+        display: contents;
+    }
+
+    .find-btn {
+        grid-area: search;
+        width: 100%;
+        min-width: 0;
+        height: 34px;
+    }
+
+    .subs-btn {
+        grid-area: subscribe;
+    }
+
+    .right-nav>i {
+        display: none;
+    }
+
+    header img {
+        grid-area: profile;
+    }
+
+    .subs-btn {
+        width: auto;
+        height: 32px;
+        padding: 0 10px;
+        font-size: 9px;
+    }
+
+    header img {
+        width: 32px;
+        height: 32px;
+    }
+
+    header .hero-content {
+        width: auto;
+        margin: auto 4vw 8vh;
+    }
+
+    .desc br {
+        display: none;
+    }
+
+    section {
+        margin: 0 4vw;
+    }
+
+    .cont-trend {
+        grid-template-columns: repeat(10, 220px);
+    }
+
+    .browse {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(3, 180px);
+    }
+
+    .genre-action {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+    }
+
+    .genre-drama {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+    }
+
+    .genre-comedy {
+        grid-column: 1 / 3;
+        grid-row: 3 / 4;
+    }
+
+    .genre-horror {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+    }
+
+    .cont-release {
+        grid-template-columns: repeat(10, 180px);
+        gap: 15px;
+    }
+
+    .footer-main {
+        flex-wrap: wrap;
+    }
+
+    .subscribe-column {
+        flex-basis: 100%;
+    }
+}
+
+/* responsive smarthone */
+@media (max-width: 480px) {
+    header {
+        min-height: 85vh;
+    }
+
+    header nav {
+        padding: 10px 4vw;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .title {
+        font-size: clamp(30px, 10vw, 42px);
+    }
+
+    .desc {
+        font-size: 12px;
+    }
+
+    .trend,
+    .release {
+        margin-bottom: 35px;
+    }
+
+    .browse {
+        grid-template-rows: repeat(3, 140px);
+        gap: 10px;
+    }
+
+    footer {
+        padding: 35px 5vw 20px;
+    }
+
+    .footer-main {
+        gap: 28px 20px;
+    }
+
+    .group-subs {
+        justify-content: flex-start;
+    }
+
+    .subscribe-column input {
+        width: min(200px, calc(100% - 50px));
+    }
+
+    .footer-bottom {
+        gap: 15px;
+        align-items: flex-start;
+    }
+}

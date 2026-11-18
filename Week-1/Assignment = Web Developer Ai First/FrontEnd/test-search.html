@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Component Tests</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components/search.css">
+  <style>
+    body {
+      padding: 2rem;
+      font-family: var(--font-family-primary);
+    }
+    
+    .test-section {
+      margin-bottom: 2rem;
+      padding: 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+    
+    .test-section h2 {
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+    
+    #test-results {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: var(--color-bg-secondary);
+      border-radius: var(--radius-md);
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    
+    .success {
+      color: var(--color-success);
+    }
+    
+    .error {
+      color: var(--color-error);
+    }
+  </style>
+</head>
+<body>
+  <h1>Search Component Tests</h1>
+  
+  <div class="test-section">
+    <h2>Visual Test</h2>
+    <div id="search-visual"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>Test Results</h2>
+    <div id="test-results">Running tests...</div>
+  </div>
+
+  <script type="module">
+    import { Search } from './js/components/search.js';
+    import { eventBus } from './js/event-bus.js';
+
+    // Visual test
+    const visualContainer = document.getElementById('search-visual');
+    const visualSearch = new Search(visualContainer, {
+      placeholder: 'Try typing to test search...'
+    });
+
+    // Log events to console
+    eventBus.on('search:input', (data) => {
+      console.log('search:input event:', data);
+    });
+
+    eventBus.on('search:clear', () => {
+      console.log('search:clear event fired');
+    });
+
+    // Run automated tests
+    const results = [];
+    
+    function log(message, isError = false) {
+      results.push({ message, isError });
+      updateResults();
+    }
+
+    function updateResults() {
+      const resultsDiv = document.getElementById('test-results');
+      resultsDiv.innerHTML = results.map(r => 
+        `<span class="${r.isError ? 'error' : 'success'}">${r.message}</span>`
+      ).join('\n');
+    }
+
+    function wait(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function runTests() {
+      try {
+        log('Running Search Component Tests...\n');
+
+        // Test 1: Component initialization
+        log('Test 1: Component initialization');
+        const container1 = document.createElement('div');
+        document.body.appendChild(container1);
+        const search1 = new Search(container1);
+        
+        const input1 = container1.querySelector('.search-input');
+        const clearButton1 = container1.querySelector('.search-clear');
+        
+        if (!input1) throw new Error('Search input not rendered');
+        if (!clearButton1) throw new Error('Clear button not rendered');
+        
+        search1.destroy();
+        document.body.removeChild(container1);
+        log('✓ Test 1 passed: Component initializes correctly\n');
+
+        // Test 2: getValue and setValue methods
+        log('Test 2: getValue and setValue methods');
+        const container2 = document.createElement('div');
+        document.body.appendChild(container2);
+        const search2 = new Search(container2);
+        
+        if (search2.getValue() !== '') {
+          throw new Error('Initial value should be empty');
+        }
+        
+        search2.setValue('bali');
+        if (search2.getValue() !== 'bali') {
+          throw new Error('getValue should return the set value');
+        }
+        
+        search2.destroy();
+        document.body.removeChild(container2);
+        log('✓ Test 2 passed: getValue and setValue work correctly\n');
+
+        // Test 3: clear method
+        log('Test 3: clear method');
+        const container3 = document.createElement('div');
+        document.body.appendChild(container3);
+        const search3 = new Search(container3);
+        
+        search3.setValue('test');
+        search3.clear();
+        
+        if (search3.getValue() !== '') {
+          throw new Error('Value should be empty after clear');
+        }
+        
+        search3.destroy();
+        document.body.removeChild(container3);
+        log('✓ Test 3 passed: clear method works correctly\n');
+
+        // Test 4: Debounced search:input event
+        log('Test 4: Debounced search:input event');
+        const container4 = document.createElement('div');
+        document.body.appendChild(container4);
+        const search4 = new Search(container4, { debounceDelay: 100 });
+        const input4 = container4.querySelector('.search-input');
+        
+        let eventCount = 0;
+        let lastQuery = null;
+        
+        const unsubscribe4 = eventBus.on('search:input', (data) => {
+          eventCount++;
+          lastQuery = data.query;
+        });
+        
+        // Simulate rapid typing
+        input4.value = 't';
+        input4.dispatchEvent(new Event('input'));
+        await wait(50);
+        
+        input4.value = 'th';
+        input4.dispatchEvent(new Event('input'));
+        await wait(50);
+        
+        input4.value = 'tha';
+        input4.dispatchEvent(new Event('input'));
+        await wait(150);
+        
+        if (eventCount !== 1) {
+          throw new Error(`Expected 1 event, got ${eventCount}`);
+        }
+        
+        if (lastQuery !== 'tha') {
+          throw new Error(`Expected query 'tha', got '${lastQuery}'`);
+        }
+        
+        unsubscribe4();
+        search4.destroy();
+        document.body.removeChild(container4);
+        log('✓ Test 4 passed: Debounced search:input event works correctly\n');
+
+        // Test 5: search:clear event
+        log('Test 5: search:clear event');
+        const container5 = document.createElement('div');
+        document.body.appendChild(container5);
+        const search5 = new Search(container5);
+        const clearButton5 = container5.querySelector('.search-clear');
+        
+        search5.setValue('test');
+        
+        let clearEventFired = false;
+        let inputEventFired = false;
+        
+        const unsubscribeClear5 = eventBus.on('search:clear', () => {
+          clearEventFired = true;
+        });
+        
+        const unsubscribeInput5 = eventBus.on('search:input', (data) => {
+          if (data.query === '') {
+            inputEventFired = true;
+          }
+        });
+        
+        clearButton5.click();
+        await wait(50);
+        
+        if (!clearEventFired) {
+          throw new Error('search:clear event not fired');
+        }
+        
+        if (!inputEventFired) {
+          throw new Error('search:input event with empty query not fired');
+        }
+        
+        unsubscribeClear5();
+        unsubscribeInput5();
+        search5.destroy();
+        document.body.removeChild(container5);
+        log('✓ Test 5 passed: search:clear event works correctly\n');
+
+        // Test 6: Clear button visibility
+        log('Test 6: Clear button visibility');
+        const container6 = document.createElement('div');
+        document.body.appendChild(container6);
+        const search6 = new Search(container6);
+        const clearButton6 = container6.querySelector('.search-clear');
+        
+        if (clearButton6.classList.contains('visible')) {
+          throw new Error('Clear button should be hidden initially');
+        }
+        
+        search6.setValue('test');
+        if (!clearButton6.classList.contains('visible')) {
+          throw new Error('Clear button should be visible when value is set');
+        }
+        
+        search6.clear();
+        if (clearButton6.classList.contains('visible')) {
+          throw new Error('Clear button should be hidden after clear');
+        }
+        
+        search6.destroy();
+        document.body.removeChild(container6);
+        log('✓ Test 6 passed: Clear button visibility works correctly\n');
+
+        // Test 7: focus method
+        log('Test 7: focus method');
+        const container7 = document.createElement('div');
+        document.body.appendChild(container7);
+        const search7 = new Search(container7);
+        const input7 = container7.querySelector('.search-input');
+        
+        search7.focus();
+        
+        if (document.activeElement !== input7) {
+          throw new Error('Input should be focused after focus() call');
+        }
+        
+        search7.destroy();
+        document.body.removeChild(container7);
+        log('✓ Test 7 passed: focus method works correctly\n');
+
+        // Test 8: Custom options
+        log('Test 8: Custom options');
+        const container8 = document.createElement('div');
+        document.body.appendChild(container8);
+        const search8 = new Search(container8, {
+          placeholder: 'Search here...',
+          debounceDelay: 500
+        });
+        
+        const input8 = container8.querySelector('.search-input');
+        
+        if (input8.placeholder !== 'Search here...') {
+          throw new Error('Custom placeholder not applied');
+        }
+        
+        if (search8.options.debounceDelay !== 500) {
+          throw new Error('Custom debounce delay not applied');
+        }
+        
+        search8.destroy();
+        document.body.removeChild(container8);
+        log('✓ Test 8 passed: Custom options work correctly\n');
+
+        log('\n✓✓✓ All Search Component tests passed! ✓✓✓');
+        
+      } catch (error) {
+        log(`\n✗ Test failed: ${error.message}`, true);
+        console.error(error);
+      }
+    }
+
+    // Run tests after a short delay
+    setTimeout(runTests, 500);
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#007F8C"/>
+  <circle cx="200" cy="300" r="40" fill="#FF6B6B"/>
+  <circle cx="350" cy="400" r="35" fill="#FFCD56"/>
+  <circle cx="500" cy="320" r="45" fill="#4FCC7E"/>
+  <circle cx="650" cy="380" r="38" fill="#FF9E9E"/>
+  <circle cx="300" cy="200" r="30" fill="#4DD4DC" opacity="0.5"/>
+  <text x="400" y="80" font-family="Arial" font-size="26" fill="white" text-anchor="middle">Coral Triangle</text>
+</svg>

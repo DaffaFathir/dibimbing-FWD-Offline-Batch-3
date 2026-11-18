@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Design Testing - Southeast Asia Destinations</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .test-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #00A9B5;
+      margin-bottom: 10px;
+    }
+
+    .test-info {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 30px;
+      border-left: 4px solid #00A9B5;
+    }
+
+    .viewport-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .viewport-btn {
+      padding: 10px 20px;
+      border: 2px solid #00A9B5;
+      background: white;
+      color: #00A9B5;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .viewport-btn:hover {
+      background: #00A9B5;
+      color: white;
+    }
+
+    .viewport-btn.active {
+      background: #00A9B5;
+      color: white;
+    }
+
+    .current-viewport {
+      background: #fff3cd;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .iframe-container {
+      border: 3px solid #00A9B5;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+
+    iframe {
+      display: block;
+      border: none;
+      width: 100%;
+      min-height: 800px;
+    }
+
+    .test-results {
+      margin-top: 30px;
+    }
+
+    .test-section {
+      margin-bottom: 20px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    .test-section h3 {
+      color: #333;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status.pass {
+      background: #4caf50;
+      color: white;
+    }
+
+    .status.pending {
+      background: #ff9800;
+      color: white;
+    }
+
+    .test-item {
+      padding: 10px;
+      margin: 8px 0;
+      background: white;
+      border-left: 3px solid #ddd;
+      border-radius: 3px;
+    }
+
+    .test-item.checked {
+      border-left-color: #4caf50;
+    }
+
+    .check-btn {
+      margin-left: 10px;
+      padding: 5px 15px;
+      background: #00A9B5;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .check-btn:hover {
+      background: #007F8C;
+    }
+
+    .instructions {
+      background: #fff9e6;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+      border-left: 4px solid #F7B731;
+    }
+
+    .instructions h4 {
+      color: #E09F1C;
+      margin-bottom: 10px;
+    }
+
+    .instructions ul {
+      margin-left: 20px;
+    }
+
+    .instructions li {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🔍 Responsive Design Testing</h1>
+    <div class="test-info">
+      <strong>Task 12.2:</strong> Verify responsive layout across mobile (320px-767px), tablet (768px-1023px), and laptop (1024px+) screens.
+    </div>
+
+    <div class="viewport-controls">
+      <button class="viewport-btn" data-width="375" data-label="Mobile (375px)">📱 iPhone SE</button>
+      <button class="viewport-btn" data-width="414" data-label="Mobile (414px)">📱 iPhone Pro</button>
+      <button class="viewport-btn" data-width="768" data-label="Tablet (768px)">📱 iPad Mini</button>
+      <button class="viewport-btn" data-width="820" data-label="Tablet (820px)">📱 iPad Air</button>
+      <button class="viewport-btn" data-width="1024" data-label="Laptop (1024px)">💻 iPad Pro</button>
+      <button class="viewport-btn" data-width="1280" data-label="Laptop (1280px)">💻 Laptop</button>
+      <button class="viewport-btn" data-width="1440" data-label="Desktop (1440px)">🖥️ Desktop</button>
+      <button class="viewport-btn active" data-width="100%" data-label="Full Width">↔️ Full Width</button>
+    </div>
+
+    <div class="current-viewport" id="currentViewport">
+      Current Viewport: <span id="viewportLabel">Full Width</span>
+    </div>
+
+    <div class="iframe-container" id="iframeContainer">
+      <iframe src="index.html" id="testFrame"></iframe>
+    </div>
+
+    <div class="test-results">
+      <h2>✅ Testing Checklist</h2>
+
+      <div class="test-section">
+        <h3>
+          📱 Mobile (320px-767px) 
+          <span class="status pending" id="status-mobile">Testing</span>
+        </h3>
+        <div class="test-item" data-test="mobile-1">
+          <input type="checkbox" id="mobile-grid">
+          <label for="mobile-grid">Grid displays 1 column layout</label>
+        </div>
+        <div class="test-item" data-test="mobile-2">
+          <input type="checkbox" id="mobile-header">
+          <label for="mobile-header">Header is readable and navigation accessible</label>
+        </div>
+        <div class="test-item" data-test="mobile-3">
+          <input type="checkbox" id="mobile-text">
+          <label for="mobile-text">Text is readable without horizontal scroll</label>
+        </div>
+        <div class="test-item" data-test="mobile-4">
+          <input type="checkbox" id="mobile-cards">
+          <label for="mobile-cards">Destination cards stack vertically</label>
+        </div>
+        <div class="test-item" data-test="mobile-5">
+          <input type="checkbox" id="mobile-touch">
+          <label for="mobile-touch">Buttons are large enough for touch (44px min)</label>
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h3>
+          📱 Tablet (768px-1023px) 
+          <span class="status pending" id="status-tablet">Testing</span>
+        </h3>
+        <div class="test-item" data-test="tablet-1">
+          <input type="checkbox" id="tablet-grid">
+          <label for="tablet-grid">Grid displays 2 columns layout</label>
+        </div>
+        <div class="test-item" data-test="tablet-2">
+          <input type="checkbox" id="tablet-header">
+          <label for="tablet-header">Full header navigation visible</label>
+        </div>
+        <div class="test-item" data-test="tablet-3">
+          <input type="checkbox" id="tablet-spacing">
+          <label for="tablet-spacing">Spacing and gaps are appropriate</label>
+        </div>
+        <div class="test-item" data-test="tablet-4">
+          <input type="checkbox" id="tablet-hero">
+          <label for="tablet-hero">Hero section scales properly (400px height)</label>
+        </div>
+        <div class="test-item" data-test="tablet-5">
+          <input type="checkbox" id="tablet-footer">
+          <label for="tablet-footer">Footer layout adjusts to 2 columns</label>
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h3>
+          💻 Laptop (1024px+) 
+          <span class="status pending" id="status-laptop">Testing</span>
+        </h3>
+        <div class="test-item" data-test="laptop-1">
+          <input type="checkbox" id="laptop-grid-3">
+          <label for="laptop-grid-3">Grid displays 3 columns at 1024px</label>
+        </div>
+        <div class="test-item" data-test="laptop-2">
+          <input type="checkbox" id="laptop-grid-4">
+          <label for="laptop-grid-4">Grid displays 4 columns at 1280px+</label>
+        </div>
+        <div class="test-item" data-test="laptop-3">
+          <input type="checkbox" id="laptop-hover">
+          <label for="laptop-hover">Card hover effects work (lift and shadow)</label>
+        </div>
+        <div class="test-item" data-test="laptop-4">
+          <input type="checkbox" id="laptop-hero">
+          <label for="laptop-hero">Hero section is full size (500-600px height)</label>
+        </div>
+        <div class="test-item" data-test="laptop-5">
+          <input type="checkbox" id="laptop-footer">
+          <label for="laptop-footer">Footer displays 3-4 columns</label>
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h3>
+          🎨 Additional Tests 
+          <span class="status pending" id="status-additional">Testing</span>
+        </h3>
+        <div class="test-item" data-test="add-1">
+          <input type="checkbox" id="add-theme">
+          <label for="add-theme">Theme toggle works at all sizes</label>
+        </div>
+        <div class="test-item" data-test="add-2">
+          <input type="checkbox" id="add-search">
+          <label for="add-search">Search bar is accessible at all sizes</label>
+        </div>
+        <div class="test-item" data-test="add-3">
+          <input type="checkbox" id="add-images">
+          <label for="add-images">Images load and scale properly</label>
+        </div>
+        <div class="test-item" data-test="add-4">
+          <input type="checkbox" id="add-scroll">
+          <label for="add-scroll">No horizontal scroll at any breakpoint</label>
+        </div>
+        <div class="test-item" data-test="add-5">
+          <input type="checkbox" id="add-contrast">
+          <label for="add-contrast">WCAG AA contrast ratios maintained</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h4>📋 Testing Instructions</h4>
+      <ul>
+        <li>Click viewport buttons above to test different screen sizes</li>
+        <li>Verify grid layout changes: 1 col (mobile) → 2 cols (tablet) → 3-4 cols (laptop)</li>
+        <li>Check text readability and button sizes</li>
+        <li>Test navigation and interactive elements</li>
+        <li>Verify no horizontal scrolling occurs</li>
+        <li>Check all items in the checklist above</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Viewport switching
+    const iframeContainer = document.getElementById('iframeContainer');
+    const iframe = document.getElementById('testFrame');
+    const viewportLabel = document.getElementById('viewportLabel');
+    const buttons = document.querySelectorAll('.viewport-btn');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const width = btn.dataset.width;
+        const label = btn.dataset.label;
+        
+        if (width === '100%') {
+          iframeContainer.style.width = '100%';
+          iframeContainer.style.margin = '0 auto';
+        } else {
+          iframeContainer.style.width = width + 'px';
+          iframeContainer.style.margin = '0 auto';
+        }
+        
+        viewportLabel.textContent = label;
+      });
+    });
+
+    // Checkbox tracking
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', (e) => {
+        const testItem = e.target.closest('.test-item');
+        if (e.target.checked) {
+          testItem.classList.add('checked');
+        } else {
+          testItem.classList.remove('checked');
+        }
+        updateSectionStatus();
+      });
+    });
+
+    function updateSectionStatus() {
+      // Check mobile section
+      const mobileChecks = ['mobile-grid', 'mobile-header', 'mobile-text', 'mobile-cards', 'mobile-touch'];
+      const mobileComplete = mobileChecks.every(id => document.getElementById(id).checked);
+      updateStatus('mobile', mobileComplete);
+
+      // Check tablet section
+      const tabletChecks = ['tablet-grid', 'tablet-header', 'tablet-spacing', 'tablet-hero', 'tablet-footer'];
+      const tabletComplete = tabletChecks.every(id => document.getElementById(id).checked);
+      updateStatus('tablet', tabletComplete);
+
+      // Check laptop section
+      const laptopChecks = ['laptop-grid-3', 'laptop-grid-4', 'laptop-hover', 'laptop-hero', 'laptop-footer'];
+      const laptopComplete = laptopChecks.every(id => document.getElementById(id).checked);
+      updateStatus('laptop', laptopComplete);
+
+      // Check additional section
+      const additionalChecks = ['add-theme', 'add-search', 'add-images', 'add-scroll', 'add-contrast'];
+      const additionalComplete = additionalChecks.every(id => document.getElementById(id).checked);
+      updateStatus('additional', additionalComplete);
+    }
+
+    function updateStatus(section, complete) {
+      const statusEl = document.getElementById(`status-${section}`);
+      if (complete) {
+        statusEl.textContent = 'Complete ✓';
+        statusEl.className = 'status pass';
+      } else {
+        statusEl.textContent = 'Testing';
+        statusEl.className = 'status pending';
+      }
+    }
+
+    // Auto-check viewport on load
+    window.addEventListener('load', () => {
+      console.log('Responsive test harness loaded');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Component Verification</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components/hero.css">
+  
+  <style>
+    body {
+      font-family: var(--font-family-primary);
+      background-color: var(--color-neutral-100);
+    }
+    
+    .test-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    
+    .test-section {
+      margin-bottom: 3rem;
+    }
+    
+    .test-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--color-text-primary);
+    }
+    
+    .controls {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .control-group {
+      margin-bottom: 0.5rem;
+    }
+    
+    .control-group label {
+      display: inline-block;
+      width: 150px;
+      font-weight: 500;
+    }
+    
+    .control-group input {
+      padding: 0.5rem;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      width: 300px;
+    }
+    
+    .control-group button {
+      padding: 0.5rem 1rem;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+    
+    .control-group button:hover {
+      background: var(--color-primary-dark);
+    }
+    
+    .hero-wrapper {
+      margin-bottom: 2rem;
+      border: 2px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .info {
+      padding: 1rem;
+      background: var(--color-bg-secondary);
+      border-radius: 8px;
+      color: var(--color-text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1 style="font-size: 2rem; margin-bottom: 2rem; color: var(--color-primary);">
+      Hero Component Verification
+    </h1>
+    
+    <!-- Test 1: Default Hero -->
+    <div class="test-section">
+      <h2 class="test-title">Test 1: Default Hero (No Options)</h2>
+      <div class="hero-wrapper" id="hero-default"></div>
+      <div class="info">
+        ✓ Should display default title: "Discover Tropical Paradise"<br>
+        ✓ Should display default subtitle: "Explore breathtaking destinations across Southeast Asia"<br>
+        ✓ Should have tropical gradient background
+      </div>
+    </div>
+    
+    <!-- Test 2: Custom Hero -->
+    <div class="test-section">
+      <h2 class="test-title">Test 2: Custom Hero with Background Image</h2>
+      <div class="hero-wrapper" id="hero-custom"></div>
+      <div class="info">
+        ✓ Should display custom title and subtitle<br>
+        ✓ Should have background image (using placeholder from picsum.photos)
+      </div>
+    </div>
+    
+    <!-- Test 3: Dynamic Update -->
+    <div class="test-section">
+      <h2 class="test-title">Test 3: Dynamic Content Update</h2>
+      <div class="controls">
+        <div class="control-group">
+          <label for="update-title">Title:</label>
+          <input type="text" id="update-title" value="Updated Title" placeholder="Enter new title">
+        </div>
+        <div class="control-group">
+          <label for="update-subtitle">Subtitle:</label>
+          <input type="text" id="update-subtitle" value="Updated subtitle text" placeholder="Enter new subtitle">
+        </div>
+        <div class="control-group">
+          <label for="update-bg">Background URL:</label>
+          <input type="text" id="update-bg" value="https://picsum.photos/1200/600?random=2" placeholder="Image URL">
+        </div>
+        <div class="control-group">
+          <label></label>
+          <button id="btn-update">Update Content</button>
+          <button id="btn-reset">Reset to Default</button>
+        </div>
+      </div>
+      <div class="hero-wrapper" id="hero-dynamic"></div>
+      <div class="info">
+        ✓ Content should update when you click "Update Content"<br>
+        ✓ Should reset to default when you click "Reset to Default"
+      </div>
+    </div>
+    
+    <!-- Test 4: XSS Prevention -->
+    <div class="test-section">
+      <h2 class="test-title">Test 4: XSS Prevention</h2>
+      <div class="hero-wrapper" id="hero-xss"></div>
+      <div class="info">
+        ✓ Should display escaped HTML, not execute script<br>
+        ✓ Title should show "&lt;script&gt;..." as text, not run the script
+      </div>
+    </div>
+    
+    <!-- Test 5: Responsive Design -->
+    <div class="test-section">
+      <h2 class="test-title">Test 5: Responsive Design</h2>
+      <div class="info">
+        ✓ Resize your browser window to test responsive behavior<br>
+        ✓ Mobile (&lt;768px): Smaller text, reduced padding<br>
+        ✓ Tablet (768px-1023px): Medium-sized text and hero height<br>
+        ✓ Laptop (1024px+): Larger text and hero height
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Hero } from './js/components/hero.js';
+
+    // Test 1: Default Hero
+    const hero1 = new Hero(document.getElementById('hero-default'));
+    console.log('✓ Test 1: Default Hero created');
+
+    // Test 2: Custom Hero with Background
+    const hero2 = new Hero(document.getElementById('hero-custom'), {
+      title: 'Visit Beautiful Bali',
+      subtitle: 'Experience pristine beaches, ancient temples, and vibrant culture',
+      backgroundImage: 'https://picsum.photos/1200/600?random=1'
+    });
+    console.log('✓ Test 2: Custom Hero created with background image');
+
+    // Test 3: Dynamic Hero
+    const hero3 = new Hero(document.getElementById('hero-dynamic'), {
+      title: 'Dynamic Hero',
+      subtitle: 'This content can be updated dynamically'
+    });
+    console.log('✓ Test 3: Dynamic Hero created');
+
+    // Update button handler
+    document.getElementById('btn-update').addEventListener('click', () => {
+      const title = document.getElementById('update-title').value;
+      const subtitle = document.getElementById('update-subtitle').value;
+      const bg = document.getElementById('update-bg').value;
+      
+      hero3.updateContent({
+        title: title,
+        subtitle: subtitle,
+        backgroundImage: bg
+      });
+      console.log('✓ Hero content updated');
+    });
+
+    // Reset button handler
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      hero3.updateContent({
+        title: 'Dynamic Hero',
+        subtitle: 'This content can be updated dynamically',
+        backgroundImage: ''
+      });
+      document.getElementById('update-title').value = 'Updated Title';
+      document.getElementById('update-subtitle').value = 'Updated subtitle text';
+      document.getElementById('update-bg').value = 'https://picsum.photos/1200/600?random=2';
+      console.log('✓ Hero content reset to default');
+    });
+
+    // Test 4: XSS Prevention
+    const hero4 = new Hero(document.getElementById('hero-xss'), {
+      title: '<script>alert("XSS Attack!")</script>Malicious Title',
+      subtitle: '<img src=x onerror="alert(\'XSS\')">Malicious Subtitle'
+    });
+    console.log('✓ Test 4: XSS Prevention test - HTML should be escaped');
+
+    // Verify XSS was prevented
+    setTimeout(() => {
+      const xssTitle = document.querySelector('#hero-xss .hero-title');
+      if (xssTitle && xssTitle.textContent.includes('<script>')) {
+        console.log('✅ XSS Prevention working: Script tags escaped');
+      } else {
+        console.error('❌ XSS Prevention may have failed');
+      }
+    }, 100);
+
+    console.log('\n=== All Hero Component Tests Initialized ===');
+    console.log('Check the page visually and the console for results');
+  </script>
+</body>
+</html>

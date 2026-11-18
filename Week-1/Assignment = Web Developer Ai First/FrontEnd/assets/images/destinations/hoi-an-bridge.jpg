@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F7B731"/>
+  <rect x="200" y="250" width="400" height="200" fill="#8B4513"/>
+  <polygon points="200,250 400,150 600,250" fill="#FF6B6B"/>
+  <rect x="250" y="450" width="300" height="80" fill="#00A9B5"/>
+  <text x="400" y="100" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Japanese Bridge</text>
+</svg>

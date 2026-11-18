@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout Test - Southeast Asia Destinations</title>
+  
+  <!-- CSS Files in correct order -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-lg mb-md">Layout System Test</h1>
+    
+    <!-- Container Test -->
+    <section class="section">
+      <h2 class="mb-md">Container System</h2>
+      <div class="container border rounded p-md bg-secondary">
+        Default Container (max-width: 1280px)
+      </div>
+    </section>
+
+    <!-- Grid System Test -->
+    <section class="section">
+      <h2 class="mb-md">Grid System</h2>
+      <div class="grid grid-cols-1 grid-gap-md">
+        <div class="border rounded p-md bg-tertiary">Grid Item 1</div>
+        <div class="border rounded p-md bg-tertiary">Grid Item 2</div>
+        <div class="border rounded p-md bg-tertiary">Grid Item 3</div>
+        <div class="border rounded p-md bg-tertiary">Grid Item 4</div>
+      </div>
+    </section>
+
+    <!-- Flexbox Test -->
+    <section class="section">
+      <h2 class="mb-md">Flexbox Utilities</h2>
+      <div class="flex justify-between items-center gap-md border rounded p-md">
+        <div class="p-md bg-secondary rounded">Flex Item 1</div>
+        <div class="p-md bg-secondary rounded">Flex Item 2</div>
+        <div class="p-md bg-secondary rounded">Flex Item 3</div>
+      </div>
+    </section>
+
+    <!-- Buttons Test -->
+    <section class="section">
+      <h2 class="mb-md">Button Styles</h2>
+      <div class="flex gap-md flex-wrap">
+        <button class="btn btn-primary">Primary Button</button>
+        <button class="btn btn-secondary">Secondary Button</button>
+        <button class="btn btn-primary btn-lg">Large Button</button>
+        <button class="btn btn-secondary btn-sm">Small Button</button>
+        <button class="btn btn-primary" disabled>Disabled Button</button>
+      </div>
+    </section>
+
+    <!-- Spacing Utilities Test -->
+    <section class="section">
+      <h2 class="mb-md">Spacing Utilities</h2>
+      <div class="border rounded p-lg">
+        <div class="p-md bg-secondary rounded mb-md">Padding Medium, Margin Bottom Medium</div>
+        <div class="p-sm bg-tertiary rounded mt-lg">Padding Small, Margin Top Large</div>
+      </div>
+    </section>
+
+    <!-- Typography Test -->
+    <section class="section mb-2xl">
+      <h2 class="mb-md">Typography</h2>
+      <h1>Heading 1</h1>
+      <h2>Heading 2</h2>
+      <h3>Heading 3</h3>
+      <h4>Heading 4</h4>
+      <p class="text-base">This is a paragraph with base font size.</p>
+      <p class="text-sm text-secondary">This is smaller text with secondary color.</p>
+      <p class="font-bold text-lg">This is bold and larger text.</p>
+      <p class="truncate" style="max-width: 200px;">This is a very long text that will be truncated with an ellipsis when it exceeds the container width</p>
+    </section>
+
+    <!-- Utility Classes Test -->
+    <section class="section">
+      <h2 class="mb-md">Utility Classes</h2>
+      <div class="grid grid-cols-2 grid-gap-md">
+        <div class="shadow-sm border rounded p-md">Shadow Small</div>
+        <div class="shadow-md border rounded p-md">Shadow Medium</div>
+        <div class="shadow-lg border rounded p-md">Shadow Large</div>
+        <div class="shadow-xl border rounded p-md">Shadow Extra Large</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

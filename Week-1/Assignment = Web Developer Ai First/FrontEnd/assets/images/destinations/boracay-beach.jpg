@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#4DD4DC"/>
+  <rect y="400" width="800" height="200" fill="#FAFAFA"/>
+  <circle cx="650" cy="120" r="50" fill="#FFD700"/>
+  <polygon points="100,300 150,400 50,400" fill="#26A65B"/>
+  <text x="400" y="300" font-family="Arial" font-size="32" fill="white" text-anchor="middle">Boracay White Beach</text>
+</svg>

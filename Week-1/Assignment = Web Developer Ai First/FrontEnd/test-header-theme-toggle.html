@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header Theme Toggle Integration Test</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  <link rel="stylesheet" href="css/components/theme-toggle.css">
+  
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    
+    .test-section {
+      padding: var(--spacing-4);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .test-info {
+      background-color: var(--color-bg-secondary);
+      padding: var(--spacing-3);
+      border-radius: var(--border-radius-md);
+      margin-top: var(--spacing-4);
+    }
+    
+    .test-info h2 {
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-2);
+    }
+    
+    .test-info ul {
+      margin-left: var(--spacing-3);
+      line-height: 1.8;
+    }
+    
+    .test-content {
+      margin-top: var(--spacing-4);
+      padding: var(--spacing-4);
+      background-color: var(--color-bg-tertiary);
+      border-radius: var(--border-radius-md);
+      min-height: 400px;
+    }
+    
+    .test-content h3 {
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-2);
+    }
+    
+    .test-content p {
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header component will be mounted here -->
+  <div id="header-container"></div>
+  
+  <div class="test-section">
+    <div class="test-info">
+      <h2>Header Theme Toggle Integration Test</h2>
+      <p><strong>Task 6.5:</strong> Update Header component with Theme Toggle integration</p>
+      
+      <h3>What to Test:</h3>
+      <ul>
+        <li>✅ Theme toggle button appears in the header</li>
+        <li>✅ Theme toggle is positioned before the user profile area</li>
+        <li>✅ Clicking the theme toggle switches between light and dark modes</li>
+        <li>✅ Theme preference persists on page reload</li>
+        <li>✅ Keyboard navigation works (Tab to focus, Space/Enter to toggle)</li>
+        <li>✅ ARIA attributes update correctly (aria-checked)</li>
+        <li>✅ Visual indicators work (sun/moon icons, thumb position)</li>
+        <li>✅ The entire page theme updates when toggling</li>
+      </ul>
+      
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Open browser DevTools (F12) to check for any errors</li>
+        <li>Click the theme toggle button in the header</li>
+        <li>Verify the theme switches between light and dark</li>
+        <li>Reload the page - theme preference should persist</li>
+        <li>Test keyboard navigation (Tab to button, Space to toggle)</li>
+        <li>Inspect the button element to verify ARIA attributes</li>
+      </ol>
+    </div>
+    
+    <div class="test-content">
+      <h3>Sample Content for Theme Testing</h3>
+      <p>
+        This content area helps visualize the theme changes. When you click the theme toggle 
+        in the header, this entire page should switch between light and dark modes.
+      </p>
+      <p>
+        The background colors, text colors, and all visual elements should update smoothly 
+        to reflect the selected theme.
+      </p>
+      <p>
+        <strong>Note:</strong> The theme preference is saved to localStorage, so your selection 
+        will persist even after closing and reopening the page.
+      </p>
+    </div>
+  </div>
+  
+  <script type="module">
+    import { Header } from './js/components/header.js';
+    import { themeManager } from './js/services/theme-manager.js';
+    
+    // Initialize theme manager
+    themeManager.initialize();
+    
+    // Get header container
+    const headerContainer = document.getElementById('header-container');
+    
+    // Create Header component with list variant
+    const header = new Header(headerContainer, {
+      variant: 'list',
+      showSearch: false,
+      user: {
+        name: 'Test User',
+        profilePicture: '/assets/images/icons/default-avatar.png'
+      }
+    });
+    
+    console.log('Header component initialized with Theme Toggle');
+    console.log('Current theme:', themeManager.getTheme());
+    
+    // Log theme changes for debugging
+    themeManager.onChange((theme) => {
+      console.log('Theme changed to:', theme);
+    });
+  </script>
+</body>
+</html>

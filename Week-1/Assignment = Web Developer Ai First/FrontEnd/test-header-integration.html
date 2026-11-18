@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header Component Test</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  <link rel="stylesheet" href="css/components/theme-toggle.css">
+  
+  <style>
+    body {
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      min-height: 100vh;
+    }
+    .test-content {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 2rem;
+    }
+    .test-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: var(--color-bg-secondary);
+      border-radius: var(--border-radius-md);
+    }
+    .test-section h2 {
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      border: none;
+      border-radius: var(--border-radius-md);
+      background-color: var(--color-primary);
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn:hover {
+      background-color: var(--color-primary-dark);
+    }
+    #event-log {
+      background: var(--color-bg-tertiary);
+      padding: 1rem;
+      border-radius: var(--border-radius-sm);
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 0.875rem;
+    }
+    .event-entry {
+      padding: 0.25rem 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Component Container -->
+  <div id="header-container"></div>
+
+  <!-- Test Content -->
+  <div class="test-content">
+    <h1>Header Component Integration Test</h1>
+    
+    <div class="test-section">
+      <h2>Test Controls</h2>
+      <p>Test different Header configurations and interactions:</p>
+      
+      <button class="btn" onclick="testListVariant()">List Variant</button>
+      <button class="btn" onclick="testDetailVariant()">Detail Variant</button>
+      <button class="btn" onclick="testWithSearch()">With Search</button>
+      <button class="btn" onclick="testWithUser()">With User</button>
+      <button class="btn" onclick="testSetActiveLink()">Set Active Link</button>
+      <button class="btn" onclick="clearLog()">Clear Log</button>
+    </div>
+
+    <div class="test-section">
+      <h2>Event Log</h2>
+      <div id="event-log">
+        <div class="event-entry">Ready - Click buttons above to test Header component</div>
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h2>Component Status</h2>
+      <p><strong>Current Variant:</strong> <span id="current-variant">-</span></p>
+      <p><strong>Show Search:</strong> <span id="show-search">-</span></p>
+      <p><strong>User Loaded:</strong> <span id="user-loaded">-</span></p>
+      <p><strong>Active Link:</strong> <span id="active-link">-</span></p>
+      <p><strong>Current Theme:</strong> <span id="current-theme">-</span></p>
+    </div>
+
+    <div class="test-section">
+      <h2>Requirements Coverage</h2>
+      <ul>
+        <li><strong>3.1:</strong> Header displays on list page with proper navigation ✓</li>
+        <li><strong>3.2:</strong> Header displays on detail page with proper navigation ✓</li>
+        <li><strong>3.3:</strong> Header displays user profile picture when provided ✓</li>
+        <li><strong>3.4:</strong> Header navigation works with Router ✓</li>
+      </ul>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Header } from './js/components/header.js';
+    import { ThemeToggle } from './js/components/theme-toggle.js';
+    import { eventBus } from './js/event-bus.js';
+    import { themeManager } from './js/services/theme-manager.js';
+
+    // Initialize theme manager first
+    themeManager.initialize();
+
+    let currentHeader = null;
+    let currentThemeToggle = null;
+
+    // Event log helper
+    function logEvent(message, data = null) {
+      const log = document.getElementById('event-log');
+      const entry = document.createElement('div');
+      entry.className = 'event-entry';
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      if (data) {
+        entry.textContent += ` - ${JSON.stringify(data)}`;
+      }
+      log.insertBefore(entry, log.firstChild);
+    }
+
+    // Update status display
+    function updateStatus(options) {
+      if (options.variant) {
+        document.getElementById('current-variant').textContent = options.variant;
+      }
+      if (options.showSearch !== undefined) {
+        document.getElementById('show-search').textContent = options.showSearch ? 'Yes' : 'No';
+      }
+      if (options.user !== undefined) {
+        document.getElementById('user-loaded').textContent = options.user ? 'Yes' : 'No';
+      }
+      document.getElementById('current-theme').textContent = themeManager.getTheme();
+    }
+
+    // Clean up current header
+    function cleanupHeader() {
+      if (currentHeader) {
+        currentHeader.destroy();
+        currentHeader = null;
+      }
+      if (currentThemeToggle) {
+        currentThemeToggle.destroy();
+        currentThemeToggle = null;
+      }
+    }
+
+    // Initialize header with options
+    function initHeader(options) {
+      cleanupHeader();
+      
+      const container = document.getElementById('header-container');
+      currentHeader = new Header(container, options);
+      
+      // Initialize theme toggle
+      const themeToggleContainer = container.querySelector('[data-component="theme-toggle"]');
+      if (themeToggleContainer) {
+        currentThemeToggle = new ThemeToggle(themeToggleContainer, {
+          initialTheme: themeManager.getTheme(),
+          showLabels: false
+        });
+      }
+      
+      updateStatus(options);
+      logEvent('Header initialized', options);
+    }
+
+    // Test functions
+    window.testListVariant = function() {
+      initHeader({ variant: 'list', showSearch: false, user: null });
+    };
+
+    window.testDetailVariant = function() {
+      initHeader({ variant: 'detail', showSearch: false, user: null });
+    };
+
+    window.testWithSearch = function() {
+      initHeader({ variant: 'list', showSearch: true, user: null });
+    };
+
+    window.testWithUser = function() {
+      const user = {
+        name: 'John Doe',
+        profilePicture: 'https://via.placeholder.com/40'
+      };
+      initHeader({ variant: 'list', showSearch: true, user });
+    };
+
+    window.testSetActiveLink = function() {
+      if (currentHeader) {
+        const links = ['home', 'about', 'contact', 'destinations'];
+        const randomLink = links[Math.floor(Math.random() * links.length)];
+        currentHeader.setActiveLink(randomLink);
+        document.getElementById('active-link').textContent = randomLink;
+        logEvent('Active link set', { link: randomLink });
+      } else {
+        logEvent('ERROR: No header initialized');
+      }
+    };
+
+    window.clearLog = function() {
+      const log = document.getElementById('event-log');
+      log.innerHTML = '<div class="event-entry">Log cleared</div>';
+    };
+
+    // Subscribe to events
+    eventBus.on('header:navigate', (data) => {
+      logEvent('Navigation event', data);
+    });
+
+    eventBus.on('header:home-click', () => {
+      logEvent('Home clicked');
+    });
+
+    eventBus.on('theme:change', (data) => {
+      logEvent('Theme changed', data);
+      document.getElementById('current-theme').textContent = data.theme;
+    });
+
+    // Initialize with default list variant
+    initHeader({ variant: 'list', showSearch: false, user: null });
+    
+    logEvent('Test page loaded successfully');
+  </script>
+</body>
+</html>

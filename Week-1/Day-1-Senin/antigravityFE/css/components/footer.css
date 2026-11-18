@@ -1,0 +1,90 @@
+/* Footer Component Styles */
+
+.site-footer {
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  padding: var(--spacing-6) 0 var(--spacing-4);
+  margin-top: auto;
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--spacing-6);
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-3);
+}
+
+.footer-about h3,
+.footer-links h3,
+.footer-social h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
+}
+
+.footer-about p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  max-width: 440px;
+}
+
+.footer-links ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.footer-links a {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--color-primary);
+}
+
+.social-links {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.social-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  font-size: 1.1rem;
+  transition: all var(--transition-fast);
+}
+
+.social-icon-link:hover {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.footer-bottom {
+  max-width: 1240px;
+  margin: var(--spacing-5) auto 0;
+  padding: var(--spacing-3) var(--spacing-3) 0;
+  border-top: 1px solid var(--color-border-light);
+  text-align: center;
+}
+
+.footer-copyright {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+

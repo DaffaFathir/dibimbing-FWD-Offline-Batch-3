@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Theme Manager</title>
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --text-primary: #212121;
+      --color-primary: #00A9B5;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1A1A1A;
+      --text-primary: #F5F5F5;
+      --color-primary: #1BC5D3;
+    }
+
+    * {
+      transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: var(--color-primary);
+      margin-bottom: 30px;
+    }
+
+    .section {
+      background: var(--bg-primary);
+      border: 2px solid var(--text-primary);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .button {
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 10px 10px 0;
+      transition: opacity 0.2s;
+    }
+
+    .button:hover {
+      opacity: 0.8;
+    }
+
+    .info {
+      background: rgba(0, 169, 181, 0.1);
+      padding: 15px;
+      border-radius: 6px;
+      margin: 10px 0;
+    }
+
+    .theme-toggle-demo {
+      width: 60px;
+      height: 30px;
+      background: transparent;
+      border: 2px solid var(--text-primary);
+      border-radius: 30px;
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+      margin: 10px 0;
+    }
+
+    .theme-toggle-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+      background: var(--bg-primary);
+      border-radius: 50%;
+      transition: transform 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    [data-theme="dark"] .theme-toggle-thumb {
+      transform: translateX(30px);
+    }
+
+    code {
+      background: rgba(0, 0, 0, 0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    #status {
+      padding: 10px;
+      border-radius: 6px;
+      margin: 10px 0;
+    }
+
+    .success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 Theme Manager Verification</h1>
+
+  <div class="section">
+    <h2>Current Theme Info</h2>
+    <div class="info">
+      <p><strong>Current Theme:</strong> <span id="current-theme">-</span></p>
+      <p><strong>Has User Preference:</strong> <span id="has-preference">-</span></p>
+      <p><strong>System Preference:</strong> <span id="system-preference">-</span></p>
+      <p><strong>localStorage Available:</strong> <span id="storage-available">-</span></p>
+      <p><strong>Meta Theme Color:</strong> <span id="meta-color">-</span></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Manual Theme Controls</h2>
+    <button class="button" id="btn-toggle">Toggle Theme</button>
+    <button class="button" id="btn-set-light">Set Light</button>
+    <button class="button" id="btn-set-dark">Set Dark</button>
+    <button class="button" id="btn-clear-storage">Clear Storage</button>
+    
+    <div style="margin-top: 20px;">
+      <p>Visual Toggle Button (demo):</p>
+      <button class="theme-toggle-demo" data-action="toggle-theme" aria-checked="false">
+        <span class="theme-toggle-thumb">
+          <span class="theme-icon">🌙</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Event Subscription Test</h2>
+    <div id="status"></div>
+    <p id="event-log">No theme changes yet...</p>
+    <button class="button" id="btn-clear-log">Clear Log</button>
+  </div>
+
+  <div class="section">
+    <h2>Automatic Tests</h2>
+    <div id="test-results"></div>
+    <button class="button" id="btn-run-tests">Run Automated Tests</button>
+  </div>
+
+  <script type="module">
+    import { ThemeManager } from './js/services/theme-manager.js';
+
+    // Initialize Theme Manager
+    const themeManager = new ThemeManager({
+      defaultTheme: 'light',
+      storageKey: 'user-theme-preference',
+      respectSystemPreference: true
+    });
+
+    themeManager.initialize();
+
+    // Update info display
+    function updateInfo() {
+      document.getElementById('current-theme').textContent = themeManager.getTheme();
+      document.getElementById('has-preference').textContent = themeManager.hasUserPreference() ? 'Yes' : 'No';
+      document.getElementById('system-preference').textContent = themeManager.getSystemPreference();
+      document.getElementById('storage-available').textContent = themeManager.storageAvailable ? 'Yes' : 'No';
+      
+      const metaTag = document.querySelector('meta[name="theme-color"]');
+      document.getElementById('meta-color').textContent = metaTag ? metaTag.getAttribute('content') : 'Not set';
+      
+      // Update demo toggle button
+      const demoToggle = document.querySelector('.theme-toggle-demo');
+      const icon = demoToggle.querySelector('.theme-icon');
+      if (themeManager.getTheme() === 'dark') {
+        demoToggle.setAttribute('aria-checked', 'true');
+        icon.textContent = '🌙';
+      } else {
+        demoToggle.setAttribute('aria-checked', 'false');
+        icon.textContent = '☀️';
+      }
+    }
+
+    // Event log
+    const eventLog = [];
+    const maxLogEntries = 10;
+
+    function addLogEntry(message) {
+      const timestamp = new Date().toLocaleTimeString();
+      eventLog.unshift(`[${timestamp}] ${message}`);
+      if (eventLog.length > maxLogEntries) {
+        eventLog.pop();
+      }
+      document.getElementById('event-log').innerHTML = eventLog.join('<br>');
+    }
+
+    // Subscribe to theme changes
+    const unsubscribe = themeManager.onChange((theme) => {
+      addLogEntry(`Theme changed to: ${theme}`);
+      updateInfo();
+    });
+
+    // Button handlers
+    document.getElementById('btn-toggle').addEventListener('click', () => {
+      const newTheme = themeManager.toggleTheme();
+      addLogEntry(`Toggled theme to: ${newTheme}`);
+    });
+
+    document.getElementById('btn-set-light').addEventListener('click', () => {
+      themeManager.setTheme('light');
+      addLogEntry('Set theme to: light');
+    });
+
+    document.getElementById('btn-set-dark').addEventListener('click', () => {
+      themeManager.setTheme('dark');
+      addLogEntry('Set theme to: dark');
+    });
+
+    document.getElementById('btn-clear-storage').addEventListener('click', () => {
+      if (themeManager.storageAvailable) {
+        localStorage.removeItem('user-theme-preference');
+        addLogEntry('Cleared localStorage preference');
+        updateInfo();
+      }
+    });
+
+    document.getElementById('btn-clear-log').addEventListener('click', () => {
+      eventLog.length = 0;
+      document.getElementById('event-log').textContent = 'Log cleared...';
+    });
+
+    // Demo toggle button
+    document.querySelector('.theme-toggle-demo').addEventListener('click', () => {
+      themeManager.toggleTheme();
+    });
+
+    // Automated tests
+    document.getElementById('btn-run-tests').addEventListener('click', () => {
+      const results = [];
+      let passed = 0;
+      let failed = 0;
+
+      function test(name, fn) {
+        try {
+          fn();
+          results.push(`✅ ${name}`);
+          passed++;
+        } catch (error) {
+          results.push(`❌ ${name}: ${error.message}`);
+          failed++;
+        }
+      }
+
+      // Run tests
+      test('Theme Manager initializes', () => {
+        if (!themeManager) throw new Error('ThemeManager not initialized');
+      });
+
+      test('getTheme returns valid theme', () => {
+        const theme = themeManager.getTheme();
+        if (theme !== 'light' && theme !== 'dark') {
+          throw new Error(`Invalid theme: ${theme}`);
+        }
+      });
+
+      test('setTheme changes theme', () => {
+        const original = themeManager.getTheme();
+        const newTheme = original === 'light' ? 'dark' : 'light';
+        themeManager.setTheme(newTheme);
+        if (themeManager.getTheme() !== newTheme) {
+          throw new Error('Theme did not change');
+        }
+        themeManager.setTheme(original); // Restore
+      });
+
+      test('toggleTheme switches theme', () => {
+        const before = themeManager.getTheme();
+        const after = themeManager.toggleTheme();
+        if (before === after) {
+          throw new Error('Toggle did not switch theme');
+        }
+        themeManager.toggleTheme(); // Restore
+      });
+
+      test('DOM reflects theme', () => {
+        themeManager.setTheme('dark');
+        const attr = document.documentElement.getAttribute('data-theme');
+        if (attr !== 'dark') {
+          throw new Error('DOM attribute not set correctly');
+        }
+      });
+
+      test('Meta theme-color exists', () => {
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (!meta) {
+          throw new Error('Meta tag not created');
+        }
+      });
+
+      test('onChange callback works', () => {
+        let called = false;
+        const unsub = themeManager.onChange(() => { called = true; });
+        themeManager.toggleTheme();
+        unsub();
+        if (!called) {
+          throw new Error('Callback not called');
+        }
+        themeManager.toggleTheme(); // Restore
+      });
+
+      // Display results
+      const resultDiv = document.getElementById('test-results');
+      resultDiv.innerHTML = `
+        <div class="${failed === 0 ? 'success' : 'error'}" style="padding: 15px; border-radius: 6px; margin: 10px 0;">
+          <strong>Test Results:</strong><br>
+          Passed: ${passed}<br>
+          Failed: ${failed}<br>
+          Total: ${passed + failed}
+        </div>
+        <div style="margin-top: 10px;">
+          ${results.join('<br>')}
+        </div>
+      `;
+
+      addLogEntry(`Tests completed: ${passed} passed, ${failed} failed`);
+    });
+
+    // Initial info display
+    updateInfo();
+    addLogEntry('Theme Manager initialized');
+
+    // Show initial status
+    const statusDiv = document.getElementById('status');
+    statusDiv.className = 'success';
+    statusDiv.innerHTML = '<strong>✅ Theme Manager loaded successfully!</strong><br>Try toggling the theme using the buttons above.';
+  </script>
+</body>
+</html>

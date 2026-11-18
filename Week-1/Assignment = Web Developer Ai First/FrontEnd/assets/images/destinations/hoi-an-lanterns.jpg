@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#424242"/>
+  <circle cx="200" cy="200" r="50" fill="#FF6B6B" opacity="0.8"/>
+  <circle cx="400" cy="180" r="60" fill="#FFCD56" opacity="0.8"/>
+  <circle cx="600" cy="200" r="55" fill="#FF9E9E" opacity="0.8"/>
+  <circle cx="300" cy="350" r="50" fill="#F7B731" opacity="0.8"/>
+  <circle cx="500" cy="330" r="55" fill="#FF6B6B" opacity="0.8"/>
+  <text x="400" y="520" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Hoi An Lanterns</text>
+</svg>

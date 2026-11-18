@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#87CEEB"/>
+  <rect y="150" width="800" height="100" fill="#4FCC7E"/>
+  <rect y="250" width="800" height="100" fill="#26A65B"/>
+  <rect y="350" width="800" height="100" fill="#1A8047"/>
+  <rect y="450" width="800" height="150" fill="#228B22"/>
+  <text x="400" y="100" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Rice Terraces</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#26A65B"/>
+  <rect x="250" y="200" width="300" height="350" fill="#9E9E9E"/>
+  <circle cx="350" cy="300" r="40" fill="#616161"/>
+  <circle cx="450" cy="300" r="40" fill="#616161"/>
+  <ellipse cx="400" cy="380" rx="50" ry="30" fill="#616161"/>
+  <text x="400" y="80" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Bayon Temple Faces</text>
+</svg>

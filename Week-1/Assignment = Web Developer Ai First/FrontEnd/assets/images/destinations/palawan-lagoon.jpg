@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#4DD4DC"/>
+  <ellipse cx="200" cy="250" rx="120" ry="200" fill="#26A65B"/>
+  <ellipse cx="600" cy="280" rx="140" ry="220" fill="#1A8047"/>
+  <ellipse cx="400" cy="450" rx="250" ry="100" fill="#00A9B5"/>
+  <text x="400" y="100" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Hidden Lagoon</text>
+</svg>

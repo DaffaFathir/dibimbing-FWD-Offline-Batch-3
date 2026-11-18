@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Component Demo</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components/search.css">
+  <style>
+    body {
+      padding: 2rem;
+      background-color: var(--color-bg-secondary);
+    }
+    
+    .demo-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: var(--color-bg-primary);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+    
+    h1 {
+      margin-bottom: 2rem;
+      color: var(--color-primary);
+    }
+    
+    .demo-section {
+      margin-bottom: 2rem;
+    }
+    
+    .demo-section h2 {
+      font-size: var(--font-size-lg);
+      margin-bottom: 1rem;
+      color: var(--color-text-primary);
+    }
+    
+    .event-log {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: var(--color-bg-secondary);
+      border-radius: var(--radius-md);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .event-log h3 {
+      margin-bottom: 0.5rem;
+      color: var(--color-text-secondary);
+    }
+    
+    .event-item {
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      background-color: var(--color-bg-primary);
+      border-left: 3px solid var(--color-primary);
+      font-family: monospace;
+      font-size: var(--font-size-sm);
+    }
+    
+    .event-time {
+      color: var(--color-text-tertiary);
+      margin-right: 0.5rem;
+    }
+    
+    .event-type {
+      color: var(--color-primary);
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+    
+    .event-data {
+      color: var(--color-text-secondary);
+    }
+    
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-md);
+      background-color: var(--color-primary);
+      color: white;
+      cursor: pointer;
+      font-size: var(--font-size-sm);
+      transition: background-color var(--transition-base);
+    }
+    
+    .btn:hover {
+      background-color: var(--color-primary-dark);
+    }
+    
+    .btn-secondary {
+      background-color: var(--color-neutral-500);
+    }
+    
+    .btn-secondary:hover {
+      background-color: var(--color-neutral-600);
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1>🔍 Search Component Demo</h1>
+    
+    <div class="demo-section">
+      <h2>Interactive Search</h2>
+      <div id="search-container"></div>
+      
+      <div class="controls">
+        <button class="btn" id="btn-set-value">Set Value to "Bali"</button>
+        <button class="btn" id="btn-clear">Clear Search</button>
+        <button class="btn" id="btn-focus">Focus Input</button>
+        <button class="btn btn-secondary" id="btn-get-value">Get Current Value</button>
+      </div>
+    </div>
+    
+    <div class="event-log">
+      <h3>Event Log (Debounced 300ms)</h3>
+      <div id="event-log-items"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Search } from './js/components/search.js';
+    import { eventBus } from './js/event-bus.js';
+
+    // Initialize search component
+    const container = document.getElementById('search-container');
+    const search = new Search(container, {
+      placeholder: 'Search destinations (e.g., Bali, Thailand, Vietnam)...',
+      debounceDelay: 300
+    });
+
+    // Event log
+    const eventLogItems = document.getElementById('event-log-items');
+    
+    function logEvent(type, data) {
+      const time = new Date().toLocaleTimeString();
+      const eventItem = document.createElement('div');
+      eventItem.className = 'event-item';
+      eventItem.innerHTML = `
+        <span class="event-time">${time}</span>
+        <span class="event-type">${type}</span>
+        <span class="event-data">${JSON.stringify(data)}</span>
+      `;
+      eventLogItems.insertBefore(eventItem, eventLogItems.firstChild);
+      
+      // Keep only last 20 events
+      while (eventLogItems.children.length > 20) {
+        eventLogItems.removeChild(eventLogItems.lastChild);
+      }
+    }
+
+    // Subscribe to events
+    eventBus.on('search:input', (data) => {
+      logEvent('search:input', data);
+      console.log('Search query:', data.query);
+    });
+
+    eventBus.on('search:clear', () => {
+      logEvent('search:clear', {});
+      console.log('Search cleared');
+    });
+
+    // Button controls
+    document.getElementById('btn-set-value').addEventListener('click', () => {
+      search.setValue('Bali');
+      logEvent('setValue()', { value: 'Bali' });
+    });
+
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      search.clear();
+      logEvent('clear()', {});
+    });
+
+    document.getElementById('btn-focus').addEventListener('click', () => {
+      search.focus();
+      logEvent('focus()', {});
+    });
+
+    document.getElementById('btn-get-value').addEventListener('click', () => {
+      const value = search.getValue();
+      alert(`Current value: "${value}"`);
+      logEvent('getValue()', { value });
+    });
+
+    // Initial log message
+    logEvent('component', { status: 'initialized' });
+  </script>
+</body>
+</html>

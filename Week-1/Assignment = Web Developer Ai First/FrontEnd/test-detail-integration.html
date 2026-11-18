@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Test - Detail Page Integration">
+  <meta name="theme-color" content="#FFFFFF">
+  <title>Test - Destination Detail Integration</title>
+  
+  <!-- Theme initialization script -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('user-theme-preference');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+      if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', theme === 'dark' ? '#1A1A1A' : '#FFFFFF');
+      }
+    })();
+  </script>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/components/header.css">
+  <link rel="stylesheet" href="css/components/footer.css">
+  <link rel="stylesheet" href="css/components/destination-detail.css">
+  <link rel="stylesheet" href="css/components/theme-toggle.css">
+</head>
+<body data-page="detail">
+  <div style="padding: 20px; background: var(--color-bg-secondary);">
+    <h1>Destination Detail Page Integration Test</h1>
+    <p>Testing the DestinationDetailApp controller with different scenarios</p>
+    
+    <div style="margin: 20px 0;">
+      <h3>Test Scenarios:</h3>
+      <ul>
+        <li><a href="?id=dest-001">Valid ID: dest-001 (Bali Paradise Beach)</a></li>
+        <li><a href="?id=dest-002">Valid ID: dest-002</a></li>
+        <li><a href="?id=invalid-id">Invalid ID: invalid-id (should show error)</a></li>
+        <li><a href="?">No ID parameter (should show error)</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Header Component -->
+  <div data-component="header"></div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div data-component="destination-detail"></div>
+    </div>
+  </main>
+
+  <!-- Footer Component -->
+  <div data-component="footer"></div>
+
+  <!-- Test Script -->
+  <script type="module">
+    import { Header } from './js/components/header.js';
+    import { Footer } from './js/components/footer.js';
+    import { ThemeToggle } from './js/components/theme-toggle.js';
+    import { DestinationDetail } from './js/components/destination-detail.js';
+    import { eventBus } from './js/event-bus.js';
+    import { router } from './js/router.js';
+    import { mockAPI } from './js/services/mock-api.js';
+
+    /**
+     * DestinationDetailApp - copied from main.js for testing
+     */
+    class DestinationDetailApp {
+      constructor() {
+        this.destinationDetailContainer = null;
+        this.destinationDetail = null;
+        this.destinationId = null;
+        
+        this.handleOrderClick = this.handleOrderClick.bind(this);
+        this.handleBackClick = this.handleBackClick.bind(this);
+      }
+
+      async initialize() {
+        console.log('DestinationDetailApp: Initializing...');
+        
+        this.destinationDetailContainer = document.querySelector('[data-component="destination-detail"]');
+        if (!this.destinationDetailContainer) {
+          console.error('DestinationDetailApp: destination-detail container not found');
+          return;
+        }
+
+        this.destinationId = router.getQueryParam('id');
+        console.log('DestinationDetailApp: Destination ID from URL:', this.destinationId);
+
+        if (!this.destinationId) {
+          console.error('DestinationDetailApp: Missing destination ID in URL');
+          this.renderErrorState('Invalid destination: Missing ID parameter');
+          return;
+        }
+
+        eventBus.on('detail:order-click', this.handleOrderClick);
+        eventBus.on('detail:back-click', this.handleBackClick);
+
+        await this.loadDestination();
+      }
+
+      async loadDestination() {
+        try {
+          this.renderLoadingState();
+          console.log(`DestinationDetailApp: Fetching destination ${this.destinationId} from API...`);
+
+          const destination = await mockAPI.getDestinationById(this.destinationId);
+          console.log('DestinationDetailApp: Loaded destination:', destination.name);
+
+          this.renderDestinationDetail(destination);
+
+        } catch (error) {
+          console.error('DestinationDetailApp: Failed to load destination:', error);
+          
+          if (error.message.includes('not found')) {
+            this.renderErrorState('Destination not found. The destination you are looking for does not exist.');
+          } else {
+            this.renderErrorState(error.message || 'Failed to load destination details');
+          }
+        }
+      }
+
+      renderLoadingState() {
+        if (!this.destinationDetailContainer) return;
+
+        this.destinationDetailContainer.innerHTML = `
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading destination details...</p>
+          </div>
+        `;
+      }
+
+      renderErrorState(errorMessage) {
+        if (!this.destinationDetailContainer) return;
+
+        this.destinationDetailContainer.innerHTML = `
+          <div class="error-state">
+            <div class="error-icon">⚠️</div>
+            <h2>Oops! Something went wrong</h2>
+            <p>${this.escapeHtml(errorMessage)}</p>
+            <div class="error-actions">
+              <button class="btn btn-primary" onclick="window.location.href='index.html'">
+                Back to Destinations
+              </button>
+              <button class="btn btn-secondary" onclick="location.reload()">
+                Try Again
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      renderDestinationDetail(destination) {
+        if (!this.destinationDetailContainer) return;
+
+        if (this.destinationDetail) {
+          this.destinationDetail.destroy();
+        }
+
+        this.destinationDetail = new DestinationDetail(this.destinationDetailContainer, destination);
+        console.log('DestinationDetailApp: Rendered destination detail component');
+      }
+
+      handleOrderClick(data) {
+        const { destinationId, destination } = data;
+        console.log('DestinationDetailApp: Order ticket clicked for:', destinationId);
+        console.log('Order Ticket Now - Placeholder Action');
+        console.log('Destination:', destination.name);
+        console.log('Price:', destination.price);
+        
+        alert(`Order Ticket Now\n\nDestination: ${destination.name}\nPrice: $${destination.price} per person\n\nThis feature will be implemented in a future update.`);
+      }
+
+      handleBackClick() {
+        console.log('DestinationDetailApp: Back to list clicked');
+        router.navigateToList();
+      }
+
+      escapeHtml(str) {
+        if (typeof str !== 'string') {
+          return String(str);
+        }
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      destroy() {
+        if (this.destinationDetail) {
+          this.destinationDetail.destroy();
+          this.destinationDetail = null;
+        }
+
+        if (this.destinationDetailContainer) {
+          this.destinationDetailContainer.innerHTML = '';
+        }
+
+        console.log('DestinationDetailApp: Destroyed');
+      }
+    }
+
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('Test page initialized');
+      
+      // Initialize Header
+      const headerContainer = document.querySelector('[data-component="header"]');
+      if (headerContainer) {
+        const header = new Header(headerContainer, {
+          variant: 'detail',
+          showSearch: false,
+          user: null
+        });
+        
+        const themeToggleContainer = headerContainer.querySelector('[data-component="theme-toggle"]');
+        if (themeToggleContainer) {
+          const savedTheme = localStorage.getItem('user-theme-preference');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+          
+          const themeToggle = new ThemeToggle(themeToggleContainer, {
+            initialTheme: initialTheme,
+            showLabels: false
+          });
+        }
+      }
+      
+      // Initialize Footer
+      const footerContainer = document.querySelector('[data-component="footer"]');
+      if (footerContainer) {
+        const footer = new Footer(footerContainer, {
+          socialLinks: [
+            { platform: 'facebook', url: 'https://facebook.com/seasia' },
+            { platform: 'instagram', url: 'https://instagram.com/seasia' },
+            { platform: 'twitter', url: 'https://twitter.com/seasia' }
+          ],
+          year: new Date().getFullYear()
+        });
+      }
+      
+      // Initialize detail page app
+      const app = new DestinationDetailApp();
+      await app.initialize();
+    });
+  </script>
+</body>
+</html>

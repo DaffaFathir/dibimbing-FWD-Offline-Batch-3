@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Test Verification</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .test-container {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #00A9B5;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 15px;
+      border-left: 4px solid #00A9B5;
+      background: #f9f9f9;
+    }
+    .test-item {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .pass {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .fail {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .warning {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+    .info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+    button {
+      background: #00A9B5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #007F8C;
+    }
+    .manual-test {
+      background: #e9ecef;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 4px;
+    }
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: 2px solid #00A9B5;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🧪 Manual Testing Verification Dashboard</h1>
+    <p>This dashboard helps verify all functionality for task 12.1</p>
+    
+    <div class="test-section">
+      <h2>🚀 Quick Actions</h2>
+      <button onclick="runAutomatedTests()">Run Automated Tests</button>
+      <button onclick="openListPage()">Open List Page</button>
+      <button onclick="openDetailPage()">Open Detail Page</button>
+      <button onclick="testInvalidId()">Test Invalid ID</button>
+    </div>
+
+    <div class="test-section">
+      <h2>📋 Test Checklist</h2>
+      <div id="test-results"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>🖥️ Live Preview</h2>
+      <iframe id="preview-frame" src="http://localhost:8000/index.html"></iframe>
+    </div>
+
+    <div class="test-section">
+      <h2>📝 Manual Test Instructions</h2>
+      
+      <div class="manual-test">
+        <h3>1. Navigation Flow Test</h3>
+        <ol>
+          <li>Verify destination cards are visible</li>
+          <li>Click a "View Details" button</li>
+          <li>Verify navigation to detail page with correct ID</li>
+          <li>Click "Back to List" button</li>
+          <li>Verify return to list page</li>
+        </ol>
+        <button onclick="testNavigation()">Mark Complete</button>
+      </div>
+
+      <div class="manual-test">
+        <h3>2. Search Functionality Test</h3>
+        <ol>
+          <li>Enter search term (e.g., "Bali")</li>
+          <li>Verify cards filter correctly</li>
+          <li>Clear search and verify all cards return</li>
+        </ol>
+        <button onclick="testSearch()">Mark Complete</button>
+      </div>
+
+      <div class="manual-test">
+        <h3>3. Detail Page Buttons Test</h3>
+        <ol>
+          <li>Navigate to a detail page</li>
+          <li>Click "Order Ticket Now"</li>
+          <li>Open console and verify log message</li>
+          <li>Click "Back to List"</li>
+        </ol>
+        <button onclick="testDetailButtons()">Mark Complete</button>
+      </div>
+
+      <div class="manual-test">
+        <h3>4. Error Handling Test</h3>
+        <ol>
+          <li>Navigate to detail.html?id=invalid-id-999</li>
+          <li>Verify error message is displayed</li>
+          <li>Verify "Back to List" button still works</li>
+        </ol>
+        <button onclick="testErrorHandling()">Mark Complete</button>
+      </div>
+
+      <div class="manual-test">
+        <h3>5. Loading States Test</h3>
+        <ol>
+          <li>Refresh the page</li>
+          <li>Observe loading indicator appears briefly</li>
+          <li>Verify content loads successfully</li>
+        </ol>
+        <button onclick="testLoadingStates()">Mark Complete</button>
+      </div>
+
+      <div class="manual-test">
+        <h3>6. Theme Toggle Test</h3>
+        <ol>
+          <li>Click the theme toggle button in header</li>
+          <li>Verify theme switches between light and dark</li>
+          <li>Refresh page and verify theme persists</li>
+        </ol>
+        <button onclick="testTheme()">Mark Complete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const completedTests = new Set();
+
+    function runAutomatedTests() {
+      const frame = document.getElementById('preview-frame');
+      const frameWindow = frame.contentWindow;
+      
+      const results = document.getElementById('test-results');
+      results.innerHTML = '<p>Running automated tests in iframe...</p>';
+      
+      setTimeout(() => {
+        const tests = [];
+        
+        // Test 1: Components exist
+        const header = frameWindow.document.querySelector('[data-component="header"]');
+        tests.push({ name: 'Header component rendered', pass: !!header });
+        
+        const hero = frameWindow.document.querySelector('[data-component="hero"]');
+        tests.push({ name: 'Hero component rendered', pass: !!hero });
+        
+        const footer = frameWindow.document.querySelector('[data-component="footer"]');
+        tests.push({ name: 'Footer component rendered', pass: !!footer });
+        
+        // Test 2: Cards rendered
+        const cards = frameWindow.document.querySelectorAll('.destination-card');
+        tests.push({ name: 'Destination cards rendered', pass: cards.length > 0, info: `${cards.length} cards found` });
+        
+        if (cards.length > 0) {
+          const firstCard = cards[0];
+          tests.push({ name: 'Card has Detail button', pass: !!firstCard.querySelector('[data-action="detail"]') });
+          tests.push({ name: 'Card has destination ID', pass: !!firstCard.getAttribute('data-destination-id') });
+          tests.push({ name: 'Card has image', pass: !!firstCard.querySelector('img') });
+          tests.push({ name: 'Card has price', pass: !!firstCard.querySelector('.card-price') });
+        }
+        
+        // Test 3: Search exists
+        const searchInput = frameWindow.document.querySelector('.search-input');
+        tests.push({ name: 'Search input exists', pass: !!searchInput });
+        
+        // Test 4: Theme toggle
+        const themeToggle = frameWindow.document.querySelector('[data-action="toggle-theme"]');
+        tests.push({ name: 'Theme toggle button exists', pass: !!themeToggle });
+        
+        // Render results
+        let html = '';
+        let passed = 0;
+        let failed = 0;
+        
+        tests.forEach(test => {
+          if (test.pass) {
+            passed++;
+            html += `<div class="test-item pass">✅ ${test.name}${test.info ? ` (${test.info})` : ''}</div>`;
+          } else {
+            failed++;
+            html += `<div class="test-item fail">❌ ${test.name}</div>`;
+          }
+        });
+        
+        html = `<div class="test-item info"><strong>Results: ${passed} passed, ${failed} failed</strong></div>` + html;
+        results.innerHTML = html;
+      }, 2000);
+    }
+
+    function openListPage() {
+      window.open('http://localhost:8000/index.html', '_blank');
+    }
+
+    function openDetailPage() {
+      // Open first available destination
+      const frame = document.getElementById('preview-frame');
+      const cards = frame.contentWindow.document.querySelectorAll('.destination-card');
+      if (cards.length > 0) {
+        const destId = cards[0].getAttribute('data-destination-id');
+        window.open(`http://localhost:8000/detail.html?id=${destId}`, '_blank');
+      }
+    }
+
+    function testInvalidId() {
+      window.open('http://localhost:8000/detail.html?id=invalid-id-999', '_blank');
+    }
+
+    function markTestComplete(testName) {
+      completedTests.add(testName);
+      alert(`✅ ${testName} marked as complete!`);
+      updateProgress();
+    }
+
+    function testNavigation() {
+      markTestComplete('Navigation Flow');
+    }
+
+    function testSearch() {
+      markTestComplete('Search Functionality');
+    }
+
+    function testDetailButtons() {
+      markTestComplete('Detail Page Buttons');
+    }
+
+    function testErrorHandling() {
+      markTestComplete('Error Handling');
+    }
+
+    function testLoadingStates() {
+      markTestComplete('Loading States');
+    }
+
+    function testTheme() {
+      markTestComplete('Theme Toggle');
+    }
+
+    function updateProgress() {
+      const total = 6;
+      const completed = completedTests.size;
+      console.log(`Progress: ${completed}/${total} manual tests completed`);
+    }
+
+    // Auto-run tests on load
+    window.addEventListener('load', () => {
+      setTimeout(runAutomatedTests, 3000);
+    });
+  </script>
+</body>
+</html>

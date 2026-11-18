@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#26A65B"/>
+  <rect x="300" y="200" width="200" height="300" fill="#8B4513"/>
+  <polygon points="300,200 400,100 500,200" fill="#FF6B6B"/>
+  <text x="400" y="550" font-family="Arial" font-size="24" fill="white" text-anchor="middle">Bali Temple</text>
+</svg>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header Component Tests</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+    }
+    #test-output {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+    .success {
+      color: #26A65B;
+    }
+    .error {
+      color: #E84545;
+    }
+  </style>
+</head>
+<body>
+  <h1>Header Component Tests</h1>
+  <div id="test-output">Running tests...</div>
+
+  <script type="module">
+    // Capture console output
+    const output = [];
+    const originalLog = console.log;
+    const originalAssert = console.assert;
+    
+    console.log = (...args) => {
+      const message = args.join(' ');
+      output.push(message);
+      originalLog(...args);
+    };
+    
+    console.assert = (condition, ...args) => {
+      if (!condition) {
+        const message = 'Assertion failed: ' + args.join(' ');
+        output.push('✗ ' + message);
+        originalLog('✗ ' + message);
+      }
+      originalAssert(condition, ...args);
+    };
+    
+    // Import and run tests
+    import('./js/components/header.test.js').then(() => {
+      setTimeout(() => {
+        const testOutputEl = document.getElementById('test-output');
+        testOutputEl.innerHTML = output.join('\n');
+        console.log = originalLog;
+        console.assert = originalAssert;
+      }, 500);
+    }).catch(error => {
+      const testOutputEl = document.getElementById('test-output');
+      testOutputEl.innerHTML = `<span class="error">Error loading tests: ${error.message}\n${error.stack}</span>`;
+      console.error('Error loading tests:', error);
+    });
+  </script>
+</body>
+</html>

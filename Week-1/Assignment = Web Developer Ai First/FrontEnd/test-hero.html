@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Component Test</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components/hero.css">
+  <style>
+    body {
+      padding: 2rem;
+      background-color: var(--color-bg-secondary);
+    }
+    
+    .test-section {
+      margin-bottom: 3rem;
+    }
+    
+    .test-section h2 {
+      font-size: var(--font-size-2xl);
+      margin-bottom: 1rem;
+      color: var(--color-text-primary);
+    }
+    
+    .test-container {
+      margin-bottom: 2rem;
+      border: 2px solid var(--color-border);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
+    
+    .test-info {
+      background-color: var(--color-bg-primary);
+      padding: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    
+    .test-info h3 {
+      margin: 0 0 0.5rem 0;
+      color: var(--color-text-primary);
+    }
+    
+    .test-info p {
+      margin: 0;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+    
+    .controls {
+      background-color: var(--color-bg-primary);
+      padding: 1rem;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--border-radius-md);
+      cursor: pointer;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      transition: all var(--transition-fast);
+    }
+    
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--color-primary-dark);
+    }
+    
+    .btn-secondary {
+      background-color: var(--color-secondary);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: var(--color-secondary-dark);
+    }
+    
+    .test-results {
+      background-color: var(--color-bg-primary);
+      padding: 2rem;
+      margin-top: 2rem;
+      border-radius: var(--border-radius-md);
+      border: 2px solid var(--color-border);
+    }
+    
+    .test-results h2 {
+      margin-top: 0;
+    }
+    
+    .test-results pre {
+      background-color: var(--color-bg-tertiary);
+      padding: 1rem;
+      border-radius: var(--border-radius-sm);
+      overflow-x: auto;
+      font-size: var(--font-size-sm);
+    }
+  </style>
+</head>
+<body>
+  <h1 style="margin-bottom: 2rem;">Hero Component Testing</h1>
+
+  <!-- Test 1: Default Hero -->
+  <div class="test-section">
+    <h2>Test 1: Default Hero</h2>
+    <div class="test-container">
+      <div class="test-info">
+        <h3>Default Configuration</h3>
+        <p>Hero with default title, subtitle, and gradient background</p>
+      </div>
+      <div id="hero-default"></div>
+    </div>
+  </div>
+
+  <!-- Test 2: Custom Content -->
+  <div class="test-section">
+    <h2>Test 2: Custom Content</h2>
+    <div class="test-container">
+      <div class="test-info">
+        <h3>Custom Title and Subtitle</h3>
+        <p>Hero with custom text content</p>
+      </div>
+      <div id="hero-custom"></div>
+    </div>
+  </div>
+
+  <!-- Test 3: With Background Image -->
+  <div class="test-section">
+    <h2>Test 3: With Background Image</h2>
+    <div class="test-container">
+      <div class="test-info">
+        <h3>Background Image</h3>
+        <p>Hero with a background image (placeholder via placeholder.com)</p>
+      </div>
+      <div id="hero-image"></div>
+    </div>
+  </div>
+
+  <!-- Test 4: Dynamic Updates -->
+  <div class="test-section">
+    <h2>Test 4: Dynamic Content Updates</h2>
+    <div class="test-container">
+      <div class="test-info">
+        <h3>Dynamic Update Test</h3>
+        <p>Use the buttons below to update the hero content dynamically</p>
+      </div>
+      <div id="hero-dynamic"></div>
+      <div class="controls">
+        <button class="btn btn-primary" id="btn-update-title">Update Title</button>
+        <button class="btn btn-primary" id="btn-update-subtitle">Update Subtitle</button>
+        <button class="btn btn-secondary" id="btn-update-all">Update All</button>
+        <button class="btn btn-secondary" id="btn-reset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unit Test Results -->
+  <div class="test-results">
+    <h2>Unit Test Results</h2>
+    <p>Check the browser console for detailed test output.</p>
+    <pre id="test-output">Running tests...</pre>
+  </div>
+
+  <script type="module">
+    import { Hero } from './js/components/hero.js';
+    import { tests } from './js/components/hero.test.js';
+
+    // Test 1: Default Hero
+    const hero1 = new Hero(document.getElementById('hero-default'));
+
+    // Test 2: Custom Content
+    const hero2 = new Hero(document.getElementById('hero-custom'), {
+      title: 'Welcome to Southeast Asia',
+      subtitle: 'Discover hidden gems and popular destinations in the heart of tropical paradise'
+    });
+
+    // Test 3: With Background Image
+    const hero3 = new Hero(document.getElementById('hero-image'), {
+      title: 'Experience Island Life',
+      subtitle: 'Crystal clear waters and pristine beaches await you',
+      backgroundImage: 'https://via.placeholder.com/1920x600/00A9B5/FFFFFF?text=Tropical+Beach'
+    });
+
+    // Test 4: Dynamic Updates
+    const hero4 = new Hero(document.getElementById('hero-dynamic'), {
+      title: 'Dynamic Hero',
+      subtitle: 'This content can be updated dynamically'
+    });
+
+    // Dynamic update controls
+    document.getElementById('btn-update-title').addEventListener('click', () => {
+      hero4.updateContent({
+        title: 'Title Updated at ' + new Date().toLocaleTimeString()
+      });
+    });
+
+    document.getElementById('btn-update-subtitle').addEventListener('click', () => {
+      hero4.updateContent({
+        subtitle: 'Subtitle updated at ' + new Date().toLocaleTimeString()
+      });
+    });
+
+    document.getElementById('btn-update-all').addEventListener('click', () => {
+      hero4.updateContent({
+        title: 'All Content Updated!',
+        subtitle: 'Both title and subtitle were updated at ' + new Date().toLocaleTimeString(),
+        backgroundImage: 'https://via.placeholder.com/1920x600/26A65B/FFFFFF?text=Updated+Background'
+      });
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      hero4.updateContent({
+        title: 'Dynamic Hero',
+        subtitle: 'This content can be updated dynamically',
+        backgroundImage: ''
+      });
+    });
+
+    // Display test results
+    setTimeout(() => {
+      const output = document.getElementById('test-output');
+      output.textContent = `Test Summary:
+Total: ${tests.passed + tests.failed}
+Passed: ${tests.passed}
+Failed: ${tests.failed}
+
+${tests.failed > 0 ? 'Failed tests:\n' + tests.results.filter(r => r.status === 'FAIL').map(r => `  - ${r.name}: ${r.error}`).join('\n') : 'All tests passed! ✓'}`;
+    }, 100);
+  </script>
+</body>
+</html>

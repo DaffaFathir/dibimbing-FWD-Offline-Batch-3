@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utility Modules Tests - Southeast Asia Tourist Website</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    
+    .test-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .test-section h2 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .test-section p {
+      color: #666;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    #console-output {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1.5rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      max-height: 500px;
+      overflow-y: auto;
+      margin-top: 1rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .console-line {
+      margin-bottom: 0.25rem;
+    }
+    
+    .console-error {
+      color: #f48771;
+    }
+    
+    .console-success {
+      color: #89d185;
+    }
+    
+    .console-info {
+      color: #6ea9db;
+    }
+    
+    .console-header {
+      color: #dcdcaa;
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+    
+    .status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+    
+    .status.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .status.running {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .status.passed {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .status.failed {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .clear-btn {
+      background: #6b7280;
+      float: right;
+    }
+    
+    .clear-btn:hover {
+      background: #4b5563;
+    }
+    
+    .run-all-btn {
+      background: #10b981;
+    }
+    
+    .run-all-btn:hover {
+      background: #059669;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Utility Modules Test Suite</h1>
+    <p class="subtitle">Southeast Asia Tourist Destination Website - Task 4.3</p>
+    
+    <div class="test-section">
+      <h2>DOM Helpers <span id="dom-status" class="status pending">Pending</span></h2>
+      <p>Tests for DOM manipulation utilities including element creation, event handling, debounce, and throttle functions.</p>
+      <button onclick="runDOMTests()">Run DOM Helper Tests</button>
+    </div>
+    
+    <div class="test-section">
+      <h2>Validators <span id="validator-status" class="status pending">Pending</span></h2>
+      <p>Tests for input validation functions including URL, email, price, and schema validation.</p>
+      <button onclick="runValidatorTests()">Run Validator Tests</button>
+    </div>
+    
+    <div class="test-section">
+      <h2>Formatters <span id="formatter-status" class="status pending">Pending</span></h2>
+      <p>Tests for data formatting utilities including price formatting, text truncation, and date formatting.</p>
+      <button onclick="runFormatterTests()">Run Formatter Tests</button>
+    </div>
+    
+    <div class="test-section">
+      <button class="run-all-btn" onclick="runAllTests()">▶ Run All Tests</button>
+      <button class="clear-btn" onclick="clearConsole()">Clear Console</button>
+    </div>
+    
+    <div id="console-output"></div>
+  </div>
+
+  <script type="module">
+    import { runDOMHelperTests } from './js/utils/dom-helpers.test.js';
+    import { runValidatorTests } from './js/utils/validators.test.js';
+    import { runFormatterTests } from './js/utils/formatters.test.js';
+    
+    // Store original console methods
+    const originalLog = console.log;
+    const originalError = console.error;
+    const originalAssert = console.assert;
+    
+    const output = document.getElementById('console-output');
+    let testResults = {
+      dom: { passed: 0, failed: 0 },
+      validator: { passed: 0, failed: 0 },
+      formatter: { passed: 0, failed: 0 }
+    };
+    
+    // Override console methods to capture output
+    console.log = function(...args) {
+      originalLog.apply(console, args);
+      appendToConsole(args.join(' '), 'info');
+    };
+    
+    console.error = function(...args) {
+      originalError.apply(console, args);
+      appendToConsole(args.join(' '), 'error');
+    };
+    
+    console.assert = function(assertion, ...args) {
+      originalAssert.apply(console, arguments);
+      if (!assertion) {
+        appendToConsole('❌ Assertion failed: ' + args.join(' '), 'error');
+      } else {
+        appendToConsole('✓ ' + args.join(' '), 'success');
+      }
+    };
+    
+    function appendToConsole(message, type = 'info') {
+      const line = document.createElement('div');
+      line.className = `console-line console-${type}`;
+      
+      // Handle special formatting
+      if (message.includes('===')) {
+        line.className += ' console-header';
+      }
+      
+      line.textContent = message;
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
+    
+    function updateStatus(testType, status) {
+      const statusElement = document.getElementById(`${testType}-status`);
+      statusElement.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+      statusElement.className = `status ${status}`;
+    }
+    
+    window.runDOMTests = async function() {
+      updateStatus('dom', 'running');
+      try {
+        await runDOMHelperTests();
+        updateStatus('dom', 'passed');
+      } catch (error) {
+        updateStatus('dom', 'failed');
+        console.error('DOM tests failed:', error);
+      }
+    };
+    
+    window.runValidatorTests = async function() {
+      updateStatus('validator', 'running');
+      try {
+        await runValidatorTests();
+        updateStatus('validator', 'passed');
+      } catch (error) {
+        updateStatus('validator', 'failed');
+        console.error('Validator tests failed:', error);
+      }
+    };
+    
+    window.runFormatterTests = async function() {
+      updateStatus('formatter', 'running');
+      try {
+        await runFormatterTests();
+        updateStatus('formatter', 'passed');
+      } catch (error) {
+        updateStatus('formatter', 'failed');
+        console.error('Formatter tests failed:', error);
+      }
+    };
+    
+    window.runAllTests = async function() {
+      clearConsole();
+      console.log('🚀 Running all utility module tests...\n');
+      
+      await runDOMTests();
+      console.log('\n');
+      
+      await runValidatorTests();
+      console.log('\n');
+      
+      await runFormatterTests();
+      console.log('\n');
+      
+      console.log('✅ All test suites completed!');
+    };
+    
+    window.clearConsole = function() {
+      output.innerHTML = '';
+    };
+    
+    // Initialize
+    console.log('Test suite ready. Click a button to run tests.');
+  </script>
+</body>
+</html>

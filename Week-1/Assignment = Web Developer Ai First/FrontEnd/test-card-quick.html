@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Card Test</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components/destination-card.css">
+  <style>
+    body { padding: 2rem; background: #f5f5f5; }
+    .card-container { max-width: 400px; }
+  </style>
+</head>
+<body>
+  <h1>Quick Card Test</h1>
+  <div class="card-container" id="card"></div>
+  <div id="output" style="margin-top: 2rem; padding: 1rem; background: white; border-radius: 8px;"></div>
+
+  <script type="module">
+    import { DestinationCard } from './js/components/destination-card.js';
+    import { eventBus } from './js/event-bus.js';
+
+    const output = document.getElementById('output');
+    
+    try {
+      // Create card
+      const card = new DestinationCard(document.getElementById('card'), {
+        id: 'test-1',
+        name: 'Test Destination',
+        location: 'Test Location',
+        description: 'This is a test description.',
+        price: 999,
+        imageUrl: 'https://via.placeholder.com/400x300'
+      });
+
+      output.innerHTML = '<p style="color: green;">✓ Card created successfully!</p>';
+
+      // Listen for clicks
+      eventBus.on('card:detail-click', (data) => {
+        output.innerHTML += `<p style="color: blue;">✓ Click event received: ${data.destinationId}</p>`;
+      });
+
+    } catch (error) {
+      output.innerHTML = `<p style="color: red;">✗ Error: ${error.message}</p>`;
+      console.error(error);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#00A9B5"/>
+  <ellipse cx="200" cy="350" rx="80" ry="150" fill="#4FCC7E"/>
+  <ellipse cx="400" cy="320" rx="100" ry="180" fill="#26A65B"/>
+  <ellipse cx="600" cy="340" rx="90" ry="160" fill="#1A8047"/>
+  <text x="400" y="80" font-family="Arial" font-size="32" fill="white" text-anchor="middle">Ha Long Bay</text>
+</svg>

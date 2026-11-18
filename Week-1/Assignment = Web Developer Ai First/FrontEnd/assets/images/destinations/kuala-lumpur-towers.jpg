@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#4DD4DC"/>
+  <rect x="300" y="150" width="80" height="400" fill="#9E9E9E"/>
+  <rect x="420" y="150" width="80" height="400" fill="#BDBDBD"/>
+  <rect x="340" y="300" width="120" height="30" fill="#FFD700"/>
+  <text x="400" y="100" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Petronas Towers</text>
+</svg>

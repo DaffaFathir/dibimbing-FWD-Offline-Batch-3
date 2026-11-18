@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#00A9B5"/>
+  <ellipse cx="300" cy="400" rx="150" ry="120" fill="#26A65B"/>
+  <ellipse cx="500" cy="380" rx="180" ry="140" fill="#1A8047"/>
+  <text x="400" y="150" font-family="Arial" font-size="30" fill="white" text-anchor="middle">Komodo Island</text>
+</svg>

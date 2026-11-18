@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#00A9B5"/>
+  <rect y="350" width="800" height="250" fill="#007F8C"/>
+  <polygon points="300,250 350,350 250,350" fill="white"/>
+  <polygon points="500,280 550,350 450,350" fill="#F7B731"/>
+  <text x="400" y="100" font-family="Arial" font-size="28" fill="white" text-anchor="middle">Water Sports</text>
+</svg>
