@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+</head>
+<body>
+    <input type="number" name="" placeholder="masukan angka 1" id="angka1">
+    <input type="number" name="" placeholder="masukan angka 2" id="angka2">
+    <button onclick="getResult()">Gas</button>
+    <h4>result: </h4>
+    <h2 id="total"></h2>
+</body>
+<script>
+    const getResult = () => {
+        const angka1 = document.getElementById("angka1").value
+        const angka2 = document.getElementById("angka2").value
+        const total = Number(angka1) + Number(angka2)
+        document.getElementById("total").textContent = total
+        console.log(total);
+
+        // DOM (bisa dicobain)
+        alert(`hasil ${total} ini`)
+        confirm(`hasil ${total} ini?`)
+    }
+</script>
+</html>
