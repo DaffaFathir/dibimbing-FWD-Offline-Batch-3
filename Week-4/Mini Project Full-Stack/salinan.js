@@ -1,60 +1,46 @@
 // SOAL 1: MANIPULASI ARRAY NILAI SISWA
-// const nilaiSemester = [85, 90, 78.5, 92.25, 67.5, 75.27, 85, 97.25];
+const nilaiSemester = [85, 90, 78.5, 92.25, 67.5, 75.27, 85, 97.25];
 
-// function hitungNilaiSemester(nilai = []) {
-//     if (nilai.length === 0) {
-//         return {
-//             totalNilaiSemesterGanjil: 0,
-//             totalNilaiSemesterGenap: 0,
-//             rataRataSemesterNilaiGanjil: 0,
-//             rataRataSemesterNilaiGenap: 0
-//         };
-//     }
+function hitungNilaiSemester(nilai = []) {
+    if (nilai.length === 0) {
+        return { totalNilaiSemesterGanjil: 0, totalNilaiSemesterGenap: 0, rataRataSemesterNilaiGanjil: 0, rataRataSemesterNilaiGenap: 0 };
+    }
 
-//     const hasil = nilai.reduce((akumulasi, nilaiSemester, index) => {
-//             if ((index + 1) % 2 !== 0) {
-//                 akumulasi.totalGanjil += nilaiSemester;
-//                 akumulasi.jumlahGanjil += 1;
-//             } else {
-//                 akumulasi.totalGenap += nilaiSemester;
-//                 akumulasi.jumlahGenap += 1;
-//             }
-//             return akumulasi;
-//         },
-//         {
-//             totalGanjil: 0,
-//             totalGenap: 0,
-//             jumlahGanjil: 0,
-//             jumlahGenap: 0
-//         }
-//     );
+    const hasil = nilai.reduce((akumulasi, nilaiSemester, index) => {
+        if ((index + 1) % 2 !== 0) {
+            akumulasi.totalGanjil += nilaiSemester;
+            akumulasi.jumlahGanjil += 1;
+        } else {
+            akumulasi.totalGenap += nilaiSemester;
+            akumulasi.jumlahGenap += 1;
+        }
+        return akumulasi;
+    }, { totalGanjil: 0, totalGenap: 0, jumlahGanjil: 0, jumlahGenap: 0 }
+    );
 
-//     return {
-//         totalNilaiSemesterGanjil: hasil.totalGanjil,
-//         totalNilaiSemesterGenap: hasil.totalGenap,
-//         rataRataNilaiSemesterGanjil: hasil.totalGanjil / hasil.jumlahGanjil,
-//         rataRataNilaiSemesterGenap: hasil.totalGenap / hasil.jumlahGenap
-//     };
-// }
-// console.log(hitungNilaiSemester(nilaiSemester));
+    return {
+        totalNilaiSemesterGanjil: hasil.totalGanjil,
+        totalNilaiSemesterGenap: hasil.totalGenap,
+        rataRataNilaiSemesterGanjil: hasil.totalGanjil / hasil.jumlahGanjil,
+        rataRataNilaiSemesterGenap: hasil.totalGenap / hasil.jumlahGenap
+    };
+}
+console.log(hitungNilaiSemester(nilaiSemester));
 
 // SOAL 2: FUNCTION RETURN ARRAY BILANGAN GENAP DAN GANJIL
-// const input = [1, 12, 23, 34, 45, 56, 67, 78, 89, 90]
+const input = [1, 12, 23, 34, 45, 56, 67, 78, 89, 90]
 
-// function pisahGanjilGenap(...bilangan) {
-//     return bilangan.reduce((hasil, angka) => {
-//         if (angka % 2 === 0) {
-//             hasil.arrayBilanganGenap.push(angka);
-//         } else {
-//             hasil.arrayBilanganGanjil.push(angka);
-//         }
-//         return hasil;
-//     }, {
-//         arrayBilanganGenap: [],
-//         arrayBilanganGanjil: []
-//     });
-// }
-// console.log(pisahGanjilGenap(...input));
+function pisahGanjilGenap(...bilangan) {
+    return bilangan.reduce((hasil, angka) => {
+        if (angka % 2 === 0) {
+            hasil.arrayBilanganGenap.push(angka);
+        } else {
+            hasil.arrayBilanganGanjil.push(angka);
+        }
+        return hasil;
+    }, { arrayBilanganGenap: [], arrayBilanganGanjil: [] });
+}
+console.log(pisahGanjilGenap(...input));
 
 // SOAL 3: MANIPULASI ARRAY OF OBJECT
 const arrayObjectSiswa = [
@@ -71,8 +57,8 @@ function filterSiswaGood(siswa) {
     return siswa.map((dataSiswa) => {
         const totalNilai = dataSiswa.nilaiNilai.reduce((total, nilai) => total + nilai, 0);
         const rataRataNilai = totalNilai / dataSiswa.nilaiNilai.length
-        
-        return {...dataSiswa, nama: dataSiswa.nama.toUpperCase(), rataRataNilai};
+
+        return { ...dataSiswa, nama: dataSiswa.nama.toUpperCase(), rataRataNilai };
     }).filter((dataSiswa) => dataSiswa.rataRataNilai > 85).sort((a, b) => b.id - a.id);
 }
 
