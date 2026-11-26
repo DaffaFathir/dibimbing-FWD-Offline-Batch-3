@@ -83,7 +83,7 @@ const _ = require('lodash');
 
 const pekerjaDibawah35 = _.filter(people, (orang) => orang.age < 35)
 const asalPekerja = _.groupBy(pekerjaDibawah35, 'nationality')
-// const urutPekerja = _.sortBy(people, ["name"]) 
+//// const urutPekerja = _.sortBy(people, ["name"]) 
 
 console.log(pekerjaDibawah35);
 console.log(asalPekerja);
