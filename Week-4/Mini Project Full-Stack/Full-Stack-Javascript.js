@@ -88,3 +88,4 @@ const asalPekerja = _.groupBy(pekerjaDibawah35, 'nationality')
 console.log(pekerjaDibawah35);
 console.log(asalPekerja);
 //// console.log(urutPekerja);
+// console.log();
